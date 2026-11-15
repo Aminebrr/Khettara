@@ -33,6 +33,10 @@ The whole page is in English and French, with a language switch at the top.
   - a reduced-motion mode
   - a written description if WebGL is unavailable
 
+## Accessibility
+
+The page aims at WCAG 2.2 AA: keyboard access to everything, including the 3D model through viewpoint and zoom buttons; a text description and diagram of the model; alt text for every photograph; reduced-motion support; and English, French and Arabic marked up with the right `lang` and direction. See [ACCESSIBILITY.md](ACCESSIBILITY.md) for the audit, the changes and what still needs testing by hand.
+
 ## Run it locally
 
 Clone the repository and serve the folder with any static server. The page needs an internet connection for three.js, the fonts and the photographs.

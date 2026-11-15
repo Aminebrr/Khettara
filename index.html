@@ -46,6 +46,7 @@
   color-scheme:dark;
 }
 *{box-sizing:border-box}
+[hidden]{display:none !important}
 html{scroll-behavior:smooth;scrollbar-color:var(--night-3) var(--night);accent-color:var(--water);caret-color:var(--water)}
 body{margin:0;background:var(--night);color:var(--bone);font-family:var(--serif);font-size:clamp(1.0625rem,1rem + .25vw,1.25rem);line-height:1.6;font-optical-sizing:auto;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.04;letter-spacing:-0.02em;margin:0;text-wrap:balance;font-variation-settings:'opsz' 60}
@@ -54,8 +55,11 @@ a{color:inherit;text-underline-offset:.2em;text-decoration-thickness:1px}
 img{display:block;max-width:100%;height:auto}
 button{font:inherit;color:inherit}
 ::selection{background:var(--water);color:var(--night)}
-:focus-visible{outline:2px solid var(--water);outline-offset:3px}
+:focus-visible{outline:3px solid #D97736;outline-offset:4px;border-radius:3px}
+/* the orange ring disappears on ochre (1.1:1), so ochre chapters and the footer use ink (6.7:1) */
 .ochre :focus-visible,footer :focus-visible{outline-color:var(--ink)}
+/* controls drawn over the 3D scene get a dark halo so the ring keeps its contrast on sand and water */
+.stage :focus-visible{outline-offset:2px;box-shadow:0 0 0 5px var(--night)}
 html[data-lang="en"] [data-l="fr"], html[data-lang="fr"] [data-l="en"]{display:none !important}
 .ar{font-family:var(--arabic)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
@@ -76,18 +80,18 @@ h2{font-size:clamp(2.25rem,1.6rem + 2.8vw,3.75rem)}
 
 /* footnotes */
 sup{font-family:var(--sans);font-size:.62em;line-height:0;font-weight:600}
-sup a{text-decoration:none;color:var(--water);padding:0 .12em}
+sup a{text-decoration:none;color:var(--water);display:inline-block;padding:.5em .3em;margin:-.5em -.15em;position:relative}
 .ochre sup a,footer sup a{color:#0a2f66}
 
 /* ---------- top bar ---------- */
-.bar{position:absolute;top:0;left:0;right:0;z-index:10;display:flex;align-items:center;gap:28px;padding:18px var(--m);font-size:.8125rem;letter-spacing:.06em;text-transform:uppercase;font-weight:600;background:linear-gradient(rgba(10,8,6,.72),rgba(10,8,6,0))}
-.mark{display:flex;align-items:center;gap:10px;text-decoration:none;white-space:nowrap}
+.bar{position:absolute;top:0;left:0;right:0;z-index:10;display:flex;align-items:center;gap:28px;padding:10px var(--m);font-size:.8125rem;letter-spacing:.06em;text-transform:uppercase;font-weight:600;background:var(--night)}
+.mark{display:flex;align-items:center;gap:10px;min-height:44px;text-decoration:none;white-space:nowrap}
 .mark .ar{font-size:1.375rem;line-height:1;text-transform:none;color:var(--ochre);letter-spacing:0}
 .bar nav{display:flex;gap:24px;margin-left:auto}
-.bar nav a{text-decoration:none;opacity:.85}
-.bar nav a:hover{opacity:1;text-decoration:underline}
+.bar nav a{text-decoration:none;color:var(--bone);display:inline-block;padding:12px 0}
+.bar nav a:hover{text-decoration:underline;text-underline-offset:.35em}
 .lang{display:flex;gap:2px}
-.lang button{background:none;border:0;padding:6px 7px;cursor:pointer;font:inherit;color:var(--bone-soft);letter-spacing:.06em}
+.lang button{background:none;border:0;min-width:44px;min-height:44px;padding:0 8px;cursor:pointer;font:inherit;color:var(--bone-soft);letter-spacing:.06em}
 .lang button[aria-pressed="true"]{color:var(--bone);text-decoration:underline;text-underline-offset:.35em}
 .cta{background:var(--water);color:var(--night);text-decoration:none;padding:11px 18px;border-radius:2px;transition:background .3s var(--ease)}
 .cta:hover{background:var(--bone)}
@@ -111,7 +115,7 @@ sup a{text-decoration:none;color:var(--water);padding:0 .12em}
 .stage{position:relative;background:var(--night-2)}
 .view{position:relative;height:clamp(460px,54vw,800px);overflow:hidden;touch-action:pan-y}
 .view canvas{display:block;width:100%;height:100%}
-.hot{position:absolute;left:0;top:0;transform:translate(-50%,-100%);background:var(--bone);color:var(--night);border:0;padding:5px 9px;font-size:.8125rem;font-weight:600;line-height:1.2;cursor:pointer;white-space:nowrap;border-radius:2px;transition:background .25s var(--ease),color .25s var(--ease)}
+.hot{position:absolute;left:0;top:0;transform:translate(-50%,-100%);background:var(--bone);color:var(--night);border:0;padding:5px 9px;min-height:28px;font-size:.8125rem;font-weight:600;line-height:1.2;cursor:pointer;white-space:nowrap;border-radius:2px;transition:background .25s var(--ease),color .25s var(--ease)}
 .hot::after{content:"";position:absolute;left:50%;top:100%;width:1px;height:12px;background:var(--bone);transform:translateX(-50%)}
 .hot:hover,.hot[aria-pressed="true"]{background:var(--water);color:var(--night)}
 .hot:hover::after,.hot[aria-pressed="true"]::after{background:var(--water)}
@@ -125,6 +129,8 @@ sup a{text-decoration:none;color:var(--water);padding:0 .12em}
 .turn svg{width:20px;height:20px}
 .nogl{position:absolute;inset:0;display:none;padding:32px;background:var(--night-2);overflow:auto}
 .view.failed .nogl{display:block}
+.view.failed{height:auto}
+.view.failed .nogl{position:static}
 .nogl p+p{margin-top:12px;color:var(--bone-soft)}
 .controls{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,4fr) minmax(0,3fr);gap:28px;align-items:end;padding-top:28px}
 .controls label{display:block;font:700 .9375rem var(--sans);margin-bottom:8px}
@@ -178,14 +184,14 @@ sup a{text-decoration:none;color:var(--water);padding:0 .12em}
 .counts{padding:clamp(88px,10vw,160px) 0}
 .counts-grid{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(40px,6vw,96px);align-items:start;margin-top:56px}
 .field{display:grid;grid-template-columns:repeat(30,1fr);gap:clamp(3px,.5vw,7px);max-width:620px}
-.field i{display:block;aspect-ratio:1;border-radius:50%;border:1.5px solid rgba(23,17,10,.42)}
+.field i{display:block;aspect-ratio:1;border-radius:50%;border:1.5px solid rgba(23,17,10,.7)}
 .field i.on{background:var(--water-deep);border-color:var(--water-deep)}
 .counts .say{font-size:clamp(1.375rem,1.15rem + .9vw,2rem);line-height:1.3;font-weight:500}
 .counts .say strong{font-weight:700}
 .counts .say + .say{margin-top:28px;padding-top:28px;border-top:1px solid rgba(23,17,10,.35)}
 .key{display:flex;gap:20px;margin-top:18px;font:.875rem var(--sans);color:var(--ink-soft)}
 .key span{display:inline-flex;align-items:center;gap:8px}
-.key i{width:12px;height:12px;border-radius:50%;border:1.5px solid rgba(23,17,10,.42)}
+.key i{width:12px;height:12px;border-radius:50%;border:1.5px solid rgba(23,17,10,.7)}
 .key i.on{background:var(--water-deep);border-color:var(--water-deep)}
 .counts .note{margin-top:56px;font-size:1rem;max-width:62ch;color:var(--ink-soft)}
 
@@ -217,7 +223,7 @@ sup a{text-decoration:none;color:var(--water);padding:0 .12em}
 .tabs{display:flex;flex-direction:column;gap:6px}
 .tab{border:0;background:rgba(23,17,10,.1);text-align:left;padding:12px 16px;cursor:pointer;display:flex;flex-direction:column;border-radius:2px;color:var(--ink);transition:background .25s var(--ease),color .25s var(--ease)}
 .tab span{font-size:1rem;font-weight:700;line-height:1.2}
-.tab small{font-size:.8125rem;opacity:.8}
+.tab small{font-size:.8125rem}
 .tab:hover{background:rgba(23,17,10,.18)}
 .tab[aria-selected="true"]{background:var(--ink);color:var(--ochre)}
 .lesson[hidden]{display:none}
@@ -250,11 +256,37 @@ footer{background:var(--ochre);color:var(--ink);padding:56px 0 28px}
 .contact:hover{text-decoration:underline;text-decoration-thickness:.05em}
 .fmeta{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 32px;margin-top:40px;padding-top:16px;border-top:1px solid rgba(23,17,10,.35);font:.8125rem var(--sans)}
 
+/* ---------- accessibility additions ---------- */
+.menu{display:none;background:none;border:1px solid var(--night-3);color:var(--bone);min-height:44px;min-width:44px;padding:0;justify-content:center;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;border-radius:2px;align-items:center;gap:8px}
+.menu svg{width:16px;height:16px}
+.skip-model{position:absolute;left:var(--m);top:-200px;z-index:5;background:var(--bone);color:var(--night);padding:10px 14px;font:600 .875rem var(--sans);text-decoration:none}
+.skip-model:focus{top:8px}
+.stage-wrap{position:relative}
+.status{position:absolute;inset:0;display:grid;place-items:center;padding:24px;text-align:center;font:600 1rem var(--sans);color:var(--bone-soft);background:var(--night-2);z-index:1}
+.status[hidden]{display:none}
+.views{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:22px}
+.views .lbl{font:700 .9375rem var(--sans);margin-right:10px}
+.views .btn{min-height:44px}
+.btn.icon{width:44px;padding:0;display:inline-grid;place-items:center}
+.btn.icon svg{width:18px;height:18px}
+.model-text{margin-top:44px;border-top:1px solid var(--night-3);padding-top:6px}
+.model-text summary{cursor:pointer;font:700 1rem var(--sans);padding:14px 0;min-height:44px}
+.model-text summary:hover{text-decoration:underline}
+.model-text figure{margin:16px 0 0}
+.model-text svg{display:block;width:100%;height:auto;background:var(--night-2)}
+.model-text figcaption{margin-top:10px}
+.model-text dl{display:grid;grid-template-columns:minmax(0,14rem) minmax(0,1fr);gap:12px 32px;margin:32px 0 0;font-size:1.0625rem;max-width:960px}
+.model-text dt{font:700 1rem var(--sans);color:var(--bone)}
+.model-text dd{margin:0;color:var(--bone-soft)}
+.model-text .scen-list{margin:28px 0 0;padding-left:1.2em;color:var(--bone-soft);font-size:1.0625rem;max-width:66ch}
+.include{font:.9375rem var(--sans);color:var(--ink-soft);margin-top:10px}
+
 /* ---------- motion ---------- */
 @keyframes settle{from{transform:scale(1.07)}to{transform:scale(1)}}
 .hero img{animation:settle 2.8s var(--ease) both}
 .field i{transition:background-color .5s var(--ease),border-color .5s var(--ease)}
 @media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{scroll-behavior:auto !important;animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
   html{scroll-behavior:auto}
   .hero img{animation:none}
   .field i,.render img{transition:none}
@@ -273,9 +305,16 @@ footer{background:var(--ochre);color:var(--ink);padding:56px 0 28px}
 
 /* ---------- phone ---------- */
 @media (max-width:760px){
-  .bar{gap:12px;padding:12px var(--m)}
-  .bar nav{display:none}
-  .lang{margin-left:auto}
+  .bar{gap:8px;padding:6px var(--m);flex-wrap:wrap}
+  .menu{display:inline-flex;margin-left:auto}
+  .mark{min-width:44px;justify-content:center}
+  .bar nav{display:none;order:9;flex-basis:100%;flex-direction:column;gap:0;margin:0;padding:4px 0 8px}
+  .bar.open nav{display:flex}
+  .bar nav a{padding:12px 0;border-top:1px solid var(--night-3)}
+  .bar nav a.wide{display:inline-block}
+  .model-text dl{grid-template-columns:1fr;gap:4px}
+  .model-text dd{margin-bottom:12px}
+  .hot{min-height:32px}
   .cta{padding:10px 12px}
   .mark .t{display:none}
   .dilemma-head{flex-direction:column;justify-content:flex-end;align-items:stretch}
@@ -303,17 +342,20 @@ footer{background:var(--ochre);color:var(--ink);padding:56px 0 28px}
   .sources ol,.photos{columns:1}
 }
 @media (max-width:374px){
-  .cta{font-size:.75rem}
-  .lang button{padding:6px 4px}
+  .cta{font-size:.75rem;padding:10px 8px}
+  .lang button{min-width:36px}
 }
 </style>
 </head>
 <body>
+<div class="sr" role="status" aria-live="polite" id="sr-status"></div>
 <a class="skip" href="#main"><span data-l="en">Skip to the exhibition</span><span data-l="fr">Aller à l'exposition</span></a>
 
 <header class="bar" id="top">
-  <a class="mark" href="#top" aria-label="Under the Oasis, back to top"><span class="ar" lang="ar" aria-hidden="true">خ</span><span class="t"><span data-l="en">Under the Oasis</span><span data-l="fr">Sous l'oasis</span></span></a>
-  <nav aria-label="Sections">
+  <a class="mark" href="#top"><span class="ar" lang="ar" dir="rtl" aria-hidden="true">خ</span><span class="t"><span data-l="en">Under the Oasis</span><span data-l="fr">Sous l'oasis</span></span><span class="sr"><span data-l="en">: back to top</span><span data-l="fr"> : haut de page</span></span></a>
+  <button type="button" class="menu" id="menu" aria-expanded="false" aria-controls="sections"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12"/></svg><span class="sr">Sections</span></button>
+  <nav id="sections" aria-label="Sections">
+    <a href="#model"><span data-l="en">Model</span><span data-l="fr">Maquette</span></a>
     <a href="#history"><span data-l="en">History</span><span data-l="fr">Histoire</span></a>
     <a href="#sharing"><span data-l="en">Sharing</span><span data-l="fr">Partage</span></a>
     <a class="wide" href="#numbers"><span data-l="en">Counts</span><span data-l="fr">Chiffres</span></a>
@@ -321,16 +363,16 @@ footer{background:var(--ochre);color:var(--ink);padding:56px 0 28px}
     <a href="#classroom"><span data-l="en">Lessons</span><span data-l="fr">Séances</span></a>
   </nav>
   <div class="lang" role="group" aria-label="Language / Langue">
-    <button type="button" id="btn-en" lang="en" aria-label="English" aria-pressed="true">EN</button>
-    <button type="button" id="btn-fr" lang="fr" aria-label="Français" aria-pressed="false">FR</button>
+    <button type="button" id="btn-en" lang="en" aria-pressed="true">EN<span class="sr"> English</span></button>
+    <button type="button" id="btn-fr" lang="fr" aria-pressed="false">FR<span class="sr"> Français</span></button>
   </div>
   <a class="cta" href="#model"><span data-l="en">Explore in 3D</span><span data-l="fr">Explorer en 3D</span></a>
 </header>
 
 <section class="hero" aria-labelledby="title">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Khettaras.jpg/1920px-Khettaras.jpg" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Khettaras.jpg/1280px-Khettaras.jpg 1280w, https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Khettaras.jpg/1920px-Khettaras.jpg 1920w" sizes="100vw" width="1920" height="1304" fetchpriority="high" alt="">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Khettaras.jpg/1920px-Khettaras.jpg" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Khettaras.jpg/1280px-Khettaras.jpg 1280w, https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Khettaras.jpg/1920px-Khettaras.jpg 1920w" sizes="100vw" width="1920" height="1304" fetchpriority="high" alt="Rows of rounded earth mounds stretching across a flat desert plain towards a line of distant mesas under a blue sky.">
   <div class="hero-text">
-    <p class="ar" lang="ar">خطّارة</p>
+    <p class="ar"><span lang="ar" dir="rtl">خطّارة</span></p>
     <h1 id="title">Khettara</h1>
     <p class="lede"><span data-l="en">In Morocco's oases, water travels for kilometres underground, moved by gravity alone. A virtual exhibition on how it works, who shares it and why it is running dry.</span><span data-l="fr">Dans les oasis du Maroc, l'eau voyage des kilomètres sous terre, portée par la seule gravité. Une exposition virtuelle : comment elle marche, qui la partage, pourquoi elle s'assèche.</span></p>
     <p class="by"><span data-l="en">Under the Oasis · By Amine Brahimi · November 2026</span><span data-l="fr">Sous l'oasis · Par Amine Brahimi · Novembre 2026</span></p>
@@ -349,15 +391,17 @@ footer{background:var(--ochre);color:var(--ink);padding:56px 0 28px}
     </div>
 
     <div class="stage-wrap">
+      <a class="skip-model" href="#model-text"><span data-l="en">Skip the 3D model to its text description</span><span data-l="fr">Passer la maquette 3D pour sa description en texte</span></a>
       <div class="stage">
        <div class="view" id="stage">
+        <p class="status" id="stage-status" role="status"><span data-l="en">Loading the 3D model…</span><span data-l="fr">Chargement de la maquette 3D…</span></p>
         <div id="hots"></div>
         <div class="turn">
-          <button type="button" id="turn-l" aria-label="Turn the model left"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M16 10H4M9 5l-5 5 5 5"/></svg></button>
-          <button type="button" id="turn-r" aria-label="Turn the model right"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 10h12M11 5l5 5-5 5"/></svg></button>
+          <button type="button" id="turn-l" aria-label="Turn the model left" data-label-en="Turn the model left" data-label-fr="Tourner la maquette vers la gauche"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M16 10H4M9 5l-5 5 5 5"/></svg></button>
+          <button type="button" id="turn-r" aria-label="Turn the model right" data-label-en="Turn the model right" data-label-fr="Tourner la maquette vers la droite"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 10h12M11 5l5 5-5 5"/></svg></button>
         </div>
         <div class="nogl">
-          <p><b data-l="en">This browser cannot show the 3D model.</b><b data-l="fr">Ce navigateur ne peut pas afficher la maquette 3D.</b></p>
+          <p role="alert"><b data-l="en">This browser cannot show the 3D model.</b><b data-l="fr">Ce navigateur ne peut pas afficher la maquette 3D.</b> <a href="#model-text"><span data-l="en">Go to the diagram and description</span><span data-l="fr">Voir le schéma et la description</span></a></p>
           <p><span data-l="en">It shows foothills where rain feeds the groundwater; a mother well dug at the highest point; a line of shafts across the plain; a tunnel sloping gently under the water table; an outlet and basin; and canals feeding a palm grove beside an earthen village.</span><span data-l="fr">Elle montre le piémont où la pluie alimente la nappe ; un puits mère creusé au point le plus haut ; une ligne de puits à travers la plaine ; un tunnel en pente douce sous la nappe ; une sortie et un bassin ; des canaux qui irriguent une palmeraie près d'un village de terre.</span></p>
         </div>
        </div>
@@ -373,7 +417,7 @@ footer{background:var(--ochre);color:var(--ink);padding:56px 0 28px}
           <div class="ends"><span><span data-l="en">High</span><span data-l="fr">Haute</span></span><span><span data-l="en">Low</span><span data-l="fr">Basse</span></span></div>
         </div>
         <div>
-          <div class="presets scen" role="group" aria-label="Scenarios">
+          <div class="presets scen" role="group" aria-label="Scenarios" data-label-en="Scenarios" data-label-fr="Scénarios">
             <button type="button" class="btn" data-wt="85"><span data-l="en">Rainy years</span><span data-l="fr">Années pluvieuses</span></button>
             <button type="button" class="btn" data-wt="0" aria-pressed="true"><span data-l="en">Average year</span><span data-l="fr">Année moyenne</span></button>
             <button type="button" class="btn" data-wt="-120"><span data-l="en">Heavy pumping</span><span data-l="fr">Pompage intensif</span></button>
@@ -381,20 +425,79 @@ footer{background:var(--ochre);color:var(--ink);padding:56px 0 28px}
           </div>
           <div class="presets" style="margin-top:6px">
             <button type="button" class="btn" id="xray" aria-pressed="true"><span data-l="en">See underground</span><span data-l="fr">Voir sous terre</span></button>
-            <button type="button" class="btn" id="reset"><span data-l="en">Reset view</span><span data-l="fr">Recentrer</span></button>
           </div>
         </div>
-        <div class="readout" aria-live="polite">
-          <div class="big" id="pct">54%</div>
+        <div class="readout">
+          <div class="big" id="pct">58%</div>
           <p id="pct-label"></p>
         </div>
       </div>
+      <div class="views" role="group" aria-labelledby="views-l">
+        <span class="lbl" id="views-l"><span data-l="en">Viewpoint</span><span data-l="fr">Point de vue</span></span>
+        <button type="button" class="btn" data-view="surface"><span data-l="en">Surface</span><span data-l="fr">Surface</span></button>
+        <button type="button" class="btn" data-view="under"><span data-l="en">Underground</span><span data-l="fr">Sous terre</span></button>
+        <button type="button" class="btn" data-view="outlet"><span data-l="en">Water outlet</span><span data-l="fr">Sortie de l'eau</span></button>
+        <button type="button" class="btn" id="reset"><span data-l="en">Reset view</span><span data-l="fr">Recentrer</span></button>
+        <button type="button" class="btn icon" id="zoom-in" aria-label="Zoom in" data-label-en="Zoom in" data-label-fr="Zoomer"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 3v12M3 9h12"/></svg></button>
+        <button type="button" class="btn icon" id="zoom-out" aria-label="Zoom out" data-label-en="Zoom out" data-label-fr="Dézoomer"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 9h12"/></svg></button>
+      </div>
+
+      <details class="model-text" id="model-text">
+        <summary><span data-l="en">Diagram and text description of the model</span><span data-l="fr">Schéma et description de la maquette en texte</span></summary>
+        <figure>
+          <svg viewBox="0 0 800 300" role="img" aria-labelledby="diag-desc" font-family="Archivo, Arial, sans-serif" font-size="14">
+            <path d="M0 40 C60 34 110 44 150 60 L260 110 L640 196 L800 214 L800 300 L0 300 Z" fill="#7a6142"/>
+            <path d="M0 40 C60 34 110 44 150 60 L260 110 L640 196 L800 214" fill="none" stroke="#f2ece3" stroke-width="2"/>
+            <line x1="0" y1="140" x2="800" y2="240" stroke="#4a9dff" stroke-width="2" stroke-dasharray="8 6"/>
+            <line x1="200" y1="83" x2="200" y2="185" stroke="#f2ece3" stroke-width="2"/>
+            <g stroke="#f2ece3" stroke-width="1.5">
+              <line x1="250" y1="106" x2="250" y2="186"/><line x1="300" y1="119" x2="300" y2="187"/><line x1="350" y1="130" x2="350" y2="189"/><line x1="400" y1="142" x2="400" y2="190"/><line x1="450" y1="153" x2="450" y2="191"/><line x1="500" y1="164" x2="500" y2="193"/><line x1="550" y1="176" x2="550" y2="194"/><line x1="600" y1="187" x2="600" y2="195"/>
+            </g>
+            <g fill="#c8904a"><ellipse cx="200" cy="83" rx="9" ry="4"/><ellipse cx="250" cy="106" rx="8" ry="3.5"/><ellipse cx="300" cy="119" rx="8" ry="3.5"/><ellipse cx="350" cy="130" rx="8" ry="3.5"/><ellipse cx="400" cy="142" rx="8" ry="3.5"/><ellipse cx="450" cy="153" rx="8" ry="3.5"/><ellipse cx="500" cy="164" rx="8" ry="3.5"/><ellipse cx="550" cy="176" rx="8" ry="3.5"/></g>
+            <line x1="200" y1="185" x2="400" y2="190" stroke="#4a9dff" stroke-width="7" stroke-linecap="round"/>
+            <line x1="400" y1="190" x2="640" y2="196" stroke="#f2ece3" stroke-width="3"/>
+            <line x1="400" y1="190" x2="640" y2="196" stroke="#4a9dff" stroke-width="1.5"/>
+            <rect x="640" y="194" width="34" height="10" fill="#4a9dff"/>
+            <line x1="657" y1="162" x2="657" y2="190" stroke="#f2ece3" stroke-width="1"/>
+            <g fill="#3f7d3a"><circle cx="705" cy="190" r="10"/><circle cx="735" cy="194" r="10"/><circle cx="765" cy="198" r="10"/></g>
+            <g fill="#f2ece3">
+              <text x="40" y="28" data-l="en">Foothills</text><text x="40" y="28" data-l="fr">Piémont</text>
+              <text x="212" y="78" data-l="en">Mother well</text><text x="212" y="78" data-l="fr">Puits mère</text>
+              <text x="430" y="122" data-l="en">Shafts</text><text x="430" y="122" data-l="fr">Puits</text>
+              <text x="20" y="128" fill="#8fc2ff" data-l="en">Water table</text><text x="20" y="128" fill="#8fc2ff" data-l="fr">Nappe</text>
+              <text x="205" y="216" fill="#8fc2ff" data-l="en">Tunnel below the water table: collects water</text><text x="205" y="216" fill="#8fc2ff" data-l="fr">Tunnel sous la nappe : capte l'eau</text>
+              <text x="480" y="264" data-l="en">Tunnel above it: only carries water</text><text x="480" y="264" data-l="fr">Tunnel au-dessus : transporte l'eau</text>
+              <text x="640" y="156" text-anchor="middle" data-l="en">Outlet and basin</text><text x="640" y="156" text-anchor="middle" data-l="fr">Sortie et bassin</text>
+              <text x="792" y="178" text-anchor="end" data-l="en">Palm grove</text><text x="792" y="178" text-anchor="end" data-l="fr">Palmeraie</text>
+            </g>
+          </svg>
+          <figcaption class="cap" id="diag-desc"><span data-l="en">Cross-section, not to scale. The ground falls from the foothills to the palm grove. A tunnel runs from the bottom of the mother well to an outlet at the surface, falling more gently than the ground. Shafts link it to the surface. Where the tunnel lies below the water table it collects water; further down it only carries the water to the outlet.</span><span data-l="fr">Coupe, sans échelle. Le terrain descend du piémont à la palmeraie. Un tunnel part du fond du puits mère jusqu'à une sortie en surface, avec une pente plus douce que celle du terrain. Des puits le relient à la surface. Là où il passe sous la nappe, le tunnel capte l'eau ; plus bas, il ne fait que la conduire jusqu'à la sortie.</span></figcaption>
+        </figure>
+        <dl>
+          <dt><span data-l="en">Foothills</span><span data-l="fr">Piémont</span></dt><dd><span data-l="en">Rain and snowmelt here feed the groundwater that the khettara drains.</span><span data-l="fr">La pluie et la fonte des neiges alimentent ici la nappe que draine la khettara.</span></dd>
+          <dt><span data-l="en">Wadi</span><span data-l="fr">Oued</span></dt><dd><span data-l="en">Floods in the dry riverbed soak into the gravel. Recharging the aquifer along wadis is one proposed fix.</span><span data-l="fr">Les crues de l'oued s'infiltrent dans les graviers. Recharger la nappe le long des oueds est l'une des solutions proposées.</span><sup><a href="#src-1">1</a></sup></dd>
+          <dt><span data-l="en">Mother well</span><span data-l="fr">Puits mère</span></dt><dd><span data-l="en">Digging starts here, with a test well at the highest point, then the tunnel is dug back up toward it.</span><span data-l="fr">Le creusement commence ici, par un puits d'essai au point le plus haut, puis le tunnel est creusé vers lui.</span><sup><a href="#src-2">2</a></sup></dd>
+          <dt><span data-l="en">Shafts</span><span data-l="fr">Puits</span></dt><dd><span data-l="en">Every 5 to 40 m. Seen from the air, their spoil mounds draw the khettara's dotted line across the plain.</span><span data-l="fr">Tous les 5 à 40 m. Vus du ciel, leurs déblais dessinent la ligne pointillée de la khettara à travers la plaine.</span><sup><a href="#src-1">1</a>,<a href="#src-2">2</a></sup></dd>
+          <dt><span data-l="en">Gallery</span><span data-l="fr">Galerie</span></dt><dd><span data-l="en">50 to 80 cm wide and 90 to 150 cm high. Diggers work bent over.</span><span data-l="fr">50 à 80 cm de large et 90 à 150 cm de haut. On y travaille courbé.</span><sup><a href="#src-2">2</a></sup></dd>
+          <dt><span data-l="en">Water table</span><span data-l="fr">Nappe</span></dt><dd><span data-l="en">Only the part of the tunnel below this level collects water.</span><span data-l="fr">Seule la partie du tunnel sous ce niveau capte l'eau.</span></dd>
+          <dt><span data-l="en">Outlet and basin</span><span data-l="fr">Sortie et bassin</span></dt><dd><span data-l="en">The water reaches daylight and is stored in a basin before it is shared.</span><span data-l="fr">L'eau voit le jour et est stockée dans un bassin avant d'être partagée.</span></dd>
+          <dt><span data-l="en">Palm grove and ksar</span><span data-l="fr">Palmeraie et ksar</span></dt><dd><span data-l="en">Canals carry the water to the gardens under the date palms, next to the earthen village.</span><span data-l="fr">Des canaux mènent l'eau aux jardins sous les palmiers dattiers, près du village de terre.</span></dd>
+          <dt><span data-l="en">Boreholes</span><span data-l="fr">Forages</span></dt><dd><span data-l="en">Shown only after heavy pumping. Motor and solar pumps lower the water table; on the same aquifer, pumps tend to win.</span><span data-l="fr">Visibles seulement après un pompage intensif. Les pompes, à moteur ou solaires, font baisser la nappe ; sur une même nappe, elles finissent par l'emporter.</span><sup><a href="#src-2">2</a>,<a href="#src-3">3</a></sup></dd>
+        </dl>
+        <ul class="scen-list">
+<li><span data-l="en">Rainy years: the water table rises and about 87% of the tunnel collects water.</span><span data-l="fr">Années pluvieuses : la nappe monte et environ 87 % de la galerie capte l'eau.</span></li>
+          <li><span data-l="en">Average year: about 58% of the tunnel collects water.</span><span data-l="fr">Année moyenne : environ 58 % de la galerie capte l'eau.</span></li>
+          <li><span data-l="en">Heavy pumping: the water table falls, only about 18% of the tunnel collects water, the flow is weak and boreholes appear in the fields.</span><span data-l="fr">Pompage intensif : la nappe baisse, environ 18 % seulement de la galerie capte l'eau, le débit est faible et des forages apparaissent dans les champs.</span></li>
+          <li><span data-l="en">Aquifer exhausted: the water table is below the whole tunnel and the outlet is dry.</span><span data-l="fr">Nappe épuisée : la nappe passe sous toute la galerie et la sortie est à sec.</span></li>
+          <li><span data-l="en">These percentages come from the model, which exaggerates heights; they illustrate the mechanism, not a measured khettara.</span><span data-l="fr">Ces pourcentages viennent de la maquette, dont les hauteurs sont exagérées ; ils illustrent le mécanisme, pas une khettara mesurée.</span></li>
+        </ul>
+      </details>
     </div>
 
     <div class="steps">
       <div>
         <figure>
-          <div class="render step-render"><img id="still-cut" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" width="1280" height="960" alt=""></div>
+          <div class="render step-render"><img id="still-cut" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" width="1280" height="960" alt="Rendered from the 3D model: a cut-away of the hillside showing the mother well and the first shafts reaching down to a blue band of groundwater."></div>
           <figcaption class="cap"><span data-l="en">Rendered from the model: the tunnel's upper end, under the mother well, reaches into the groundwater.</span><span data-l="fr">Rendu de la maquette : la partie haute du tunnel, sous le puits mère, atteint la nappe.</span></figcaption>
         </figure>
         <h3><span data-l="en">Gather</span><span data-l="fr">Capter</span></h3>
@@ -402,7 +505,7 @@ footer{background:var(--ochre);color:var(--ink);padding:56px 0 28px}
       </div>
       <div>
         <figure>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Khettara.jpg/1280px-Khettara.jpg" width="1280" height="958" loading="lazy" decoding="async" alt="">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Khettara.jpg/1280px-Khettara.jpg" width="1280" height="958" loading="lazy" decoding="async" alt="A deep, rough-edged hole opening into darkness in pale, stony ground.">
           <figcaption class="cap"><span data-l="en">A shaft opening near Erfoud.</span><span data-l="fr">L'ouverture d'un puits près d'Erfoud.</span> <a href="https://commons.wikimedia.org/wiki/File:Khettara.jpg">Bernard Gagnon</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a></figcaption>
         </figure>
         <h3><span data-l="en">Channel</span><span data-l="fr">Conduire</span></h3>
@@ -410,7 +513,7 @@ footer{background:var(--ochre);color:var(--ink);padding:56px 0 28px}
       </div>
       <div>
         <figure>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/A_pool_for_irrigating_gardens.jpg/1280px-A_pool_for_irrigating_gardens.jpg" width="1280" height="768" loading="lazy" decoding="async" alt="">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/A_pool_for_irrigating_gardens.jpg/1280px-A_pool_for_irrigating_gardens.jpg" width="1280" height="768" loading="lazy" decoding="async" alt="A square stone basin of green water under palm fronds, with water pouring into it.">
           <figcaption class="cap"><span data-l="en">An irrigation pool in the palm grove of Figuig.</span><span data-l="fr">Un bassin d'irrigation dans la palmeraie de Figuig.</span> <a href="https://commons.wikimedia.org/wiki/File:A_pool_for_irrigating_gardens.jpg">Mohammed Abdeljalil</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a></figcaption>
         </figure>
         <h3><span data-l="en">Share</span><span data-l="fr">Partager</span></h3>
@@ -423,7 +526,7 @@ footer{background:var(--ochre);color:var(--ink);padding:56px 0 28px}
 <!-- HISTORY -->
 <section class="history" id="history">
   <figure class="plate">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/64/Tafilalt_-_panoramio.jpg" width="1227" height="766" loading="lazy" decoding="async" alt="">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/64/Tafilalt_-_panoramio.jpg" width="1227" height="766" loading="lazy" decoding="async" alt="A dark green band of palm trees along a valley floor between bare reddish cliffs.">
     <figcaption><span class="cap" style="margin:0"><span data-l="en">Palm groves along the valley floor in the Tafilalet.</span><span data-l="fr">Palmeraies au fond de la vallée, au Tafilalet.</span></span><span class="credit"><a href="https://commons.wikimedia.org/wiki/File:Tafilalt_-_panoramio.jpg">Eduardo Manchon</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a></span></figcaption>
   </figure>
   <div class="history-body ochre">
@@ -434,7 +537,7 @@ footer{background:var(--ochre);color:var(--ink);padding:56px 0 28px}
         <p><span data-l="en"><b>Born in Persia</b>The technique appears there more than 2,500 years ago and spreads along the southern Mediterranean in the Middle Ages. Iran still counts an estimated 37,000 qanats, and eleven were inscribed on UNESCO's World Heritage List in 2016.</span><span data-l="fr"><b>Née en Perse</b>La technique y apparaît il y a plus de 2 500 ans et gagne la rive sud de la Méditerranée au Moyen Âge. L'Iran compterait encore 37 000 qanats ; onze ont été inscrits au patrimoine mondial de l'UNESCO en 2016.</span><sup><a href="#src-1">1</a>,<a href="#src-6">6</a>,<a href="#src-7">7</a></sup></p>
         <p><span data-l="en"><b>Rooted in Marrakech</b>Under the Almoravids, in the 11th and 12th centuries, the first Moroccan khettaras were dug to supply Marrakech and irrigate the Haouz plain. About 650 still worked there at the end of the 20th century.</span><span data-l="fr"><b>Ancrée à Marrakech</b>Sous les Almoravides, aux XIe et XIIe siècles, les premières khettaras marocaines sont creusées pour alimenter Marrakech et irriguer la plaine du Haouz. Environ 650 y fonctionnaient encore à la fin du XXe siècle.</span><sup><a href="#src-1">1</a>,<a href="#src-5">5</a></sup></p>
         <p><span data-l="en"><b>Alive in the Tafilalet</b>The oldest documented digging there dates from the 16th and 17th centuries, and the khettaras of Siffa from about 1730. After the drought of 1979–1985, rain returned from 2006 and young people came back to restore the tunnels.</span><span data-l="fr"><b>Vivante au Tafilalet</b>Les premiers creusements documentés y datent des XVIe et XVIIe siècles, ceux de Siffa d'environ 1730. Après la sécheresse de 1979-1985, la pluie revient à partir de 2006 et des jeunes reviennent restaurer les galeries.</span><sup><a href="#src-1">1</a>,<a href="#src-2">2</a>,<a href="#src-4">4</a></sup></p>
-        <p class="about"><span data-l="en"><b>About this exhibition</b>A work sample by Amine Brahimi, not an official UNESCO publication. It is designed as a deep-dive companion to the Morocco case of <i>The Voices of Water</i>, by the Global Network of Water Museums, on UNESCO's Virtual Science Museum.</span><span data-l="fr"><b>À propos</b>Échantillon de travail réalisé par Amine Brahimi, et non publication officielle de l'UNESCO. Il prolonge le cas marocain de <i>The Voices of Water</i>, exposition du Réseau mondial des musées de l'eau sur le Musée virtuel des sciences de l'UNESCO.</span><sup><a href="#src-8">8</a></sup></p>
+        <p class="about"><span data-l="en"><b>About this exhibition</b>A work sample by Amine Brahimi, not an official UNESCO publication. It is designed as a deep-dive companion to the Morocco case of <i lang="en">The Voices of Water</i>, by the Global Network of Water Museums, on UNESCO's Virtual Science Museum.</span><span data-l="fr"><b>À propos</b>Échantillon de travail réalisé par Amine Brahimi, et non publication officielle de l'UNESCO. Il prolonge le cas marocain de <i lang="en">The Voices of Water</i>, exposition du Réseau mondial des musées de l'eau sur le Musée virtuel des sciences de l'UNESCO.</span><sup><a href="#src-8">8</a></sup></p>
       </div>
     </div>
   </div>
@@ -444,7 +547,7 @@ footer{background:var(--ochre);color:var(--ink);padding:56px 0 28px}
 <section class="share" id="sharing">
   <div class="wrap share-grid">
     <figure>
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Tarhjicht_-_Water_the_treasure_in_the_oasis_-_panoramio.jpg/1280px-Tarhjicht_-_Water_the_treasure_in_the_oasis_-_panoramio.jpg" width="1280" height="853" loading="lazy" decoding="async" alt="">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Tarhjicht_-_Water_the_treasure_in_the_oasis_-_panoramio.jpg/1280px-Tarhjicht_-_Water_the_treasure_in_the_oasis_-_panoramio.jpg" width="1280" height="853" loading="lazy" decoding="async" alt="A narrow channel of water running beside a dirt path in the shade of dense palm trees.">
       <figcaption class="cap"><span data-l="en">An irrigation canal under the palms of the Tarhjicht oasis.</span><span data-l="fr">Un canal d'irrigation sous les palmiers de l'oasis de Tarhjicht.</span> <a href="https://commons.wikimedia.org/wiki/File:Tarhjicht_-_Water_the_treasure_in_the_oasis_-_panoramio.jpg">tuarek</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a></figcaption>
     </figure>
     <div>
@@ -485,7 +588,7 @@ footer{background:var(--ochre);color:var(--ink);padding:56px 0 28px}
 <!-- DILEMMA -->
 <section class="dilemma" id="dilemma">
   <div class="dilemma-head">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Tafilalt_Khettara.jpg/1920px-Tafilalt_Khettara.jpg" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Tafilalt_Khettara.jpg/1280px-Tafilalt_Khettara.jpg 1280w, https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Tafilalt_Khettara.jpg/1920px-Tafilalt_Khettara.jpg 1920w" sizes="100vw" width="1920" height="1280" loading="lazy" decoding="async" alt="">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Tafilalt_Khettara.jpg/1920px-Tafilalt_Khettara.jpg" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Tafilalt_Khettara.jpg/1280px-Tafilalt_Khettara.jpg 1280w, https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Tafilalt_Khettara.jpg/1920px-Tafilalt_Khettara.jpg 1920w" sizes="100vw" width="1920" height="1280" loading="lazy" decoding="async" alt="A frame of rough wooden poles and a crossbar standing over a shaft opening in bare, stony ground.">
     <div class="wrap">
       <h2><span data-l="en">Pump, or disappear?</span><span data-l="fr">Pomper ou disparaître ?</span></h2>
       <p><span data-l="en">The question researchers ask about the oases of southern Morocco today.</span><span data-l="fr">La question que posent les chercheurs sur les oasis du sud du Maroc.</span><sup><a href="#src-3">3</a></sup></p>
@@ -533,28 +636,29 @@ footer{background:var(--ochre);color:var(--ink);padding:56px 0 28px}
   <div class="wrap">
     <h2><span class="soft"><span data-l="en">Three lessons</span><span data-l="fr">Trois séances</span></span><br><span data-l="en">for ages 11 to 15</span><span data-l="fr">pour les 11-15 ans</span></h2>
     <div class="agenda">
-      <div class="tabs" role="tablist" aria-label="Lessons" aria-orientation="vertical">
+      <div class="tabs" role="tablist" aria-label="Lessons" data-label-en="Lessons" data-label-fr="Séances">
         <button type="button" class="tab" role="tab" id="tab-sci" aria-controls="les-sci" aria-selected="true"><span><span data-l="en">Science</span><span data-l="fr">Sciences</span></span><small>45 min</small></button>
         <button type="button" class="tab" role="tab" id="tab-math" aria-controls="les-math" aria-selected="false"><span>Maths</span><small>20 min</small></button>
         <button type="button" class="tab" role="tab" id="tab-civ" aria-controls="les-civ" aria-selected="false"><span><span data-l="en">Citizenship</span><span data-l="fr">Citoyenneté</span></span><small>30 min</small></button>
       </div>
       <div class="rows">
-        <div class="lesson" id="les-sci" role="tabpanel" aria-labelledby="tab-sci">
+        <div class="lesson" id="les-sci" role="tabpanel" aria-labelledby="tab-sci" tabindex="0">
           <div class="row"><div class="t">0–5 <small>min</small></div><div class="w"><span data-l="en">Set up the tray</span><span data-l="fr">Préparer le bac</span><small><span data-l="en">Clear plastic box, sand, gravel, a drinking straw pierced with small holes, a watering can.</span><span data-l="fr">Bac transparent, sable, gravier, une paille percée de petits trous, un arrosoir.</span></small></div></div>
           <div class="row"><div class="t">5–15 <small>min</small></div><div class="w"><span data-l="en">Bury the tunnel</span><span data-l="fr">Enterrer le tunnel</span><small><span data-l="en">Tilt the box slightly and bury the straw in the sand on a gentle slope, its low end at the edge of the box.</span><span data-l="fr">Inclinez légèrement le bac et enterrez la paille dans le sable en pente douce, son extrémité basse au bord du bac.</span></small></div></div>
           <div class="row"><div class="t">15–30 <small>min</small></div><div class="w"><span data-l="en">Make it rain</span><span data-l="fr">Faire pleuvoir</span><small><span data-l="en">Water the high end and watch the water come out of the low end.</span><span data-l="fr">Arrosez la partie haute et regardez l'eau sortir en bas.</span></small></div></div>
           <div class="row"><div class="t">30–45 <small>min</small></div><div class="w"><span data-l="en">Dig a well</span><span data-l="fr">Creuser un puits</span><small><span data-l="en">Scoop water out of a hole near the top. What happens to the flow?</span><span data-l="fr">Retirez l'eau d'un trou près du haut. Que devient le débit ?</span></small></div></div>
         </div>
-        <div class="lesson" id="les-math" role="tabpanel" aria-labelledby="tab-math">
+        <div class="lesson" id="les-math" role="tabpanel" aria-labelledby="tab-math" tabindex="0">
           <div class="row"><div class="t">0–5 <small>min</small></div><div class="w"><span data-l="en">The question</span><span data-l="fr">La question</span><small><span data-l="en">A khettara is 3 km long with a 1.5% gradient. How far does it drop?</span><span data-l="fr">Une khettara mesure 3 km avec une pente de 1,5 %. De combien descend-elle ?</span></small></div></div>
-          <div class="row"><div class="t">5–15 <small>min</small></div><div class="w"><span data-l="en">Work it out</span><span data-l="fr">Calculer</span><small>3,000 m × 0.015 = 45 m</small></div></div>
+          <div class="row"><div class="t">5–15 <small>min</small></div><div class="w"><span data-l="en">Work it out</span><span data-l="fr">Calculer</span><small><span aria-hidden="true">3,000 m × 0.015 = 45 m</span><span class="sr"><span data-l="en">3,000 metres times 0.015 equals 45 metres</span><span data-l="fr">3 000 mètres fois 0,015 égale 45 mètres</span></span></small></div></div>
           <div class="row"><div class="t">15–20 <small>min</small></div><div class="w"><span data-l="en">Compare</span><span data-l="fr">Comparer</span><small><span data-l="en">A 1.5% slope looks flat to the eye, yet it is enough to keep the water moving for 3 km.</span><span data-l="fr">Une pente de 1,5 % paraît plate à l'œil, mais elle suffit à faire couler l'eau sur 3 km.</span></small></div></div>
         </div>
-        <div class="lesson" id="les-civ" role="tabpanel" aria-labelledby="tab-civ">
+        <div class="lesson" id="les-civ" role="tabpanel" aria-labelledby="tab-civ" tabindex="0">
           <div class="row"><div class="t">0–10 <small>min</small></div><div class="w"><span data-l="en">Make a tanast</span><span data-l="fr">Fabriquer une tanast</span><small><span data-l="en">Pierce a yoghurt pot with a pin, float it in a bowl of water and time how long it takes to sink.</span><span data-l="fr">Percez un pot de yaourt avec une épingle, posez-le sur l'eau d'un saladier et mesurez le temps qu'il met à couler.</span></small></div></div>
           <div class="row"><div class="t">10–20 <small>min</small></div><div class="w"><span data-l="en">Share the turns</span><span data-l="fr">Partager les tours</span><small><span data-l="en">Give each group turns according to the "work" it did.</span><span data-l="fr">Donnez à chaque groupe des tours selon le « travail » fourni.</span></small></div></div>
           <div class="row"><div class="t">20–30 <small>min</small></div><div class="w"><span data-l="en">Debate</span><span data-l="fr">Débattre</span><small><span data-l="en">A new family arrives in the village. Who gives up time?</span><span data-l="fr">Une nouvelle famille arrive au village. Qui cède du temps ?</span></small></div></div>
         </div>
+        <p class="include"><span data-l="en">For every lesson, pupils can work in pairs with one handling, one timing and one recording, so no step depends on fine hand movement or on sight alone. The "Dig a well" effect can also be shown with the water-table slider in the 3D model, or with its text description.</span><span data-l="fr">Pour chaque séance, les élèves peuvent travailler en binôme, l'un manipule, l'autre chronomètre ou note, pour qu'aucune étape ne dépende seulement de la motricité fine ou de la vue. L'effet « Creuser un puits » peut aussi se montrer avec le curseur de la nappe dans la maquette 3D, ou avec sa description en texte.</span></p>
         <p class="ask"><span data-l="en">Curriculum links: groundwater, percentages, sustainable development (SDG 6, clean water).</span><span data-l="fr">Liens avec les programmes : eaux souterraines, pourcentages, développement durable (ODD 6, eau propre).</span></p>
       </div>
     </div>
@@ -567,20 +671,20 @@ footer{background:var(--ochre);color:var(--ink);padding:56px 0 28px}
     <p class="side"><span data-l="en">Every figure on this page links to one of these sources. The 3D model and its renders were made in code for this exhibition; the photographs come from Wikimedia Commons under open licences.</span><span data-l="fr">Chaque chiffre de cette page renvoie à l'une de ces sources. La maquette 3D et ses rendus ont été réalisés en code pour cette exposition ; les photographies viennent de Wikimedia Commons, sous licence libre.</span></p>
     <div>
       <h2><span data-l="en">Sources and further reading</span><span data-l="fr">Sources et lectures</span></h2>
-      <a class="further" href="https://www.unesco.org/en/virtual-science-museum/voices-water?hub=196669"><span data-l="en">The Voices of Water, on UNESCO's Virtual Science Museum</span><span data-l="fr">The Voices of Water, sur le Musée virtuel des sciences de l'UNESCO</span></a>
-      <ol>
+      <a class="further" href="https://www.unesco.org/en/virtual-science-museum/voices-water?hub=196669"><span data-l="en">The Voices of Water, on UNESCO's Virtual Science Museum</span><span data-l="fr"><span lang="en">The Voices of Water</span>, sur le Musée virtuel des sciences de l'UNESCO</span></a>
+      <ol lang="en">
         <li id="src-1">WAMU-NET / Museum of Water Civilisation in Morocco "Mohammed VI", <a href="https://www.watermuseums.net/campaigns/valuing-ancient-water-cultures/moroccan-khettaras/">Moroccan khettaras</a>.</li>
         <li id="src-2">Beraaouz M., Abioui M., Hssaisoune M., Martínez-Frías J. (2022), <a href="https://link.springer.com/10.1186/s43238-022-00073-x">Khettaras in the Tafilalet oasis (Morocco): contribution to the promotion of tourism and sustainable development</a>, <i>Built Heritage</i>.</li>
         <li id="src-3">Khardi Y., Lacombe G., Kuper M., Taky A., Bouarfa S., Hammani A. (2023), <a href="https://www.cahiersagricultures.fr/articles/cagri/abs/2023/01/cagri220097/cagri220097.html">Pumping or disappearing: the dilemma of the reinforcement of khettaras by solar pumping in the oases of Morocco</a>, <i>Cahiers Agricultures</i> 32.</li>
         <li id="src-4">IRD (2011), <a href="https://sciencedaily.com/releases/2011/09/110909111632.htm">Ancient Mediterranean water supply networks revived</a>, via ScienceDaily.</li>
-        <li id="src-5">SNRTnews, <a href="https://snrtnews.com/fr/article/les-khettaras-ce-patrimoine-%C3%A0-pr%C3%A9server">Les khettaras, ce patrimoine à préserver</a>.</li>
+        <li id="src-5" lang="fr">SNRTnews, <a href="https://snrtnews.com/fr/article/les-khettaras-ce-patrimoine-%C3%A0-pr%C3%A9server">Les khettaras, ce patrimoine à préserver</a>.</li>
         <li id="src-6">UNESCO World Heritage Committee (2016), <a href="https://whc.unesco.org/en/decisions/6799">Decision 40 COM 8B.21, The Persian Qanat</a>.</li>
         <li id="src-7">Iran, Ministry of Cultural Heritage (2019), <a href="https://whc.unesco.org/document/179893">Risk Management Plan of the Persian Qanat World Heritage Site</a>.</li>
         <li id="src-8">WAMU-NET (2026), <a href="https://www.ideassonline.org/public/pdf/UNESCOTheVoiciesofWater-ENG.pdf">The Voices of Water on UNESCO's Virtual Science Museum</a>, summary sheet.</li>
         <li id="src-9">Khettouch A. (2025), <a href="https://iwra.org/proceedings/congress/resource/IWRA_XIXWWCMaroc_Dec2025_WaterChangingWorld_ORAL_Athmane_Khettouch_XIXWorldWaterCongress319.pdf">Resilience of the khettara system in Morocco's southern oases</a>, XIX World Water Congress, Marrakech.</li>
       </ol>
       <h3><span data-l="en">Photographs</span><span data-l="fr">Photographies</span></h3>
-      <ul class="photos">
+      <ul class="photos" lang="en">
         <li><a href="https://commons.wikimedia.org/wiki/File:Khettaras.jpg">Khettaras near Erfoud</a>, Bernard Gagnon, 2005, <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a></li>
         <li><a href="https://commons.wikimedia.org/wiki/File:Khettara.jpg">Khettara hole near Erfoud</a>, Bernard Gagnon, 2005, <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a></li>
         <li><a href="https://commons.wikimedia.org/wiki/File:A_pool_for_irrigating_gardens.jpg">A pool for irrigating gardens</a>, Mohammed Abdeljalil, 2015, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a></li>
@@ -626,17 +730,32 @@ footer{background:var(--ochre);color:var(--ink);padding:56px 0 28px}
   var desc=document.querySelector('meta[name="description"]');
   var field=document.getElementById('field');
   [].forEach.call(document.querySelectorAll('sup a[href^="#src-"]'),function(a){a.setAttribute('aria-label','Source '+a.textContent.trim());});
-  function setLang(l){
-    root.setAttribute('data-lang',l); root.lang=l;
+  /* one polite live region for short spoken updates */
+  var live=document.getElementById('sr-status'), liveT;
+  window.uoSay=function(msg){ clearTimeout(liveT); live.textContent=''; liveT=setTimeout(function(){ live.textContent=msg; },60); };
+  function setLabels(l){
+    [].forEach.call(document.querySelectorAll('[data-label-'+l+']'),function(e){ e.setAttribute('aria-label', e.getAttribute('data-label-'+l)); });
+  }
+  function setLang(l, spoken){
+    root.setAttribute('data-lang',l); root.lang=l; setLabels(l);
     document.title=META[l].t; desc.setAttribute('content',META[l].d); field.setAttribute('aria-label',META[l].f);
     bEn.setAttribute('aria-pressed',l==='en'); bFr.setAttribute('aria-pressed',l==='fr');
     try{localStorage.setItem('uto-lang',l);}catch(e){}
     document.dispatchEvent(new CustomEvent('uolang'));
+    if(spoken) window.uoSay(l==='fr'?'Version française':'English version');
   }
-  bEn.addEventListener('click',function(){setLang('en');});
-  bFr.addEventListener('click',function(){setLang('fr');});
+  bEn.addEventListener('click',function(){setLang('en',true);});
+  bFr.addEventListener('click',function(){setLang('fr',true);});
+
+  /* phone menu: a disclosure; Escape closes it and returns focus to the button */
+  var bar=document.querySelector('.bar'), menu=document.getElementById('menu'), nav=document.getElementById('sections');
+  function setMenu(open){ bar.classList.toggle('open',open); menu.setAttribute('aria-expanded',open); }
+  menu.addEventListener('click',function(){ setMenu(menu.getAttribute('aria-expanded')!=='true'); });
+  nav.addEventListener('click',function(e){ if(e.target.closest('a')) setMenu(false); });
+  bar.addEventListener('keydown',function(e){ if(e.key==='Escape' && bar.classList.contains('open')){ setMenu(false); menu.focus(); } });
+  document.addEventListener('click',function(e){ if(bar.classList.contains('open') && !bar.contains(e.target)) setMenu(false); });
   var saved=null; try{saved=localStorage.getItem('uto-lang');}catch(e){}
-  if(saved==='fr') setLang('fr');
+  if(saved==='fr') setLang('fr'); else setLabels('en');
 
   /* lesson tabs */
   var tabs=[].slice.call(document.querySelectorAll('.tab'));
@@ -648,6 +767,8 @@ footer{background:var(--ochre);color:var(--ink);padding:56px 0 28px}
     t.addEventListener('keydown',function(e){
       if(e.key==='ArrowDown'||e.key==='ArrowRight'){e.preventDefault();var n=tabs[(i+1)%tabs.length];pick(n);n.focus();}
       if(e.key==='ArrowUp'||e.key==='ArrowLeft'){e.preventDefault();var p=tabs[(i+tabs.length-1)%tabs.length];pick(p);p.focus();}
+      if(e.key==='Home'){e.preventDefault();pick(tabs[0]);tabs[0].focus();}
+      if(e.key==='End'){e.preventDefault();var z=tabs[tabs.length-1];pick(z);z.focus();}
     });
   });
   pick(tabs[0]);
@@ -671,6 +792,9 @@ footer{background:var(--ochre);color:var(--ink);padding:56px 0 28px}
   setTimeout(function(){
     if(!window.uoReady){
       document.getElementById('stage').classList.add('failed');
+      var st=document.getElementById('stage-status'); if(st) st.hidden=true;
+      var vw=document.querySelector('.views'); if(vw) vw.hidden=true;
+      document.getElementById('model-text').open=true;
       var c=document.querySelector('.controls'); if(c) c.hidden=true;
       var i=document.getElementById('info'); if(i) i.hidden=true;
     }
@@ -687,9 +811,11 @@ const lang = () => window.uoLang();
 
 /* ---------------- text ---------------- */
 const T = {
-  en:{flow:'of the tunnel still captures water', weak:'Weak flow. ', dry:'The outlet is dry. ', hint:'Tap a label to see what it is. Drag to turn the model (two fingers on a phone), or use the arrows.', hintT:'Explore the model',
+  en:{flow:'of the tunnel still captures water', weak:'Weak flow.', dry:'The outlet is dry.', hint:'Select a label to see what it is. Drag to turn the model (two fingers on a phone), or use the viewpoint, zoom and arrow buttons. Esc clears the selection.', hintT:'Explore the model',
+      views:{surface:'Surface view', under:'Underground view', outlet:'Water outlet', home:'View reset', zin:'Zoomed in', zout:'Zoomed out'}, cleared:'Selection cleared',
       canvas:'Interactive 3D model of a khettara, from the foothills to the palm grove. The same content is described by the labels below and the text of this section.'},
-  fr:{flow:'de la galerie capte encore de l’eau', weak:'Débit faible. ', dry:'La sortie est à sec. ', hint:'Touchez une étiquette pour la découvrir. Faites glisser pour tourner la maquette (deux doigts sur téléphone), ou utilisez les flèches.', hintT:'Explorer la maquette',
+  fr:{flow:'de la galerie capte encore de l’eau', weak:'Débit faible.', dry:'La sortie est à sec.', hint:'Sélectionnez une étiquette pour la découvrir. Faites glisser pour tourner la maquette (deux doigts sur téléphone), ou utilisez les boutons de point de vue, de zoom et les flèches. Échap annule la sélection.', hintT:'Explorer la maquette',
+      views:{surface:'Vue de surface', under:'Vue sous terre', outlet:'Sortie de l’eau', home:'Vue recentrée', zin:'Zoom avant', zout:'Zoom arrière'}, cleared:'Sélection annulée',
       canvas:'Maquette 3D interactive d’une khettara, du piémont à la palmeraie. Les étiquettes et le texte de cette section décrivent le même contenu.'}
 };
 const SPOTS = [
@@ -740,9 +866,14 @@ function ksarMask(x,z){return sm(7.7,8.1,x)*(1-sm(9.5,9.8,x))*sm(-3.6,-3.3,z)*(1
 let renderer;
 try{
   renderer = new THREE.WebGLRenderer({antialias:true, alpha:true});
-}catch(e){ window.uoReady=true; stage.classList.add('failed'); document.querySelector('.controls').hidden=true; document.getElementById('info').hidden=true; throw e; }
+}catch(e){
+  window.uoReady=true; stage.classList.add('failed');
+  document.querySelector('.controls').hidden=true; document.getElementById('info').hidden=true; document.querySelector('.views').hidden=true;
+  document.getElementById('stage-status').hidden=true; document.getElementById('model-text').open=true;
+  throw e;
+}
 window.uoReady = true;
-stage.classList.remove('failed'); document.querySelector('.controls').hidden=false; document.getElementById('info').hidden=false;
+stage.classList.remove('failed'); document.querySelector('.controls').hidden=false; document.getElementById('info').hidden=false; document.querySelector('.views').hidden=false;
 const small = stage.clientWidth < 700;
 renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
 renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -1061,7 +1192,7 @@ function update(){
   pctEl.textContent = p + (lang()==='fr'?' %':'%');
   pctEl.classList.toggle('dry', p===0);
   const t=T[lang()];
-  pctLab.textContent = (p===0? t.dry : (p<20? t.weak:'')) + t.flow;
+  pctLab.textContent = t.flow + (p===0? '. '+t.dry : (p<20? '. '+t.weak : ''));
   slider.setAttribute('aria-valuetext', pctEl.textContent + ' ' + pctLab.textContent);
   hotEls.pumps.hidden = !pumps.visible;
 }
@@ -1088,14 +1219,15 @@ function showInfo(id){
 }
 SPOTS.forEach(s=>{
   const b=document.createElement('button'); b.type='button'; b.className='hot'; b.setAttribute('aria-pressed','false');
-  b.addEventListener('click',()=>{
-    active = active===s.id? null : s.id;
-    Object.values(hotEls).forEach(o=>o.setAttribute('aria-pressed', o===hotEls[active]));
-    showInfo(active);
-    if(active){ flyTo(anchor[active]()); if(active==='gallery'||active==='table') setXray(true); }
-  });
+  b.addEventListener('click',()=>select(active===s.id? null : s.id));
   hotWrap.appendChild(b); hotEls[s.id]=b;
 });
+function select(id){
+  active = id;
+  Object.values(hotEls).forEach(o=>o.setAttribute('aria-pressed', o===hotEls[active]));
+  showInfo(active);
+  if(active){ flyTo(anchor[active]()); if(active==='gallery'||active==='table'||active==='outlet') setXray(true); }
+}
 function labelHots(){ SPOTS.forEach(s=>{hotEls[s.id].textContent=s[lang()][0];}); }
 const v=new THREE.Vector3();
 function placeHots(){
@@ -1121,20 +1253,36 @@ function placeHots(){
 
 /* ---------------- camera moves ---------------- */
 let fly=null;
+const moveTime = ms => reduce ? 0 : ms;
+function flyPose(pos, target){ fly={t0:performance.now(), dur:moveTime(950), p0:camera.position.clone(), t0v:controls.target.clone(), p1:pos.clone(), t1v:target.clone()}; }
 function flyTo(target){
   const dir = camera.position.clone().sub(controls.target).normalize();
   const dist = 9.5;
-  fly={t0:performance.now(), dur:950, p0:camera.position.clone(), t0v:controls.target.clone(), p1:target.clone().add(dir.multiplyScalar(dist)), t1v:target.clone()};
+  fly={t0:performance.now(), dur:moveTime(950), p0:camera.position.clone(), t0v:controls.target.clone(), p1:target.clone().add(dir.multiplyScalar(dist)), t1v:target.clone()};
   if(fly.p1.y < target.y+2.2) fly.p1.y = target.y+2.2;
 }
-function goHome(){ fly={t0:performance.now(), dur:950, p0:camera.position.clone(), t0v:controls.target.clone(), p1:homePos(), t1v:HOME.target.clone()}; }
+function goHome(){ fly={t0:performance.now(), dur:moveTime(950), p0:camera.position.clone(), t0v:controls.target.clone(), p1:homePos(), t1v:HOME.target.clone()}; }
 function homePos(){ const a=stage.clientWidth/stage.clientHeight; return HOME.pos.clone().multiplyScalar(a<1? 1.38 : a<1.4? 1.18 : 1); }
 function turn(sign){
   const off=camera.position.clone().sub(controls.target);
   off.applyAxisAngle(new THREE.Vector3(0,1,0), sign*Math.PI/6);
-  fly={t0:performance.now(), dur:600, p0:camera.position.clone(), t0v:controls.target.clone(), p1:controls.target.clone().add(off), t1v:controls.target.clone()};
+  fly={t0:performance.now(), dur:moveTime(600), p0:camera.position.clone(), t0v:controls.target.clone(), p1:controls.target.clone().add(off), t1v:controls.target.clone()};
 }
 const ease=t=>1-Math.pow(1-t,3);
+function zoom(f){
+  const off=camera.position.clone().sub(controls.target);
+  const len=Math.min(controls.maxDistance, Math.max(controls.minDistance, off.length()*f));
+  flyPose(controls.target.clone().add(off.setLength(len)), controls.target);
+}
+/* named viewpoints, so the model can be explored without dragging */
+const UNDER = {pos:new THREE.Vector3(3.2,8.6,12.4), target:new THREE.Vector3(-1.2,-0.6,0.6)};
+function view(name){
+  const t=T[lang()];
+  if(name==='surface'){ setXray(false); select(null); goHome(); }
+  if(name==='under'){ setXray(true); select(null); flyPose(UNDER.target.clone().add(UNDER.pos.clone().sub(UNDER.target).multiplyScalar(1.45)), UNDER.target); }
+  if(name==='outlet'){ select('outlet'); }
+  window.uoSay(t.views[name]);
+}
 
 /* ---------------- controls wiring ---------------- */
 const slider=document.getElementById('wt');
@@ -1143,7 +1291,16 @@ function fromSlider(){ wt0 = (+slider.value)/100; presetBtns.forEach(b=>b.setAtt
 slider.addEventListener('input',fromSlider);
 presetBtns.forEach(b=>b.addEventListener('click',()=>{ slider.value=b.dataset.wt; fromSlider(); }));
 document.getElementById('xray').addEventListener('click',()=>setXray(!xray));
-document.getElementById('reset').addEventListener('click',goHome);
+document.getElementById('reset').addEventListener('click',()=>{ goHome(); window.uoSay(T[lang()].views.home); });
+document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>view(b.dataset.view)));
+document.getElementById('zoom-in').addEventListener('click',()=>{ zoom(0.75); window.uoSay(T[lang()].views.zin); });
+document.getElementById('zoom-out').addEventListener('click',()=>{ zoom(1.33); window.uoSay(T[lang()].views.zout); });
+/* presets say their result; the slider itself reports through aria-valuetext */
+presetBtns.forEach(b=>b.addEventListener('click',()=>window.uoSay(b.innerText.trim()+'. '+pctEl.textContent+' '+pctLab.textContent)));
+/* Esc anywhere in the model clears the selected label */
+document.querySelector('.stage-wrap').addEventListener('keydown',e=>{
+  if(e.key==='Escape' && active){ select(null); window.uoSay(T[lang()].cleared); }
+});
 document.getElementById('turn-l').addEventListener('click',()=>turn(-1));
 document.getElementById('turn-r').addEventListener('click',()=>turn(1));
 document.addEventListener('uolang',()=>{labelHots(); labelCanvas(); showInfo(active); update();});
@@ -1160,14 +1317,17 @@ camera.position.copy(homePos());
 const clock=new THREE.Clock();
 let visible=true;
 new IntersectionObserver(es=>{visible=es[0].isIntersecting;}).observe(stage);
-const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const motionQuery = matchMedia('(prefers-reduced-motion: reduce)');
+let reduce = motionQuery.matches;
+controls.enableDamping = !reduce;
+motionQuery.addEventListener('change', e=>{ reduce=e.matches; controls.enableDamping=!reduce; });
 function loop(){
   requestAnimationFrame(loop);
   if(!visible) return;
   const dt=clock.getDelta();
   if(!reduce) flowU.uTime.value += dt;
   if(fly){
-    const k=Math.min(1,(performance.now()-fly.t0)/fly.dur), e=ease(k);
+    const k=fly.dur? Math.min(1,(performance.now()-fly.t0)/fly.dur) : 1, e=ease(k);
     camera.position.lerpVectors(fly.p0,fly.p1,e); controls.target.lerpVectors(fly.t0v,fly.t1v,e);
     if(k>=1) fly=null;
   }
@@ -1181,6 +1341,7 @@ function loop(){
 }
 
 setXray(true); labelHots(); labelCanvas(); showInfo(null); update();
+document.getElementById('stage-status').hidden = true;
 loop();
 
 /* ---------------- stills for the masthead and the numbers ---------------- */
@@ -1195,8 +1356,9 @@ async function still(id, w, h, pos, look, opts){
   const keep=xray, keepWT=wt0;
   setXray(opts.xray); if(opts.wt!==undefined){wt0=opts.wt; update();}
   r.render(scene,cam);
-  const blob=await new Promise(res=>r.domElement.toBlob(res,'image/jpeg',0.86));
+  /* put the visitor's settings back before waiting, so a slider move during the render is never undone */
   setXray(keep); wt0=keepWT; update();
+  const blob=await new Promise(res=>r.domElement.toBlob(res,'image/jpeg',0.86));
   r.dispose(); r.forceContextLoss();
   if(!blob) return;
   img.src=URL.createObjectURL(blob);
