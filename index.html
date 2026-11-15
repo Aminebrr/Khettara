@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Under the Oasis: Morocco's khettaras, a virtual exhibition</title>
+<meta name="description" content="A virtual exhibition on Morocco's khettaras, with an interactive 3D model: how the underground tunnels work, how water is shared, and why they are drying up. Work sample by Amine Brahimi.">
+<meta name="author" content="Amine Brahimi">
+<meta name="theme-color" content="#0a5fc4">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Under the Oasis: Morocco's khettaras, a virtual exhibition">
+<meta property="og:description" content="How Morocco's underground water tunnels work, how families share their water, and why pumping is drying them up. Interactive 3D model, sources and three classroom lessons.">
+<meta property="og:locale" content="en_GB">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230b0b0b'/%3E%3Cpath d='M8 44h48' stroke='%230a5fc4' stroke-width='6'/%3E%3Cg fill='%23fff'%3E%3Ccircle cx='16' cy='30' r='4'/%3E%3Ccircle cx='32' cy='30' r='4'/%3E%3Ccircle cx='48' cy='30' r='4'/%3E%3C/g%3E%3C/svg%3E">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"CreativeWork","name":"Under the Oasis","alternateName":"Sous l'oasis","description":"A virtual exhibition on Morocco's khettaras, with an interactive 3D model, sourced figures and three classroom lessons.","about":["Khettara","Qanat","Groundwater","Oases of Morocco"],"inLanguage":["en","fr"],"dateCreated":"2026-11","author":{"@type":"Person","name":"Amine Brahimi","url":"https://aminebrr.github.io/Portfolio/"}}
+</script>
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&family=Noto+Naskh+Arabic:wght@500&display=swap" rel="stylesheet">
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
+</script>
+<style>
+:root{
+  /* Printed-annual layout: masthead board, a text axis at 42%, whole sections in flat colour. Paper, ink, groundwater blue. */
+  --bg:#ffffff;
+  --surface:#efeeeb;
+  --ink:#0b0b0b;
+  --muted:#575757;
+  --accent:#0a5fc4;
+  --accent-ink:#ffffff;
+  --field:#000000;
+  --field-ink:#ffffff;
+  --text:'Literata', Georgia, 'Times New Roman', serif;
+  --arabic:'Noto Naskh Arabic', 'Geeza Pro', 'Arabic Typesetting', serif;
+  --step-small:clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
+  --step-body:clamp(1.125rem, 1.05rem + 0.3vw, 1.3125rem);
+  --step-lead:clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
+  --step-h2:clamp(36px, 4vw, 60px);
+  --m:20px;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  color-scheme: light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--text);font-size:var(--step-body);line-height:1.6;font-optical-sizing:auto;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-weight:500;letter-spacing:-0.02em;line-height:1.05;margin:0;text-wrap:balance}
+p{margin:0}
+a{color:inherit;text-underline-offset:.18em;text-decoration-thickness:1px}
+img{display:block;max-width:100%}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+::selection{background:var(--accent);color:#fff}
+button{font:inherit;color:inherit}
+html[data-lang="en"] [data-l="fr"], html[data-lang="fr"] [data-l="en"]{display:none !important}
+sup{font-size:.62em;line-height:0}
+sup a{text-decoration:none;color:var(--accent);padding:0 .1em}
+.ar{font-family:var(--arabic)}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;padding:0 var(--m)}
+.soft{color:var(--muted)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.skip{position:absolute;left:8px;top:-100px;z-index:20;background:var(--field);color:var(--field-ink);padding:12px 16px;font-size:var(--step-small);font-weight:600;text-decoration:none}
+.skip:focus{top:8px}
+main:focus{outline:none}
+/* focus and footnote links stay visible on blue and black fields */
+footer :focus-visible,.say.blue :focus-visible,.band.head :focus-visible,.fig :focus-visible,.show :focus-visible,.pair figcaption :focus-visible{outline-color:#fff}
+.show sup a{color:#8ab8ff}
+.band.head sup a,.fig sup a,footer sup a{color:inherit}
+
+/* ---------- hero board ---------- */
+.board{height:100svh;min-height:620px;padding:8px;display:grid;gap:8px;grid-template-columns:1fr 1fr;grid-template-rows:60px 1fr 1fr}
+.toprow{grid-column:1/-1;display:grid;grid-template-columns:60px 1fr auto;gap:8px}
+.tile{position:relative;overflow:hidden}
+.logo{background:var(--field);color:var(--field-ink);display:grid;place-items:center;font-size:2rem;line-height:1;text-decoration:none}
+.links{background:var(--surface);display:grid;grid-template-columns:1fr 1fr;align-items:center}
+.links nav{grid-column:2;display:flex;gap:28px;align-items:center;padding:0 20px;font-size:var(--step-small)}
+.links nav a{text-decoration:none}
+.links nav a:hover{text-decoration:underline}
+.lang{margin-left:auto;display:flex;gap:2px}
+.lang button{background:none;border:0;padding:6px 8px;cursor:pointer;font-size:var(--step-small);color:var(--muted)}
+.lang button[aria-pressed="true"]{color:var(--ink);text-decoration:underline;text-underline-offset:.3em}
+.action{background:var(--field);color:var(--field-ink);display:flex;align-items:center;padding:0 22px;text-decoration:none;font-size:var(--step-small);font-weight:600;transition:background .2s var(--ease)}
+.action:hover{background:var(--accent)}
+.name{background:var(--surface);display:flex;flex-direction:column;justify-content:space-between;padding:24px}
+.name .top{display:flex;justify-content:space-between;align-items:baseline;gap:16px}
+.name .ar{font-size:var(--step-lead);color:var(--muted)}
+.kicker{font-size:var(--step-small);line-height:1.35;color:var(--muted);text-align:right}
+.kicker b{display:block;color:var(--ink);font-weight:600}
+.name h1{font-size:clamp(64px,10.6vw,168px);letter-spacing:-0.05em;line-height:.9;font-weight:500}
+.pic{background:#b38e62}
+.pic img{width:100%;height:100%;object-fit:cover}
+.pic.dark{background:#3b2f24}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.say{padding:24px;font-size:clamp(1.15rem,0.95rem + 0.6vw,1.5rem);line-height:1.3}
+.say.dark{background:var(--field);color:var(--field-ink)}
+.say.blue{background:var(--accent);color:var(--accent-ink)}
+
+/* ---------- model ---------- */
+section{position:relative}
+.model{padding:clamp(96px,11vw,180px) 0 clamp(80px,9vw,140px)}
+.model-head{grid-column:1/5}
+.model-head h2{font-size:var(--step-h2)}
+.model-head p{margin-top:20px;font-size:1.125rem;line-height:1.55}
+.stage-wrap{grid-column:1/-1;margin-top:48px}
+.stage{position:relative;background:var(--surface)}
+.view{position:relative;height:clamp(440px,52vw,780px);overflow:hidden;touch-action:pan-y}
+.view canvas{display:block;width:100%;height:100%}
+.hot{position:absolute;left:0;top:0;transform:translate(-50%,-100%);background:var(--field);color:var(--field-ink);border:0;padding:5px 9px;font-size:var(--step-small);line-height:1.2;cursor:pointer;white-space:nowrap;transition:background .2s var(--ease),transform .2s var(--ease)}
+.hot::after{content:"";position:absolute;left:50%;top:100%;width:2px;height:12px;background:var(--field);transform:translateX(-50%)}
+.hot:hover,.hot[aria-pressed="true"]{background:var(--accent)}
+.hot:hover::after,.hot[aria-pressed="true"]::after{background:var(--accent)}
+.hot[hidden]{display:none}
+.info{position:absolute;left:16px;bottom:16px;max-width:min(440px,calc(100% - 32px));background:var(--bg);padding:16px 18px;font-size:1rem;line-height:1.45}
+.info b{display:block;font-size:1.125rem;font-weight:600;margin-bottom:4px}
+.turn{position:absolute;right:16px;bottom:16px;display:flex;gap:6px}
+.turn button{width:44px;height:44px;border:0;background:var(--bg);cursor:pointer;font-size:1.2rem;transition:background .2s var(--ease)}
+.turn button:hover{background:var(--field);color:#fff}
+.nogl{position:absolute;inset:0;display:none;padding:32px;background:var(--surface);overflow:auto}
+.view.failed .nogl{display:block}
+.controls{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,4fr) minmax(0,3fr);gap:24px;align-items:end;padding:24px 0 0}
+.controls label{display:block;font-weight:600;font-size:1rem;margin-bottom:8px}
+.controls input[type=range]{width:100%;accent-color:var(--accent);height:28px}
+.ends{display:flex;justify-content:space-between;font-size:var(--step-small);color:var(--muted)}
+.presets{display:flex;flex-wrap:wrap;gap:6px}
+.presets.scen{display:grid;grid-template-columns:1fr 1fr}
+.btn{border:0;background:var(--surface);padding:10px 14px;font-size:.9375rem;cursor:pointer;transition:background .2s var(--ease),color .2s var(--ease),transform .15s var(--ease)}
+.btn:hover{background:var(--field);color:#fff}
+.btn:active{transform:translateY(1px)}
+.btn[aria-pressed="true"]{background:var(--accent);color:#fff}
+.readout{text-align:right}
+.readout .big{font-size:clamp(48px,5vw,80px);line-height:.95;font-weight:500;letter-spacing:-0.03em;font-variant-numeric:tabular-nums;color:var(--accent)}
+.readout .big.dry{color:var(--ink)}
+.readout p{font-size:var(--step-small);color:var(--muted)}
+.thirds{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
+.thirds h3{font-size:1.25rem;font-weight:600;letter-spacing:0;margin-bottom:8px}
+.thirds p{font-size:1rem;line-height:1.55}
+
+/* ---------- intro ---------- */
+.intro{padding:96px 0}
+.lead{grid-column:1/-1;font-size:clamp(22px,2.2vw,32px);line-height:1.25;max-width:48ch}
+.cols{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:72px;align-items:start}
+.cols p{font-size:1rem;line-height:1.45;color:var(--muted)}
+.cols b{color:var(--ink);font-weight:600}
+
+/* ---------- showcase ---------- */
+.show{background:var(--field);color:var(--field-ink);padding:clamp(96px,10vw,160px) 0 0;overflow:hidden}
+.show h2{grid-column:1/6;font-size:var(--step-h2)}
+.show .para{grid-column:7/-1;font-size:1.125rem;line-height:1.55;max-width:60ch}
+.spec{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:12vh}
+.spec figure{margin:0}
+.spec figcaption{font-size:1rem;margin-bottom:10px;opacity:.85}
+.spec .num{font-size:clamp(180px,34vw,520px);line-height:.8;font-weight:500;letter-spacing:-0.05em;height:calc(clamp(180px,34vw,520px) * .5);overflow:hidden;font-variant-numeric:lining-nums}
+
+/* ---------- stats ---------- */
+.stats{padding:clamp(96px,11vw,180px) 0 0}
+.stats h2{grid-column:1/-1;font-size:var(--step-h2);margin-bottom:40px}
+.mosaic{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);height:min(66vw,920px)}
+.mosaic .pic{height:100%;min-width:0}
+.figs{display:grid;grid-template-rows:1fr 1fr}
+.fig{padding:28px}
+.fig .n{font-size:clamp(56px,5.6vw,96px);line-height:1;font-weight:500;letter-spacing:-0.03em;font-variant-numeric:tabular-nums}
+.fig p{font-size:1.125rem;line-height:1.4;margin-top:10px;max-width:24ch}
+.fig.black{background:var(--field);color:var(--field-ink)}
+.fig.blue{background:var(--accent);color:var(--accent-ink)}
+.fig sup a{color:inherit}
+.note{grid-column:5/-1;margin-top:40px;font-size:1rem;line-height:1.55;max-width:62ch}
+
+/* ---------- dilemma bands ---------- */
+.dilemma{margin-top:clamp(96px,11vw,180px)}
+.band{padding:56px 0}
+.band:nth-of-type(odd){background:var(--surface)}
+.band .q{grid-column:1/6;font-size:clamp(24px,2.1vw,32px);font-weight:600;line-height:1.15;letter-spacing:-0.01em}
+.band .a{grid-column:7/-1;font-size:1.125rem;line-height:1.5}
+.band.head{background:var(--accent);color:var(--accent-ink);min-height:40svh;display:flex;align-items:flex-end;padding:0 0 40px}
+.band.head .grid{width:100%}
+.band.head h2{grid-column:1/-1;font-size:7vw;letter-spacing:-0.04em}
+.band.head p{grid-column:1/8;font-size:1.125rem;margin-top:14px}
+
+.pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.pair figure{margin:0;position:relative;background:#cdb48e}
+.pair img{width:100%;aspect-ratio:3/2;height:auto;object-fit:cover}
+.pair figcaption{padding:16px var(--m) 24px;font-size:1rem;line-height:1.45;background:var(--field);color:var(--field-ink)}
+.pair figure:last-child figcaption{background:var(--surface);color:var(--ink)}
+
+/* ---------- classroom ---------- */
+.class{padding:clamp(96px,11vw,180px) 0 clamp(48px,6vw,96px)}
+.class h2{grid-column:1/-1;font-size:var(--step-h2)}
+.agenda{grid-column:1/-1;display:grid;grid-template-columns:150px 1fr;gap:40px;margin-top:56px}
+.tabs{display:flex;flex-direction:column;gap:6px}
+.tab{width:150px;height:64px;border:0;background:var(--surface);text-align:left;padding:10px 14px;cursor:pointer;display:flex;flex-direction:column;justify-content:center;transition:background .2s var(--ease),color .2s var(--ease)}
+.tab span{font-size:1rem;font-weight:600;line-height:1.2}
+.tab small{font-size:.8125rem;opacity:.75}
+.tab:hover{background:#dedcd7}
+.tab[aria-selected="true"]{background:var(--field);color:#fff}
+.rows{display:flex;flex-direction:column;gap:4px}
+.lesson[hidden]{display:none}
+.lesson{display:flex;flex-direction:column;gap:4px}
+.row{min-height:76px;display:grid;grid-template-columns:22% 1fr;align-items:center;padding:12px 20px;background:var(--surface)}
+.row:nth-child(even){background:#e4e2de}
+.row .t{font-size:1.25rem;font-variant-numeric:tabular-nums}
+.row .t small{font-size:.875rem;color:var(--muted)}
+.row .w{font-size:1.125rem;font-weight:500}
+.row .w small{display:block;font-size:.875rem;font-weight:400;color:var(--muted);margin-top:2px}
+.ask{font-size:1rem;color:var(--muted);margin-top:18px}
+
+/* ---------- sources (text page on the axis) ---------- */
+.sources{padding:clamp(48px,6vw,96px) 0 clamp(96px,10vw,160px)}
+.axis{display:grid;grid-template-columns:42% 1fr;column-gap:24px;padding:0 var(--m)}
+.axis .side{font-size:1rem;color:var(--muted);padding-right:24px}
+.axis h2{font-size:var(--step-h2);margin-bottom:28px}
+.axis ol{margin:0;padding-left:1.4em;columns:2 34ch;column-gap:40px;font-size:1rem;line-height:1.5}
+.axis li{break-inside:avoid;margin-bottom:14px}
+.axis li:target{background:var(--surface)}
+.further{display:flex;flex-direction:column;gap:6px;margin-bottom:40px;font-size:1.125rem}
+
+/* ---------- footer ---------- */
+footer{background:var(--accent);color:var(--accent-ink);min-height:72svh;display:flex;flex-direction:column;justify-content:space-between;padding:40px 0 24px}
+.ftop{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;padding:0 var(--m);font-size:.9375rem;line-height:1.45}
+.ftop .notes{grid-column:1/8;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.ftop .up{grid-column:12/13;justify-self:end}
+.contact-label{padding:0 var(--m);margin-top:auto;font-size:var(--step-small);font-weight:600}
+.contact{padding:8px var(--m) 0;font-size:clamp(44px,8.4vw,150px);line-height:.95;letter-spacing:-0.04em;font-weight:500;display:block;text-decoration:none}
+.contact:hover span{text-decoration:underline;text-decoration-thickness:.04em}
+.fmeta{display:grid;grid-template-columns:1fr 1fr 1fr;padding:28px var(--m) 0;font-size:.875rem;gap:24px}
+.fmeta div:nth-child(2){text-align:center}
+.fmeta div:last-child{text-align:right}
+
+/* ---------- motion ---------- */
+@keyframes shutter{from{clip-path:inset(0 0 0 100%)}to{clip-path:inset(0 0 0 0)}}
+@keyframes settle{from{transform:scale(1.12)}to{transform:scale(1)}}
+.pic img{opacity:0}
+.pic img.ready{opacity:1}
+.pic.shut img.ready{animation:shutter 1.1s var(--ease) both, settle 1.4s var(--ease) both}
+.pic.fade img.ready{transition:opacity .9s var(--ease)}
+html.js .rise{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+html.js .rise.in{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .pic.shut img.ready{animation:none}
+  html.js .rise{transform:none;transition:opacity .4s linear}
+}
+
+/* ---------- tablet ---------- */
+@media (min-width:761px) and (max-width:1100px){
+  .links nav{gap:20px}
+  .cols{grid-template-columns:repeat(2,1fr);row-gap:32px}
+  .model-head{grid-column:1/10}
+  .controls{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .readout{grid-column:1/-1;text-align:left}
+  .note{grid-column:3/-1}
+  .ftop .notes{grid-column:1/11}
+}
+/* tall screens (tablet portrait): square tiles instead of a full-height board */
+@media (min-width:761px) and (max-aspect-ratio:4/5){
+  .board{height:auto;min-height:0;grid-template-rows:60px auto auto}
+  .name,.pic.p1,.pic.p2{aspect-ratio:1/1}
+}
+
+/* ---------- phone ---------- */
+@media (max-width:760px){
+  :root{--m:20px}
+  .board{height:auto;min-height:0;padding:6px;gap:6px;grid-template-columns:1fr;grid-template-rows:none}
+  .toprow{grid-template-columns:60px 1fr auto;height:60px}
+  .links{grid-template-columns:1fr}
+  .links nav{grid-column:1;gap:16px}
+  .links nav a.wide{display:none}
+  .action{padding:0 14px}
+  .links nav a.m3d{display:none}
+  .pair{grid-template-columns:minmax(0,1fr)}
+  .name{height:30svh;min-height:200px}
+  .name h1{font-size:22vw}
+  .pic.p1{aspect-ratio:4/3}
+  .pic.p2{aspect-ratio:4/3;order:9}
+  .split{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .say{aspect-ratio:auto;min-height:calc(50vw - 9px);padding:16px;font-size:1.0625rem;overflow:visible}
+  .kicker > span{display:none}
+  .hot{font-size:.75rem;padding:4px 7px}
+  .model-head{grid-column:1/-1}
+  .view{height:112vw;max-height:620px}
+  .info{position:static;max-width:none;background:var(--surface);padding:4px 16px 18px}
+  .controls{grid-template-columns:1fr}
+  .readout{text-align:left}
+  .thirds{grid-template-columns:1fr;gap:28px}
+  .lead{font-size:20px}
+  .cols{grid-template-columns:1fr;gap:28px;margin-top:40px}
+  .show h2,.show .para{grid-column:1/-1}
+  .show .para{margin-top:18px}
+  .spec{grid-template-columns:1fr;gap:0;margin-top:56px}
+  .spec .num{font-size:62vw;height:38svh;max-height:31vw}
+  .spec figure:last-child{background:var(--bg);color:var(--ink);padding:20px var(--m) 0;margin:0 calc(-1 * var(--m))}
+  .mosaic{grid-template-columns:minmax(0,1fr);height:auto}
+  .mosaic .pic{aspect-ratio:4/3}
+  .figs{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:none}
+  .fig{aspect-ratio:1/1;padding:16px}
+  .fig .n{font-size:13vw}
+  .fig p{font-size:.9375rem}
+  .note{grid-column:1/-1}
+  .band{padding:32px 0}
+  .band .q,.band .a{grid-column:1/-1}
+  .band .q{font-size:22px;margin-bottom:12px}
+  .band .a{font-size:1.0625rem}
+  .band.head{min-height:30svh}
+  .band.head h2{font-size:13vw}
+  .band.head p{grid-column:1/-1}
+  .agenda{grid-template-columns:1fr;gap:16px}
+  .tabs{flex-direction:row;position:sticky;top:0;z-index:2;background:var(--bg);padding:6px 0}
+  .tab{flex:1;width:auto}
+  .row{grid-template-columns:1fr;padding:16px}
+  .axis{grid-template-columns:1fr}
+  .axis .side{padding:0 0 20px}
+  .axis ol{columns:1}
+  .ftop{grid-template-columns:1fr}
+  .ftop .notes{grid-column:1;grid-template-columns:1fr;gap:6px}
+  .ftop .up{grid-column:1;justify-self:start;margin-top:12px}
+  footer{min-height:0}
+  .contact-label{margin-top:96px}
+  .contact{font-size:9.4vw}
+  .fmeta{grid-template-columns:1fr;gap:4px;font-size:.8125rem}
+  .fmeta div:nth-child(2),.fmeta div:last-child{text-align:left}
+}
+@media (max-width:374px){
+  .links nav{padding:0 12px}
+  .links nav > a{display:none}
+  .action{padding:0 12px}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main"><span data-l="en">Skip to the exhibition</span><span data-l="fr">Aller à l'exposition</span></a>
+
+<header class="board" id="top">
+  <div class="toprow">
+    <a class="tile logo ar" href="#top" aria-label="Under the Oasis, back to top">خ</a>
+    <div class="tile links">
+      <nav aria-label="Sections">
+        <a class="m3d" href="#model"><span data-l="en">Model</span><span data-l="fr">Maquette</span></a>
+        <a class="wide" href="#history"><span data-l="en">History</span><span data-l="fr">Histoire</span></a>
+        <a class="wide" href="#sharing"><span data-l="en">Sharing</span><span data-l="fr">Partage</span></a>
+        <a href="#dilemma"><span data-l="en">Dilemma</span><span data-l="fr">Dilemme</span></a>
+        <a class="wide" href="#classroom"><span data-l="en">Lessons</span><span data-l="fr">Séances</span></a>
+        <div class="lang" role="group" aria-label="Language / Langue">
+          <button type="button" id="btn-en" lang="en" aria-label="English" aria-pressed="true">EN</button>
+          <button type="button" id="btn-fr" lang="fr" aria-label="Français" aria-pressed="false">FR</button>
+        </div>
+      </nav>
+    </div>
+    <a class="tile action" href="#model"><span data-l="en">Explore in 3D</span><span data-l="fr">Explorer en 3D</span></a>
+  </div>
+
+  <div class="tile name">
+    <div class="top">
+      <span class="ar" lang="ar">خطّارة</span>
+      <p class="kicker"><b><span data-l="en">Under the Oasis</span><span data-l="fr">Sous l'oasis</span></b><span><span data-l="en">A virtual exhibition</span><span data-l="fr">Une exposition virtuelle</span></span></p>
+    </div>
+    <h1>Khettara</h1>
+  </div>
+  <div class="tile pic p1 shut">
+    <img id="still-aerial" width="1600" height="900" alt="Aerial view rendered from the exhibition's 3D model: a dotted line of shaft mounds runs across the plain from the foothills to the palm grove.">
+  </div>
+  <div class="tile pic p2 dark fade">
+    <img id="still-cut" width="1600" height="900" alt="Cutaway rendered from the 3D model: the tunnel slopes beneath the plain, under the blue water table, with shafts rising to the surface.">
+  </div>
+  <div class="split">
+    <p class="tile say dark"><span data-l="en">In Morocco's oases, water travels for kilometres underground, moved by gravity alone.</span><span data-l="fr">Dans les oasis du Maroc, l'eau voyage des kilomètres sous terre, portée par la seule gravité.</span></p>
+    <p class="tile say blue"><span data-l="en">A virtual exhibition on how it works, who shares it and why it is running dry.</span><span data-l="fr">Une exposition virtuelle : comment elle marche, qui la partage, pourquoi elle s'assèche.</span></p>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+
+<!-- MODEL -->
+<section class="model" id="model">
+  <div class="grid">
+    <div class="model-head">
+      <h2 class="rise"><span data-l="en">From mountain to palm grove</span><span data-l="fr">De la montagne à la palmeraie</span></h2>
+      <p class="rise"><span data-l="en">Turn the model, tap a label and lower the water table. Heights are exaggerated: the real tunnel slopes only 1 to 2%.</span><span data-l="fr">Faites tourner la maquette, touchez une étiquette et faites baisser la nappe. Les hauteurs sont exagérées : la vraie pente n'est que de 1 à 2 %.</span><sup><a href="#src-1">1</a></sup></p>
+    </div>
+
+    <div class="stage-wrap">
+      <div class="stage">
+       <div class="view" id="stage">
+        <div id="hots"></div>
+        <div class="turn">
+          <button type="button" id="turn-l" aria-label="Turn the model left">←</button>
+          <button type="button" id="turn-r" aria-label="Turn the model right">→</button>
+        </div>
+        <div class="nogl">
+          <p><b data-l="en">This browser cannot show the 3D model.</b><b data-l="fr">Ce navigateur ne peut pas afficher la maquette 3D.</b></p>
+          <p style="margin-top:12px"><span data-l="en">It shows foothills where rain feeds the groundwater; a mother well dug at the highest point; a line of shafts across the plain; a tunnel sloping gently under the water table; an outlet and basin; and canals feeding a palm grove beside an earthen village.</span><span data-l="fr">Elle montre le piémont où la pluie alimente la nappe ; un puits mère creusé au point le plus haut ; une ligne de puits à travers la plaine ; un tunnel en pente douce sous la nappe ; une sortie et un bassin ; des canaux qui irriguent une palmeraie près d'un village de terre.</span></p>
+        </div>
+       </div>
+        <div class="info" id="info" aria-live="polite">
+          <b id="info-t"></b><span id="info-d"></span>
+        </div>
+      </div>
+
+      <div class="controls">
+        <div>
+          <label for="wt"><span data-l="en">Water table</span><span data-l="fr">Niveau de la nappe</span></label>
+          <input type="range" id="wt" min="-200" max="90" value="0" step="1" aria-describedby="pct">
+          <div class="ends"><span><span data-l="en">High</span><span data-l="fr">Haute</span></span><span><span data-l="en">Low</span><span data-l="fr">Basse</span></span></div>
+        </div>
+        <div>
+          <div class="presets scen" role="group" aria-label="Scenarios">
+            <button type="button" class="btn" data-wt="85"><span data-l="en">Rainy years</span><span data-l="fr">Années pluvieuses</span></button>
+            <button type="button" class="btn" data-wt="0" aria-pressed="true"><span data-l="en">Average year</span><span data-l="fr">Année moyenne</span></button>
+            <button type="button" class="btn" data-wt="-120"><span data-l="en">Heavy pumping</span><span data-l="fr">Pompage intensif</span></button>
+            <button type="button" class="btn" data-wt="-195"><span data-l="en">Aquifer exhausted</span><span data-l="fr">Nappe épuisée</span></button>
+          </div>
+          <div class="presets" style="margin-top:6px">
+            <button type="button" class="btn" id="xray" aria-pressed="true"><span data-l="en">See underground</span><span data-l="fr">Voir sous terre</span></button>
+            <button type="button" class="btn" id="reset"><span data-l="en">Reset view</span><span data-l="fr">Recentrer</span></button>
+          </div>
+        </div>
+        <div class="readout" aria-live="polite">
+          <div class="big" id="pct">54%</div>
+          <p id="pct-label"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="thirds">
+      <div class="rise">
+        <h3><span data-l="en">Gather</span><span data-l="fr">Capter</span></h3>
+        <p><span data-l="en">Rain and floods on the foothills soak into the gravel. The tunnel's upper end, under the mother well, cuts into this water-bearing layer.</span><span data-l="fr">La pluie et les crues du piémont s'infiltrent dans les graviers. La partie haute du tunnel, sous le puits mère, entaille cette couche aquifère.</span><sup><a href="#src-1">1</a></sup></p>
+      </div>
+      <div class="rise">
+        <h3><span data-l="en">Channel</span><span data-l="fr">Conduire</span></h3>
+        <p><span data-l="en">Water seeps in and runs down a slope of 1 to 2%. Shafts every 5 to 40 m let diggers remove soil, climb down and bring in air.</span><span data-l="fr">L'eau s'infiltre et descend une pente de 1 à 2 %. Des puits tous les 5 à 40 m servent à sortir la terre, à descendre et à aérer.</span><sup><a href="#src-1">1</a>,<a href="#src-2">2</a></sup></p>
+      </div>
+      <div class="rise">
+        <h3><span data-l="en">Share</span><span data-l="fr">Partager</span></h3>
+        <p><span data-l="en">At the outlet, water fills a basin and canals carry it to each family's garden in turn. A khettara can never take more than the aquifer receives.</span><span data-l="fr">À la sortie, l'eau remplit un bassin et des canaux la mènent tour à tour au jardin de chaque famille. Une khettara ne prend jamais plus que ce que reçoit la nappe.</span><sup><a href="#src-9">9</a></sup></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HISTORY -->
+<section class="intro" id="history">
+  <div class="grid">
+    <p class="lead rise"><span data-l="en">The same idea has watered dry lands for more than 2,500 years: a gently sloping tunnel that lets groundwater walk to the surface. Iran calls it qanat, Algeria foggara, Morocco khettara.</span><span data-l="fr">La même idée irrigue les terres sèches depuis plus de 2 500 ans : un tunnel en pente douce qui amène l'eau souterraine à la surface. L'Iran dit qanat, l'Algérie foggara, le Maroc khettara.</span><sup><a href="#src-1">1</a>,<a href="#src-4">4</a></sup></p>
+    <div class="cols">
+      <p class="rise"><span data-l="en"><b>Born in Persia.</b> The technique appears there more than 2,500 years ago and spreads along the southern Mediterranean in the Middle Ages. Iran still counts an estimated 37,000 qanats, and eleven were inscribed on UNESCO's World Heritage List in 2016.</span><span data-l="fr"><b>Née en Perse.</b> La technique y apparaît il y a plus de 2 500 ans et gagne la rive sud de la Méditerranée au Moyen Âge. L'Iran compterait encore 37 000 qanats ; onze ont été inscrits au patrimoine mondial de l'UNESCO en 2016.</span><sup><a href="#src-1">1</a>,<a href="#src-6">6</a>,<a href="#src-7">7</a></sup></p>
+      <p class="rise"><span data-l="en"><b>Rooted in Marrakech.</b> Under the Almoravids, in the 11th and 12th centuries, the first Moroccan khettaras were dug to supply Marrakech and irrigate the Haouz plain. About 650 still worked there at the end of the 20th century.</span><span data-l="fr"><b>Ancrée à Marrakech.</b> Sous les Almoravides, aux XIe et XIIe siècles, les premières khettaras marocaines sont creusées pour alimenter Marrakech et irriguer la plaine du Haouz. Environ 650 y fonctionnaient encore à la fin du XXe siècle.</span><sup><a href="#src-1">1</a>,<a href="#src-5">5</a></sup></p>
+      <p class="rise"><span data-l="en"><b>Alive in the Tafilalet.</b> The oldest documented digging there dates from the 16th and 17th centuries, and the khettaras of Siffa from about 1730. After the drought of 1979–1985, rain returned from 2006 and young people came back to restore the tunnels.</span><span data-l="fr"><b>Vivante au Tafilalet.</b> Les premiers creusements documentés y datent des XVIe et XVIIe siècles, ceux de Siffa d'environ 1730. Après la sécheresse de 1979-1985, la pluie revient à partir de 2006 et des jeunes reviennent restaurer les galeries.</span><sup><a href="#src-1">1</a>,<a href="#src-2">2</a>,<a href="#src-4">4</a></sup></p>
+      <p class="rise"><span data-l="en"><b>About this exhibition.</b> A work sample by Amine Brahimi, not an official UNESCO publication. It is designed as a deep-dive companion to the Morocco case of <i>The Voices of Water</i>, by the Global Network of Water Museums, on UNESCO's Virtual Science Museum.</span><span data-l="fr"><b>À propos.</b> Échantillon de travail réalisé par Amine Brahimi, et non publication officielle de l'UNESCO. Il prolonge le cas marocain de <i>The Voices of Water</i>, exposition du Réseau mondial des musées de l'eau sur le Musée virtuel des sciences de l'UNESCO.</span><sup><a href="#src-8">8</a></sup></p>
+    </div>
+  </div>
+</section>
+
+<!-- SHARING -->
+<section class="show" id="sharing">
+  <div class="grid">
+    <h2 class="rise"><span data-l="en">Water measured in time</span><span data-l="fr">L'eau se mesure en temps</span></h2>
+    <p class="para rise"><span data-l="en">In the Tafilalet, a family's share comes from the work its ancestors gave when the tunnel was dug. Shares are inherited, sold or rented, and a sheikh keeps the turns. Turns were timed with a pierced bowl floating in a pot: when it sank, about 45 minutes had passed.</span><span data-l="fr">Au Tafilalet, la part d'une famille vient du travail fourni par ses ancêtres au creusement. Les parts s'héritent, se vendent ou se louent, et un cheikh veille aux tours. On les mesurait avec un bol percé flottant dans un pot : quand il coulait, environ 45 minutes avaient passé.</span><sup><a href="#src-2">2</a></sup></p>
+    <div class="spec">
+      <figure>
+        <figcaption><span class="sr">12 </span><span data-l="en">Hours of full flow in one nouba, the basic share</span><span data-l="fr">Heures de débit complet dans une nouba, la part de base</span></figcaption>
+        <div class="num" aria-hidden="true">12</div>
+      </figure>
+      <figure>
+        <figcaption><span class="sr">45 </span><span data-l="en">Minutes before the pierced bowl, the tanast, sinks</span><span data-l="fr">Minutes avant que le bol percé, la tanast, ne coule</span></figcaption>
+        <div class="num" aria-hidden="true">45</div>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- NUMBERS -->
+<section class="stats" id="numbers">
+  <div class="grid"><h2 class="rise"><span data-l="en">How many still flow</span><span data-l="fr">Combien coulent encore</span></h2></div>
+  <div class="mosaic">
+    <div class="pic fade"><img id="still-oasis" width="1200" height="1200" alt="Rendered from the 3D model: the palm grove and earthen village at the end of the khettara, with the basin and canals."></div>
+    <div class="figs">
+      <div class="fig black">
+        <div class="n">304</div>
+        <p><span data-l="en">of 570 khettaras in the Tafilalet still work</span><span data-l="fr">des 570 khettaras du Tafilalet fonctionnent encore</span><sup><a href="#src-2">2</a></sup></p>
+      </div>
+      <div class="fig blue">
+        <div class="n">650</div>
+        <p><span data-l="en">worked around Marrakech in the late 20th century. Almost none remain.</span><span data-l="fr">fonctionnaient autour de Marrakech à la fin du XXe siècle. Il n'en reste presque aucune.</span><sup><a href="#src-1">1</a></sup></p>
+      </div>
+    </div>
+  </div>
+  <div class="grid">
+    <p class="note rise"><span data-l="en">The Tafilalet's working khettaras irrigate about 16,000 hectares, with a combined flow of about 700 litres a second. Sources do not always agree: a 2006 census found only about 150 in operation. That is why every figure here carries its source.</span><span data-l="fr">Les khettaras en service du Tafilalet irriguent environ 16 000 hectares, pour un débit cumulé d'environ 700 litres par seconde. Les sources ne concordent pas toujours : un recensement de 2006 n'en comptait qu'environ 150 en service. C'est pourquoi chaque chiffre porte ici sa source.</span><sup><a href="#src-2">2</a></sup></p>
+  </div>
+</section>
+
+<!-- DILEMMA -->
+<section class="dilemma" id="dilemma">
+  <div class="band head">
+    <div class="grid">
+      <h2><span data-l="en">Pump, or disappear?</span><span data-l="fr">Pomper ou disparaître ?</span></h2>
+      <p><span data-l="en">The question researchers ask about the oases of southern Morocco today.</span><span data-l="fr">La question que posent les chercheurs sur les oasis du sud du Maroc.</span><sup><a href="#src-3">3</a></sup></p>
+    </div>
+  </div>
+  <div class="pair">
+    <figure class="pic fade"><img id="still-wet" width="1200" height="800" alt="Rendered from the 3D model in an average year: the water table sits high and the lower half of the tunnel carries water to the palm grove.">
+      <figcaption><span data-l="en">Average year: the tunnel's upper half sits in the aquifer and water reaches the oasis.</span><span data-l="fr">Année moyenne : la moitié haute du tunnel baigne dans la nappe et l'eau atteint l'oasis.</span></figcaption></figure>
+    <figure class="pic fade"><img id="still-dry" width="1200" height="800" alt="Rendered from the 3D model after heavy pumping: the water table has dropped below the tunnel, solar pumps stand in the fields and the canals are empty.">
+      <figcaption><span data-l="en">After years of pumping: the water table falls below the tunnel and the outlet runs dry.</span><span data-l="fr">Après des années de pompage : la nappe passe sous le tunnel et la sortie s'assèche.</span></figcaption></figure>
+  </div>
+  <div class="band"><div class="grid">
+    <h3 class="q rise"><span data-l="en">Why are khettaras drying up?</span><span data-l="fr">Pourquoi les khettaras s'assèchent-elles ?</span></h3>
+    <p class="a rise"><span data-l="en">Pumping for drinking water and for new farms lowers the water table, while lower rainfall refills the aquifer less. On the same aquifer, motor pumps tend to win over the khettara.</span><span data-l="fr">Le pompage pour l'eau potable et les nouvelles exploitations fait baisser la nappe, et des pluies plus faibles la rechargent moins. Sur une même nappe, les motopompes finissent par l'emporter sur la khettara.</span><sup><a href="#src-2">2</a>,<a href="#src-3">3</a></sup></p>
+  </div></div>
+  <div class="band"><div class="grid">
+    <h3 class="q rise"><span data-l="en">What are communities doing?</span><span data-l="fr">Que font les communautés ?</span></h3>
+    <p class="a rise"><span data-l="en">Some drill a borehole, add a solar pump and pour the pumped water into their khettara. The water flows again and their shared access survives.</span><span data-l="fr">Certaines forent un puits, installent une pompe solaire et versent l'eau pompée dans leur khettara. L'eau coule à nouveau et l'accès collectif survit.</span><sup><a href="#src-3">3</a></sup></p>
+  </div></div>
+  <div class="band"><div class="grid">
+    <h3 class="q rise"><span data-l="en">Why is that a dilemma?</span><span data-l="fr">Pourquoi est-ce un dilemme ?</span></h3>
+    <p class="a rise"><span data-l="en">The same pumps lower the water table a little more. In the model above, slide the water table down and watch the tunnel's capture zone shrink.</span><span data-l="fr">Ces mêmes pompes font encore baisser la nappe. Dans la maquette ci-dessus, faites descendre la nappe et regardez la zone de captage rétrécir.</span><sup><a href="#src-3">3</a></sup></p>
+  </div></div>
+  <div class="band"><div class="grid">
+    <h3 class="q rise"><span data-l="en">Is there another way?</span><span data-l="fr">Existe-t-il une autre voie ?</span></h3>
+    <p class="a rise"><span data-l="en">Shared limits on pumping need rules everyone accepts and a way to check them. Oasis communities were already relaunching collective action against uncontrolled pumping in 2011. Recharging the aquifer along the wadis is another proposal.</span><span data-l="fr">Des limites communes au pompage exigent des règles acceptées par tous et un contrôle. Dès 2011, des communautés oasiennes relançaient l'action collective contre le pompage incontrôlé. Recharger la nappe le long des oueds est une autre piste.</span><sup><a href="#src-1">1</a>,<a href="#src-4">4</a></sup></p>
+  </div></div>
+  <div class="band"><div class="grid">
+    <h3 class="q rise"><span data-l="en">Who keeps the tunnels open?</span><span data-l="fr">Qui entretient les galeries ?</span></h3>
+    <p class="a rise"><span data-l="en">The families who hold water rights, in proportion to their shares. The work is hard and dangerous: in the Tafilalet, people have been badly hurt or killed by collapsing shafts and snake bites.</span><span data-l="fr">Les familles qui détiennent des droits d'eau, selon leurs parts. Le travail est pénible et dangereux : au Tafilalet, des personnes ont été blessées ou tuées par l'effondrement d'un puits ou une morsure de serpent.</span><sup><a href="#src-2">2</a>,<a href="#src-5">5</a></sup></p>
+  </div></div>
+</section>
+
+<!-- CLASSROOM -->
+<section class="class" id="classroom">
+  <div class="grid">
+    <h2 class="rise"><span class="soft"><span data-l="en">Three lessons</span><span data-l="fr">Trois séances</span></span><br><span data-l="en">for ages 11 to 15</span><span data-l="fr">pour les 11-15 ans</span></h2>
+    <div class="agenda">
+      <div class="tabs" role="tablist" aria-label="Lessons">
+        <button type="button" class="tab" role="tab" id="tab-sci" aria-controls="les-sci" aria-selected="true"><span><span data-l="en">Science</span><span data-l="fr">Sciences</span></span><small>45 min</small></button>
+        <button type="button" class="tab" role="tab" id="tab-math" aria-controls="les-math" aria-selected="false"><span>Maths</span><small>20 min</small></button>
+        <button type="button" class="tab" role="tab" id="tab-civ" aria-controls="les-civ" aria-selected="false"><span><span data-l="en">Citizenship</span><span data-l="fr">Citoyenneté</span></span><small>30 min</small></button>
+      </div>
+      <div class="rows">
+        <div class="lesson" id="les-sci" role="tabpanel" aria-labelledby="tab-sci">
+          <div class="row"><div class="t">0–5 <small>min</small></div><div class="w"><span data-l="en">Set up the tray</span><span data-l="fr">Préparer le bac</span><small><span data-l="en">Clear plastic box, sand, gravel, a drinking straw pierced with small holes, a watering can.</span><span data-l="fr">Bac transparent, sable, gravier, une paille percée de petits trous, un arrosoir.</span></small></div></div>
+          <div class="row"><div class="t">5–15 <small>min</small></div><div class="w"><span data-l="en">Bury the tunnel</span><span data-l="fr">Enterrer le tunnel</span><small><span data-l="en">Tilt the box slightly and bury the straw in the sand on a gentle slope, its low end at the edge of the box.</span><span data-l="fr">Inclinez légèrement le bac et enterrez la paille dans le sable en pente douce, son extrémité basse au bord du bac.</span></small></div></div>
+          <div class="row"><div class="t">15–30 <small>min</small></div><div class="w"><span data-l="en">Make it rain</span><span data-l="fr">Faire pleuvoir</span><small><span data-l="en">Water the high end and watch the water come out of the low end.</span><span data-l="fr">Arrosez la partie haute et regardez l'eau sortir en bas.</span></small></div></div>
+          <div class="row"><div class="t">30–45 <small>min</small></div><div class="w"><span data-l="en">Dig a well</span><span data-l="fr">Creuser un puits</span><small><span data-l="en">Scoop water out of a hole near the top. What happens to the flow?</span><span data-l="fr">Retirez l'eau d'un trou près du haut. Que devient le débit ?</span></small></div></div>
+        </div>
+        <div class="lesson" id="les-math" role="tabpanel" aria-labelledby="tab-math">
+          <div class="row"><div class="t">0–5 <small>min</small></div><div class="w"><span data-l="en">The question</span><span data-l="fr">La question</span><small><span data-l="en">A khettara is 3 km long with a 1.5% gradient. How far does it drop?</span><span data-l="fr">Une khettara mesure 3 km avec une pente de 1,5 %. De combien descend-elle ?</span></small></div></div>
+          <div class="row"><div class="t">5–15 <small>min</small></div><div class="w"><span data-l="en">Work it out</span><span data-l="fr">Calculer</span><small>3,000 m × 0.015 = 45 m</small></div></div>
+          <div class="row"><div class="t">15–20 <small>min</small></div><div class="w"><span data-l="en">Compare</span><span data-l="fr">Comparer</span><small><span data-l="en">A 1.5% slope looks flat to the eye, yet it is enough to keep the water moving for 3 km.</span><span data-l="fr">Une pente de 1,5 % paraît plate à l'œil, mais elle suffit à faire couler l'eau sur 3 km.</span></small></div></div>
+        </div>
+        <div class="lesson" id="les-civ" role="tabpanel" aria-labelledby="tab-civ">
+          <div class="row"><div class="t">0–10 <small>min</small></div><div class="w"><span data-l="en">Make a tanast</span><span data-l="fr">Fabriquer une tanast</span><small><span data-l="en">Pierce a yoghurt pot with a pin, float it in a bowl of water and time how long it takes to sink.</span><span data-l="fr">Percez un pot de yaourt avec une épingle, posez-le sur l'eau d'un saladier et mesurez le temps qu'il met à couler.</span></small></div></div>
+          <div class="row"><div class="t">10–20 <small>min</small></div><div class="w"><span data-l="en">Share the turns</span><span data-l="fr">Partager les tours</span><small><span data-l="en">Give each group turns according to the "work" it did.</span><span data-l="fr">Donnez à chaque groupe des tours selon le « travail » fourni.</span></small></div></div>
+          <div class="row"><div class="t">20–30 <small>min</small></div><div class="w"><span data-l="en">Debate</span><span data-l="fr">Débattre</span><small><span data-l="en">A new family arrives in the village. Who gives up time?</span><span data-l="fr">Une nouvelle famille arrive au village. Qui cède du temps ?</span></small></div></div>
+        </div>
+        <p class="ask"><span data-l="en">Curriculum links: groundwater, percentages, sustainable development (SDG 6, clean water).</span><span data-l="fr">Liens avec les programmes : eaux souterraines, pourcentages, développement durable (ODD 6, eau propre).</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOURCES -->
+<section class="sources" id="sources">
+  <div class="axis">
+    <p class="side"><span data-l="en">Every figure on this page links to one of these sources. The model and all pictures were made in code for this exhibition.</span><span data-l="fr">Chaque chiffre de cette page renvoie à l'une de ces sources. La maquette et toutes les images ont été réalisées en code pour cette exposition.</span></p>
+    <div>
+      <h2><span data-l="en">Sources and further reading</span><span data-l="fr">Sources et lectures</span></h2>
+      <div class="further">
+        <a href="https://www.unesco.org/en/virtual-science-museum/voices-water?hub=196669"><span data-l="en">The Voices of Water, on UNESCO's Virtual Science Museum</span><span data-l="fr">The Voices of Water, sur le Musée virtuel des sciences de l'UNESCO</span></a>
+      </div>
+      <ol>
+        <li id="src-1">WAMU-NET / Museum of Water Civilisation in Morocco "Mohammed VI", <a href="https://www.watermuseums.net/campaigns/valuing-ancient-water-cultures/moroccan-khettaras/">Moroccan khettaras</a>.</li>
+        <li id="src-2">Beraaouz M., Abioui M., Hssaisoune M., Martínez-Frías J. (2022), <a href="https://link.springer.com/10.1186/s43238-022-00073-x">Khettaras in the Tafilalet oasis (Morocco): contribution to the promotion of tourism and sustainable development</a>, <i>Built Heritage</i>.</li>
+        <li id="src-3">Khardi Y., Lacombe G., Kuper M., Taky A., Bouarfa S., Hammani A. (2023), <a href="https://www.cahiersagricultures.fr/articles/cagri/abs/2023/01/cagri220097/cagri220097.html">Pumping or disappearing: the dilemma of the reinforcement of khettaras by solar pumping in the oases of Morocco</a>, <i>Cahiers Agricultures</i> 32.</li>
+        <li id="src-4">IRD (2011), <a href="https://sciencedaily.com/releases/2011/09/110909111632.htm">Ancient Mediterranean water supply networks revived</a>, via ScienceDaily.</li>
+        <li id="src-5">SNRTnews, <a href="https://snrtnews.com/fr/article/les-khettaras-ce-patrimoine-%C3%A0-pr%C3%A9server">Les khettaras, ce patrimoine à préserver</a>.</li>
+        <li id="src-6">UNESCO World Heritage Committee (2016), <a href="https://whc.unesco.org/en/decisions/6799">Decision 40 COM 8B.21, The Persian Qanat</a>.</li>
+        <li id="src-7">Iran, Ministry of Cultural Heritage (2019), <a href="https://whc.unesco.org/document/179893">Risk Management Plan of the Persian Qanat World Heritage Site</a>.</li>
+        <li id="src-8">WAMU-NET (2026), <a href="https://www.ideassonline.org/public/pdf/UNESCOTheVoiciesofWater-ENG.pdf">The Voices of Water on UNESCO's Virtual Science Museum</a>, summary sheet.</li>
+        <li id="src-9">Khettouch A. (2025), <a href="https://iwra.org/proceedings/congress/resource/IWRA_XIXWWCMaroc_Dec2025_WaterChangingWorld_ORAL_Athmane_Khettouch_XIXWorldWaterCongress319.pdf">Resilience of the khettara system in Morocco's southern oases</a>, XIX World Water Congress, Marrakech.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="ftop">
+    <div class="notes">
+      <p><span data-l="en">Under the Oasis, a concept exhibition by Amine Brahimi</span><span data-l="fr">Sous l'oasis, exposition concept d'Amine Brahimi</span></p>
+      <p><span data-l="en">Not an official UNESCO publication</span><span data-l="fr">Pas une publication officielle de l'UNESCO</span></p>
+      <p><span data-l="en">November 2026</span><span data-l="fr">Novembre 2026</span></p>
+    </div>
+    <a class="up" href="#top"><span data-l="en">Back to top</span><span data-l="fr">Haut de page</span></a>
+  </div>
+  <p class="contact-label"><span data-l="en">More work by Amine Brahimi</span><span data-l="fr">D'autres travaux d'Amine Brahimi</span></p>
+  <a class="contact" href="https://aminebrr.github.io/Portfolio/"><span>aminebrr.github.io</span><br><span>/Portfolio</span></a>
+  <div class="fmeta">
+    <div><a href="#sources">Sources</a></div>
+    <div><span data-l="en">3D model and pictures made in code · Type: Literata, Noto Naskh Arabic</span><span data-l="fr">Maquette 3D et images réalisées en code · Caractères : Literata, Noto Naskh Arabic</span></div>
+    <div>France, 2026</div>
+  </div>
+</footer>
+
+<script>
+/* language, tabs and entrances: plain script so the page works even if 3D fails */
+(function(){
+  var root=document.documentElement; root.classList.add('js');
+  var bEn=document.getElementById('btn-en'), bFr=document.getElementById('btn-fr');
+  window.uoLang=function(){return root.getAttribute('data-lang');};
+  var META={
+    en:{t:"Under the Oasis: Morocco's khettaras, a virtual exhibition", d:"A virtual exhibition on Morocco's khettaras, with an interactive 3D model: how the underground tunnels work, how water is shared, and why they are drying up. Work sample by Amine Brahimi."},
+    fr:{t:"Sous l'oasis : les khettaras du Maroc, une exposition virtuelle", d:"Une exposition virtuelle sur les khettaras du Maroc, avec une maquette 3D interactive : comment fonctionnent ces galeries souterraines, comment l'eau se partage et pourquoi elles s'assèchent. Travail d'Amine Brahimi."}
+  };
+  var desc=document.querySelector('meta[name="description"]');
+  /* footnote links read as "Source 3" rather than "3" */
+  [].forEach.call(document.querySelectorAll('sup a[href^="#src-"]'),function(a){a.setAttribute('aria-label','Source '+a.textContent.trim());});
+  function setLang(l){
+    root.setAttribute('data-lang',l); root.lang=l;
+    document.title=META[l].t; desc.setAttribute('content',META[l].d);
+    bEn.setAttribute('aria-pressed',l==='en'); bFr.setAttribute('aria-pressed',l==='fr');
+    try{localStorage.setItem('uto-lang',l);}catch(e){}
+    document.dispatchEvent(new CustomEvent('uolang'));
+  }
+  bEn.addEventListener('click',function(){setLang('en');});
+  bFr.addEventListener('click',function(){setLang('fr');});
+  var saved=null; try{saved=localStorage.getItem('uto-lang');}catch(e){}
+  if(saved==='fr') setLang('fr');
+
+  /* lesson tabs */
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  function pick(t){
+    tabs.forEach(function(o){var on=o===t;o.setAttribute('aria-selected',on);o.tabIndex=on?0:-1;document.getElementById(o.getAttribute('aria-controls')).hidden=!on;});
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener('click',function(){pick(t);});
+    t.addEventListener('keydown',function(e){
+      if(e.key==='ArrowDown'||e.key==='ArrowRight'){e.preventDefault();var n=tabs[(i+1)%tabs.length];pick(n);n.focus();}
+      if(e.key==='ArrowUp'||e.key==='ArrowLeft'){e.preventDefault();var p=tabs[(i+tabs.length-1)%tabs.length];pick(p);p.focus();}
+    });
+  });
+  pick(tabs[0]);
+
+  /* staggered entrances; content is visible if this never runs */
+  var els=[].slice.call(document.querySelectorAll('.rise'));
+  function show(el){el.classList.add('in');}
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(!e.isIntersecting) return;
+        var sibs=[].slice.call(e.target.parentNode.querySelectorAll(':scope > .rise'));
+        var k=Math.max(0,sibs.indexOf(e.target));
+        setTimeout(function(){show(e.target);},k*80);
+        io.unobserve(e.target);
+      });
+    },{rootMargin:'0px 0px -8% 0px'});
+    els.forEach(function(el){io.observe(el);});
+  } else els.forEach(show);
+  setTimeout(function(){els.forEach(show);},4000);
+
+  /* if the 3D module never starts (blocked CDN, old browser), show the text description instead of an empty box */
+  setTimeout(function(){
+    if(!window.uoReady){
+      document.getElementById('stage').classList.add('failed');
+      var c=document.querySelector('.controls'); if(c) c.hidden=true;
+      var i=document.getElementById('info'); if(i) i.hidden=true;
+    }
+  },12000);
+})();
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+const stage = document.getElementById('stage');
+const lang = () => window.uoLang();
+
+/* ---------------- text ---------------- */
+const T = {
+  en:{flow:'of the tunnel still captures water', weak:'Weak flow. ', dry:'The outlet is dry. ', hint:'Tap a label to see what it is. Drag to turn the model (two fingers on a phone), or use the arrows.', hintT:'Explore the model',
+      canvas:'Interactive 3D model of a khettara, from the foothills to the palm grove. The same content is described by the labels below and the text of this section.'},
+  fr:{flow:'de la galerie capte encore de l’eau', weak:'Débit faible. ', dry:'La sortie est à sec. ', hint:'Touchez une étiquette pour la découvrir. Faites glisser pour tourner la maquette (deux doigts sur téléphone), ou utilisez les flèches.', hintT:'Explorer la maquette',
+      canvas:'Maquette 3D interactive d’une khettara, du piémont à la palmeraie. Les étiquettes et le texte de cette section décrivent le même contenu.'}
+};
+const SPOTS = [
+  {id:'hills', en:['Foothills','Rain and snowmelt here feed the groundwater that the khettara drains.'], fr:['Piémont','La pluie et la fonte des neiges alimentent ici la nappe que draine la khettara.']},
+  {id:'wadi', en:['Wadi','Floods in the dry riverbed soak into the gravel. Recharging the aquifer along wadis is one proposed fix [1].'], fr:['Oued','Les crues de l’oued s’infiltrent dans les graviers. Recharger la nappe le long des oueds est l’une des solutions proposées [1].']},
+  {id:'mother', en:['Mother well','Digging starts here, with a test well at the highest point, then the tunnel is dug back up toward it [2].'], fr:['Puits mère','Le creusement commence ici, par un puits d’essai au point le plus haut, puis le tunnel est creusé vers lui [2].']},
+  {id:'shafts', en:['Shafts','Every 5 to 40 m. Seen from the air, their spoil mounds draw the khettara’s dotted line across the plain [1, 2].'], fr:['Puits','Tous les 5 à 40 m. Vus du ciel, leurs déblais dessinent la ligne pointillée de la khettara à travers la plaine [1, 2].']},
+  {id:'gallery', en:['Gallery','50 to 80 cm wide and 90 to 150 cm high. Diggers work bent over [2].'], fr:['Galerie','50 à 80 cm de large et 90 à 150 cm de haut. On y travaille courbé [2].']},
+  {id:'table', en:['Water table','Only the part of the tunnel below this blue surface collects water. Move the slider to see what pumping does.'], fr:['Nappe','Seule la partie du tunnel sous cette surface bleue capte l’eau. Déplacez le curseur pour voir l’effet du pompage.']},
+  {id:'outlet', en:['Outlet and basin','The water reaches daylight and is stored in a basin before it is shared.'], fr:['Sortie et bassin','L’eau voit le jour et est stockée dans un bassin avant d’être partagée.']},
+  {id:'oasis', en:['Palm grove and ksar','Canals carry the water to the gardens under the date palms, next to the earthen village.'], fr:['Palmeraie et ksar','Des canaux mènent l’eau aux jardins sous les palmiers dattiers, près du village de terre.']},
+  {id:'pumps', en:['Boreholes','Motor and solar pumps lower the water table. On the same aquifer, pumps tend to win [2, 3].'], fr:['Forages','Les pompes, à moteur ou solaires, font baisser la nappe. Sur une même nappe, elles finissent par l’emporter [2, 3].']}
+];
+
+/* ---------------- terrain maths ---------------- */
+function hash(x,y){const h=Math.sin(x*127.1+y*311.7)*43758.5453;return h-Math.floor(h);}
+function vnoise(x,y){const ix=Math.floor(x),iy=Math.floor(y),fx=x-ix,fy=y-iy;const u=fx*fx*(3-2*fx),v=fy*fy*(3-2*fy);const a=hash(ix,iy),b=hash(ix+1,iy),c=hash(ix,iy+1),d=hash(ix+1,iy+1);return a+(b-a)*u+(c-a)*v+(a-b-c+d)*u*v;}
+function fbm(x,y){let s=0,a=.5,f=1;for(let i=0;i<5;i++){s+=a*vnoise(x*f,y*f);f*=2.03;a*=.5;}return s;}
+function sm(e0,e1,x){const t=Math.min(1,Math.max(0,(x-e0)/(e1-e0)));return t*t*(3-2*t);}
+const HX=10, HZ=5, BOT=-5;
+const wadiZ = x => -2.7 + 0.45*Math.sin(x*0.33);
+function surf(x,z){
+  let h = 1.8 - 0.18*x;
+  const m = sm(-4.0,-8.6,x);
+  h += m*(1.2 + 3.0*fbm(x*0.32+3.1, z*0.42+1.7)) ;
+  h += 0.14*(fbm(x*0.9+7.0, z*0.9)-0.5);
+  h -= 0.34*Math.exp(-((z-wadiZ(x))**2)/0.16) * sm(-8.0,-3.0,x);
+  h *= 1 - 0.38*sm(5.0,6.4,x);
+  return h;
+}
+const gz = x => 1.25 + 0.22*Math.sin(x*0.55);
+const X0=-5.2, X1=5.7;
+const YH = surf(X0,gz(X0)) - 4.3;
+const YO = surf(X1,gz(X1)) - 0.06;
+const K = (YO-YH)/(X1-X0);
+const gy = x => YH + K*(x-X0);
+const SLOPE = -0.12;
+let wt0 = 0;
+const wt = x => wt0 + SLOPE*x;
+function captureFrac(){
+  const xc = (wt0 - YH + K*X0)/(K - SLOPE);
+  return Math.min(1,Math.max(0,(xc-X0)/(X1-X0)));
+}
+function oasisMask(x,z){return sm(5.5,6.4,x)*sm(-1.9,-1.1,z)*(1-sm(4.0,4.7,z));}
+function ksarMask(x,z){return sm(7.7,8.1,x)*(1-sm(9.5,9.8,x))*sm(-3.6,-3.3,z)*(1-sm(-1.9,-1.6,z));}
+
+/* ---------------- renderer ---------------- */
+let renderer;
+try{
+  renderer = new THREE.WebGLRenderer({antialias:true, alpha:true});
+}catch(e){ window.uoReady=true; stage.classList.add('failed'); document.querySelector('.controls').hidden=true; document.getElementById('info').hidden=true; throw e; }
+window.uoReady = true;
+stage.classList.remove('failed'); document.querySelector('.controls').hidden=false; document.getElementById('info').hidden=false;
+const small = stage.clientWidth < 700;
+renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.05;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+stage.prepend(renderer.domElement);
+renderer.domElement.setAttribute('role','img');
+const labelCanvas = () => renderer.domElement.setAttribute('aria-label', T[lang()].canvas);
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(30,1,0.1,200);
+const HOME = {pos:new THREE.Vector3(16.5,15.5,23.5), target:new THREE.Vector3(-0.4,0.7,0)};
+camera.position.copy(HOME.pos);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true; controls.dampingFactor = 0.07;
+controls.enablePan = false;
+controls.minDistance = 7; controls.maxDistance = 42;
+controls.maxPolarAngle = 1.42;
+controls.target.copy(HOME.target);
+controls.touches.ONE = null;
+controls.touches.TWO = THREE.TOUCH.DOLLY_ROTATE;
+renderer.domElement.style.touchAction = 'pan-y';
+
+/* lights */
+scene.add(new THREE.HemisphereLight(0xe8eef4, 0x7a5c40, 1.1));
+const sun = new THREE.DirectionalLight(0xfff0d8, 2.4);
+sun.position.set(-9,15,10);
+sun.castShadow = true;
+sun.shadow.mapSize.set(small?1024:2048, small?1024:2048);
+Object.assign(sun.shadow.camera,{left:-14,right:14,top:12,bottom:-12,near:1,far:50});
+sun.shadow.bias=-0.0004; sun.shadow.normalBias=0.03;
+scene.add(sun);
+
+/* ---------------- terrain ---------------- */
+const SX=220, SZ=110;
+const tGeo = new THREE.PlaneGeometry(HX*2, HZ*2, SX, SZ);
+tGeo.rotateX(-Math.PI/2);
+const tp = tGeo.attributes.position;
+const cols = new Float32Array(tp.count*3);
+const cSand = new THREE.Color('#c9a26d'), cRock = new THREE.Color('#8d6a51'), cHigh=new THREE.Color('#6f5544'),
+      cGravel = new THREE.Color('#ddcaa4'), cGreen = new THREE.Color('#4f7d3a'), cGreen2 = new THREE.Color('#6c8f45'), cClay=new THREE.Color('#b9875c');
+const tmp = new THREE.Color();
+for(let i=0;i<tp.count;i++){
+  const x=tp.getX(i), z=tp.getZ(i), y=surf(x,z);
+  tp.setY(i,y);
+  const m = sm(-4.2,-7.5,x);
+  tmp.copy(cSand).lerp(cRock, m).lerp(cHigh, sm(3.8,6.0,y)*m);
+  tmp.offsetHSL(0,0,(fbm(x*2.2,z*2.2)-0.5)*0.08);
+  const w = Math.exp(-((z-wadiZ(x))**2)/0.12)*sm(-8.0,-3.0,x);
+  tmp.lerp(cGravel, w*0.85);
+  const o = oasisMask(x,z);
+  const plot = (Math.floor(x*2.6)+Math.floor(z*2.6))%2===0;
+  tmp.lerp(plot?cGreen:cGreen2, o*0.92);
+  tmp.lerp(cClay, ksarMask(x,z)*0.8);
+  cols[i*3]=tmp.r; cols[i*3+1]=tmp.g; cols[i*3+2]=tmp.b;
+}
+tGeo.setAttribute('color', new THREE.BufferAttribute(cols,3));
+tGeo.computeVertexNormals();
+const tMat = new THREE.MeshStandardMaterial({vertexColors:true, roughness:0.96, metalness:0, transparent:true, opacity:1});
+const terrain = new THREE.Mesh(tGeo, tMat);
+terrain.receiveShadow = true;
+terrain.renderOrder = 2;
+scene.add(terrain);
+
+/* ---------------- block walls (strata shader) ---------------- */
+const wallUniforms = { uWT0:{value:wt0}, uSlope:{value:SLOPE} };
+function wallMat(shade){
+  return new THREE.ShaderMaterial({
+    uniforms: Object.assign({uShade:{value:shade}}, wallUniforms),
+    vertexShader:`varying vec3 vP; void main(){ vec4 w = modelMatrix*vec4(position,1.0); vP=w.xyz; gl_Position=projectionMatrix*viewMatrix*w; }`,
+    fragmentShader:`
+      uniform float uWT0; uniform float uSlope; uniform float uShade; varying vec3 vP;
+      float rnd(vec2 p){ return fract(sin(dot(p, vec2(12.9898,78.233)))*43758.5453); }
+      void main(){
+        float along = vP.x + vP.z;
+        vec3 alluv = vec3(0.80,0.64,0.44);
+        vec3 grav  = vec3(0.64,0.52,0.40);
+        vec3 rock  = vec3(0.34,0.29,0.26);
+        vec3 c = mix(grav, alluv, smoothstep(-1.7,-1.1, vP.y + 0.28*sin(along*0.7)));
+        c = mix(rock, c, smoothstep(-3.95,-3.55, vP.y + 0.3*sin(along*0.45+1.0)));
+        c *= 0.9 + 0.1*rnd(floor(vec2(along, vP.y)*vec2(26.0,34.0)));
+        float wt = uWT0 + uSlope*vP.x;
+        float sat = step(vP.y, wt) * smoothstep(-3.9,-3.6, vP.y);
+        c = mix(c, vec3(0.13,0.42,0.78), sat*0.62);
+        float line = 1.0 - smoothstep(0.0, 0.045, abs(vP.y - wt));
+        c = mix(c, vec3(0.62,0.86,1.0), line);
+        gl_FragColor = vec4(c*uShade, 1.0);
+        #include <colorspace_fragment>
+      }`
+  });
+}
+function edgeWall(samples, shade){
+  // samples: array of [x,z]; builds a strip from surface down to BOT
+  const pos=[], idx=[];
+  samples.forEach(([x,z],i)=>{ pos.push(x,surf(x,z),z, x,BOT,z); if(i>0){const a=(i-1)*2,b=a+1,c=i*2,d=c+1; idx.push(a,b,c, c,b,d);} });
+  const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3)); g.setIndex(idx);
+  const m=new THREE.Mesh(g, wallMat(shade)); m.material.side=THREE.DoubleSide; scene.add(m); return m;
+}
+const N=240, front=[], back=[], left=[], right=[];
+for(let i=0;i<=N;i++){const x=-HX+2*HX*i/N; front.push([x,HZ]); back.push([x,-HZ]);}
+for(let i=0;i<=N/2;i++){const z=-HZ+2*HZ*i/(N/2); left.push([-HX,z]); right.push([HX,z]);}
+edgeWall(front,1.0); edgeWall(back,0.7); edgeWall(left,0.82); edgeWall(right,0.9);
+const base = new THREE.Mesh(new THREE.BoxGeometry(HX*2,0.06,HZ*2), new THREE.MeshBasicMaterial({color:0x2a221c}));
+base.position.y = BOT-0.03; scene.add(base);
+
+/* water table surface (seen when the ground is see-through) */
+const wtGeo = new THREE.PlaneGeometry(HX*2-0.02, HZ*2-0.02, 1, 1); wtGeo.rotateX(-Math.PI/2);
+const wtMesh = new THREE.Mesh(wtGeo, new THREE.MeshBasicMaterial({color:0x2c86e0, transparent:true, opacity:0.24, side:THREE.DoubleSide, depthWrite:false}));
+wtMesh.renderOrder = 1; scene.add(wtMesh);
+function placeWT(){
+  const p=wtGeo.attributes.position;
+  for(let i=0;i<p.count;i++){p.setY(i, wt(p.getX(i)));}
+  p.needsUpdate=true; wtGeo.computeBoundingSphere();
+  wallUniforms.uWT0.value = wt0;
+}
+
+/* ---------------- the khettara ---------------- */
+const pts=[]; for(let x=X0;x<=X1+1e-6;x+=0.1){pts.push(new THREE.Vector3(x,gy(x),gz(x)));}
+const curve = new THREE.CatmullRomCurve3(pts);
+const tunnel = new THREE.Mesh(new THREE.TubeGeometry(curve,300,0.13,10), new THREE.MeshStandardMaterial({color:0x2b2018, roughness:1}));
+scene.add(tunnel);
+const flowU = {uTime:{value:0}, uCap:{value:0.5}, uOn:{value:1}};
+const water = new THREE.Mesh(new THREE.TubeGeometry(curve,300,0.15,12), new THREE.ShaderMaterial({
+  uniforms: flowU, transparent:true, depthWrite:false,
+  vertexShader:`varying vec2 vUv; void main(){ vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0); }`,
+  fragmentShader:`
+    uniform float uTime; uniform float uCap; uniform float uOn; varying vec2 vUv;
+    void main(){
+      float s = smoothstep(0.35,0.65, fract(vUv.x*55.0 - uTime*1.6));
+      vec3 deep = vec3(0.04,0.37,0.77), light = vec3(0.55,0.84,1.0);
+      vec3 c = mix(deep, light, s*0.45);
+      float inCap = 1.0 - step(uCap, vUv.x);
+      c = mix(c, vec3(0.72,0.93,1.0), inCap*0.35);
+      gl_FragColor = vec4(c, 0.95*uOn);
+      #include <colorspace_fragment>
+    }`
+}));
+water.renderOrder = 3; scene.add(water);
+
+/* shafts + spoil mounds */
+const shaftXs=[]; for(let x=X0;x<=X1-0.5;x+=0.72) shaftXs.push(x);
+const shaftMat = new THREE.MeshStandardMaterial({color:0x4b3828, roughness:1});
+const ringGeo = new THREE.TorusGeometry(0.17,0.075,8,18); ringGeo.rotateX(Math.PI/2);
+const rings = new THREE.InstancedMesh(ringGeo, new THREE.MeshStandardMaterial({color:0xb48a5a, roughness:1}), shaftXs.length);
+const holeGeo = new THREE.CircleGeometry(0.11,14); holeGeo.rotateX(-Math.PI/2);
+const holes = new THREE.InstancedMesh(holeGeo, new THREE.MeshBasicMaterial({color:0x1d150f}), shaftXs.length);
+const d = new THREE.Object3D();
+shaftXs.forEach((x,i)=>{
+  const z=gz(x), top=surf(x,z), bot=gy(x), mother=i===0, r=mother?1.35:1;
+  const s=new THREE.Mesh(new THREE.CylinderGeometry(mother?0.07:0.045, mother?0.07:0.045, top-bot, 8), shaftMat);
+  s.position.set(x,(top+bot)/2,z); scene.add(s);
+  d.position.set(x,top+0.03,z); d.scale.set(r,1,r); d.rotation.set(0,0,0); d.updateMatrix(); rings.setMatrixAt(i,d.matrix);
+  d.position.y=top+0.075; d.updateMatrix(); holes.setMatrixAt(i,d.matrix);
+});
+rings.castShadow = true; rings.receiveShadow = true;
+scene.add(rings, holes);
+
+/* outlet basin and canals */
+const bx = X1+0.42, bz=gz(X1), by=surf(bx,bz);
+const basin = new THREE.Mesh(new THREE.BoxGeometry(0.62,0.16,0.46), new THREE.MeshStandardMaterial({color:0xa97b51, roughness:1}));
+basin.position.set(bx,by+0.04,bz); basin.castShadow=true; scene.add(basin);
+const waterMat = new THREE.MeshBasicMaterial({color:0x1f78d6, transparent:true, opacity:1});
+const basinW = new THREE.Mesh(new THREE.PlaneGeometry(0.5,0.34).rotateX(-Math.PI/2), waterMat);
+basinW.position.set(bx,by+0.125,bz); scene.add(basinW);
+const canals = new THREE.Group(); scene.add(canals);
+function canal(points){
+  const c=new THREE.CatmullRomCurve3(points.map(([x,z])=>new THREE.Vector3(x,surf(x,z)+0.03,z)));
+  canals.add(new THREE.Mesh(new THREE.TubeGeometry(c,60,0.035,6), waterMat));
+}
+canal([[X1,bz],[bx,bz]]);
+canal([[bx+0.3,bz],[7.2,bz+0.1],[8.4,bz-0.1],[9.6,bz]]);
+[6.6,7.8,9.0].forEach((x,i)=>{ canal([[x,bz],[x+0.1,bz+1.4],[x,3.7]]); canal([[x,bz],[x-0.1,bz-1.1],[x+0.05,-0.9]]); });
+
+/* palm grove */
+let seed=7; const rand=()=>{seed=(seed*16807)%2147483647;return (seed-1)/2147483646;};
+const palms=[];
+for(let n=0;n<900 && palms.length<150;n++){
+  const x=5.9+rand()*3.9, z=-1.0+rand()*5.6;
+  if(oasisMask(x,z)<0.75) continue;
+  if(Math.abs(z-bz)<0.18) continue;
+  palms.push([x,z]);
+}
+const trunkGeo = new THREE.CylinderGeometry(0.02,0.032,1,6); trunkGeo.translate(0,0.5,0);
+const trunks = new THREE.InstancedMesh(trunkGeo, new THREE.MeshStandardMaterial({color:0x6a4c30, roughness:1}), palms.length);
+const crownGeo = new THREE.ConeGeometry(0.27,0.13,8,1,true); crownGeo.translate(0,-0.02,0);
+const crowns = new THREE.InstancedMesh(crownGeo, new THREE.MeshStandardMaterial({color:0x2f6a2d, roughness:.9, flatShading:true, side:THREE.DoubleSide}), palms.length);
+const pc = new THREE.Color();
+palms.forEach(([x,z],i)=>{
+  const h=0.34+rand()*0.26, y=surf(x,z);
+  d.position.set(x,y,z); d.scale.set(1,h,1); d.rotation.set((rand()-.5)*0.15,0,(rand()-.5)*0.15); d.updateMatrix(); trunks.setMatrixAt(i,d.matrix);
+  d.position.set(x,y+h,z); d.scale.setScalar(0.8+rand()*0.45); d.rotation.set(0,rand()*6.28,0); d.updateMatrix(); crowns.setMatrixAt(i,d.matrix);
+  pc.setHSL(0.27+rand()*0.05, 0.42, 0.24+rand()*0.08); crowns.setColorAt(i,pc);
+});
+trunks.castShadow=crowns.castShadow=true;
+scene.add(trunks,crowns);
+
+/* ksar: earthen village */
+const ksarMat = new THREE.MeshStandardMaterial({color:0xb7845a, roughness:1, flatShading:true});
+[[8.2,-3.2,0.6,0.35,0.5],[8.75,-3.15,0.5,0.45,0.45],[9.25,-3.1,0.45,0.32,0.5],[8.3,-2.6,0.5,0.4,0.45],[8.85,-2.55,0.6,0.5,0.4],[9.3,-2.5,0.4,0.36,0.5],[8.4,-2.05,0.55,0.3,0.4],[8.95,-2.0,0.45,0.42,0.4],[9.38,-2.0,0.32,0.75,0.32]]
+.forEach(([x,z,w,h,dd])=>{const b=new THREE.Mesh(new THREE.BoxGeometry(w,h,dd),ksarMat); b.position.set(x,surf(x,z)+h/2-0.02,z); b.castShadow=b.receiveShadow=true; scene.add(b);});
+
+/* boreholes with solar panels (shown when pumping) */
+const pumps = new THREE.Group(); scene.add(pumps);
+const poleMat = new THREE.MeshStandardMaterial({color:0x3a3a3a, roughness:.6});
+const panelMat = new THREE.MeshStandardMaterial({color:0x14315c, roughness:.35, metalness:.2});
+[[3.6,-1.4],[6.3,4.2],[2.2,3.3],[7.4,-0.6]].forEach(([x,z])=>{
+  const y=surf(x,z);
+  const pole=new THREE.Mesh(new THREE.CylinderGeometry(0.03,0.03,0.7,6),poleMat); pole.position.set(x,y+0.35,z);
+  const panel=new THREE.Mesh(new THREE.BoxGeometry(0.62,0.03,0.4),panelMat); panel.position.set(x,y+0.72,z); panel.rotation.x=-0.5;
+  const head=new THREE.Mesh(new THREE.CylinderGeometry(0.09,0.09,0.16,10),poleMat); head.position.set(x+0.22,y+0.08,z);
+  const pipe=new THREE.Mesh(new THREE.CylinderGeometry(0.025,0.025,y-BOT-0.4,6),poleMat); pipe.position.set(x+0.22,(y+BOT+0.4)/2,z);
+  [pole,panel,head].forEach(m=>m.castShadow=true);
+  pumps.add(pole,panel,head,pipe);
+});
+
+/* rain over the foothills (rainy years) */
+const RN=700, rainPos=new Float32Array(RN*3);
+for(let i=0;i<RN;i++){rainPos[i*3]=-HX+rand()*6.5; rainPos[i*3+1]=2+rand()*8; rainPos[i*3+2]=-HZ+rand()*2*HZ;}
+const rainGeo=new THREE.BufferGeometry(); rainGeo.setAttribute('position',new THREE.BufferAttribute(rainPos,3));
+const rainMat=new THREE.PointsMaterial({color:0x2c86e0,size:0.05,transparent:true,opacity:0});
+const rain=new THREE.Points(rainGeo,rainMat); scene.add(rain);
+
+/* ---------------- state ---------------- */
+let xray = true;
+function setXray(on){
+  xray=on;
+  tMat.opacity = on?0.34:1; tMat.depthWrite = !on; tMat.needsUpdate=true;
+  wtMesh.visible = on;
+  document.getElementById('xray').setAttribute('aria-pressed', on);
+}
+const pctEl=document.getElementById('pct'), pctLab=document.getElementById('pct-label');
+function update(){
+  placeWT();
+  const f = captureFrac(), p=Math.round(f*100);
+  flowU.uCap.value = f; flowU.uOn.value = f>0?1:0;
+  canals.visible = f>0; basinW.visible = f>0;
+  waterMat.opacity = 0.35 + 0.65*Math.min(1,f/0.45);
+  pumps.visible = wt0 < -0.6;
+  rainMat.opacity = wt0 > 0.5 ? 0.75 : 0;
+  pctEl.textContent = p + (lang()==='fr'?' %':'%');
+  pctEl.classList.toggle('dry', p===0);
+  const t=T[lang()];
+  pctLab.textContent = (p===0? t.dry : (p<20? t.weak:'')) + t.flow;
+  slider.setAttribute('aria-valuetext', pctEl.textContent + ' ' + pctLab.textContent);
+  hotEls.pumps.hidden = !pumps.visible;
+}
+
+/* ---------------- hotspots ---------------- */
+const hotWrap=document.getElementById('hots'), hotEls={};
+const anchor = {
+  hills: ()=>new THREE.Vector3(-8.2, surf(-8.2,0)+0.4, 0),
+  wadi: ()=>{const x=-2.2,z=wadiZ(x);return new THREE.Vector3(x,surf(x,z)+0.15,z);},
+  mother: ()=>new THREE.Vector3(X0, surf(X0,gz(X0))+0.35, gz(X0)),
+  shafts: ()=>{const x=-0.9;return new THREE.Vector3(x,surf(x,gz(x))+0.3,gz(x));},
+  gallery: ()=>{const x=1.2;return new THREE.Vector3(x,gy(x)+0.15,gz(x));},
+  table: ()=>{const x=-1.5,z=4.2;return new THREE.Vector3(x,wt(x),z);},
+  outlet: ()=>new THREE.Vector3(bx, by+0.35, bz),
+  oasis: ()=>new THREE.Vector3(8.0, surf(8.0,2.6)+1.0, 2.6),
+  pumps: ()=>{const x=3.6,z=-1.4;return new THREE.Vector3(x,surf(x,z)+0.95,z);}
+};
+let active=null;
+function showInfo(id){
+  const t=T[lang()];
+  const s = id && SPOTS.find(o=>o.id===id);
+  document.getElementById('info-t').textContent = s? s[lang()][0] : t.hintT;
+  document.getElementById('info-d').textContent = s? s[lang()][1] : t.hint;
+}
+SPOTS.forEach(s=>{
+  const b=document.createElement('button'); b.type='button'; b.className='hot'; b.setAttribute('aria-pressed','false');
+  b.addEventListener('click',()=>{
+    active = active===s.id? null : s.id;
+    Object.values(hotEls).forEach(o=>o.setAttribute('aria-pressed', o===hotEls[active]));
+    showInfo(active);
+    if(active){ flyTo(anchor[active]()); if(active==='gallery'||active==='table') setXray(true); }
+  });
+  hotWrap.appendChild(b); hotEls[s.id]=b;
+});
+function labelHots(){ SPOTS.forEach(s=>{hotEls[s.id].textContent=s[lang()][0];}); }
+const v=new THREE.Vector3();
+function placeHots(){
+  const w=stage.clientWidth, h=stage.clientHeight, boxes=[];
+  SPOTS.forEach(s=>{
+    const el=hotEls[s.id]; if(s.id==='pumps'&&!pumps.visible){el.hidden=true;return;}
+    v.copy(anchor[s.id]()).project(camera);
+    const vis = v.z<1 && Math.abs(v.x)<1.02 && Math.abs(v.y)<1.02;
+    el.hidden=!vis; if(!vis) return;
+    const bw=el.offsetWidth, bh=el.offsetHeight, px=Math.min(w-bw/2-6, Math.max(bw/2+6,(v.x*.5+.5)*w));
+    let py=Math.max(bh+16,(-v.y*.5+.5)*h - 12);
+    /* nudge a label up when it would cover one already placed */
+    for(let pass=0;pass<4;pass++){
+      const hit=boxes.find(b=>Math.abs(b.x-px)<(b.w+bw)/2+4 && Math.abs(b.y-py)<(b.h+bh)/2+2);
+      if(!hit) break;
+      py=hit.y-hit.h-4;
+    }
+    py=Math.max(bh+2,py);
+    boxes.push({x:px,y:py,w:bw,h:bh});
+    el.style.transform=`translate(${px}px, ${py}px) translate(-50%,-100%)`;
+  });
+}
+
+/* ---------------- camera moves ---------------- */
+let fly=null;
+function flyTo(target){
+  const dir = camera.position.clone().sub(controls.target).normalize();
+  const dist = 9.5;
+  fly={t0:performance.now(), dur:950, p0:camera.position.clone(), t0v:controls.target.clone(), p1:target.clone().add(dir.multiplyScalar(dist)), t1v:target.clone()};
+  if(fly.p1.y < target.y+2.2) fly.p1.y = target.y+2.2;
+}
+function goHome(){ fly={t0:performance.now(), dur:950, p0:camera.position.clone(), t0v:controls.target.clone(), p1:homePos(), t1v:HOME.target.clone()}; }
+function homePos(){ const a=stage.clientWidth/stage.clientHeight; return HOME.pos.clone().multiplyScalar(a<1? 1.38 : a<1.4? 1.18 : 1); }
+function turn(sign){
+  const off=camera.position.clone().sub(controls.target);
+  off.applyAxisAngle(new THREE.Vector3(0,1,0), sign*Math.PI/6);
+  fly={t0:performance.now(), dur:600, p0:camera.position.clone(), t0v:controls.target.clone(), p1:controls.target.clone().add(off), t1v:controls.target.clone()};
+}
+const ease=t=>1-Math.pow(1-t,3);
+
+/* ---------------- controls wiring ---------------- */
+const slider=document.getElementById('wt');
+const presetBtns=[].slice.call(document.querySelectorAll('[data-wt]'));
+function fromSlider(){ wt0 = (+slider.value)/100; presetBtns.forEach(b=>b.setAttribute('aria-pressed', b.dataset.wt===slider.value)); update(); }
+slider.addEventListener('input',fromSlider);
+presetBtns.forEach(b=>b.addEventListener('click',()=>{ slider.value=b.dataset.wt; fromSlider(); }));
+document.getElementById('xray').addEventListener('click',()=>setXray(!xray));
+document.getElementById('reset').addEventListener('click',goHome);
+document.getElementById('turn-l').addEventListener('click',()=>turn(-1));
+document.getElementById('turn-r').addEventListener('click',()=>turn(1));
+document.addEventListener('uolang',()=>{labelHots(); labelCanvas(); showInfo(active); update();});
+
+/* ---------------- size + loop ---------------- */
+function resize(){
+  const w=stage.clientWidth, h=stage.clientHeight;
+  renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix();
+}
+new ResizeObserver(resize).observe(stage);
+resize();
+camera.position.copy(homePos());
+
+const clock=new THREE.Clock();
+let visible=true;
+new IntersectionObserver(es=>{visible=es[0].isIntersecting;}).observe(stage);
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+function loop(){
+  requestAnimationFrame(loop);
+  if(!visible) return;
+  const dt=clock.getDelta();
+  if(!reduce) flowU.uTime.value += dt;
+  if(fly){
+    const k=Math.min(1,(performance.now()-fly.t0)/fly.dur), e=ease(k);
+    camera.position.lerpVectors(fly.p0,fly.p1,e); controls.target.lerpVectors(fly.t0v,fly.t1v,e);
+    if(k>=1) fly=null;
+  }
+  if(rainMat.opacity>0 && !reduce){
+    const p=rainGeo.attributes.position;
+    for(let i=0;i<RN;i++){let y=p.getY(i)-dt*6; if(y<surf(p.getX(i),p.getZ(i))) y=10; p.setY(i,y);} p.needsUpdate=true;
+  }
+  controls.update();
+  renderer.render(scene,camera);
+  placeHots();
+}
+
+setXray(true); labelHots(); labelCanvas(); showInfo(null); update();
+loop();
+
+/* ---------------- stills for the masthead and the numbers ---------------- */
+async function still(id, w, h, pos, look, opts){
+  const img=document.getElementById(id); if(!img) return;
+  const r=new THREE.WebGLRenderer({antialias:true, preserveDrawingBuffer:true});
+  r.setPixelRatio(1); r.setSize(w,h,false);
+  r.outputColorSpace=THREE.SRGBColorSpace; r.toneMapping=THREE.ACESFilmicToneMapping; r.toneMappingExposure=1.05;
+  r.shadowMap.enabled=true; r.shadowMap.type=THREE.PCFSoftShadowMap;
+  r.setClearColor(opts.bg,1);
+  const cam=new THREE.PerspectiveCamera(opts.fov||30,w/h,0.1,200); cam.position.copy(pos); cam.lookAt(look);
+  const keep=xray, keepWT=wt0;
+  setXray(opts.xray); if(opts.wt!==undefined){wt0=opts.wt; update();}
+  r.render(scene,cam);
+  const blob=await new Promise(res=>r.domElement.toBlob(res,'image/jpeg',0.86));
+  setXray(keep); wt0=keepWT; update();
+  r.dispose(); r.forceContextLoss();
+  if(!blob) return;
+  img.src=URL.createObjectURL(blob);
+  img.decode().catch(()=>{}).then(()=>img.classList.add('ready'));
+}
+/* masthead stills render at once; the others when the reader gets near them. One at a time, since each borrows the scene. */
+let queue = Promise.resolve();
+const render = (...a) => { queue = queue.then(()=>still(...a)).catch(()=>{}); };
+render('still-aerial',1600,900,new THREE.Vector3(-1.5,19,9.5),new THREE.Vector3(1.6,0,1.0),{xray:false,bg:0xb38e62,fov:34});
+render('still-cut',1600,900,new THREE.Vector3(3.2,8.6,12.4),new THREE.Vector3(-1.2,-0.6,0.6),{xray:true,bg:0xefeeeb,fov:38});
+const later = {
+  'still-oasis':[1200,1200,new THREE.Vector3(12.8,3.6,7.6),new THREE.Vector3(7.2,0.2,0.6),{xray:false,bg:0xefeeeb,fov:34}],
+  'still-wet':[1200,800,new THREE.Vector3(2.5,9.5,13.5),new THREE.Vector3(-0.6,-0.8,0.8),{xray:true,bg:0xefeeeb,fov:40,wt:0}],
+  'still-dry':[1200,800,new THREE.Vector3(2.5,9.5,13.5),new THREE.Vector3(-0.6,-0.8,0.8),{xray:true,bg:0xefeeeb,fov:40,wt:-1.95}]
+};
+const near = new IntersectionObserver(es=>es.forEach(e=>{
+  if(!e.isIntersecting) return;
+  near.unobserve(e.target); render(e.target.id, ...later[e.target.id]);
+}),{rootMargin:'800px 0px'});
+Object.keys(later).forEach(id=>near.observe(document.getElementById(id)));
+</script>
+</body>
+</html>
