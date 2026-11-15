@@ -2,7 +2,7 @@
 
 A virtual exhibition on Morocco's khettaras: underground tunnels that carry groundwater for kilometres to the oases, moved by gravity alone.
 
-**Live site:** https://aminebrr.github.io/under-the-oasis/
+**Live site:** https://aminebrr.github.io/Khettara/
 
 The page explains how a khettara works, how families share its water, and why many are drying up. At its centre is an interactive 3D model. Lower the water table and you can watch the part of the tunnel that still captures water shrink.
 
@@ -13,7 +13,7 @@ The exhibition is designed as a deep-dive companion to the Morocco case in *The 
 - **3D model.** Turn the model, tap the labels (mother well, shafts, gallery, water table, outlet, palm grove) and test four scenarios, from rainy years to an exhausted aquifer.
 - **History.** How the qanat spread from Persia to Marrakech and the Tafilalet.
 - **Sharing.** Water measured in time: the nouba and the tanast, a pierced bowl that sinks in about 45 minutes.
-- **Figures.** How many khettaras still flow, each figure linked to its source.
+- **Figures.** How many khettaras still flow, shown as a field of 570 dots with 304 lit, each figure linked to its source.
 - **The dilemma.** Some communities pump groundwater into their khettara to keep it alive, but the same pumps lower the water table further.
 - **Three lessons for ages 11 to 15.** Science, maths and citizenship activities that use simple classroom materials.
 - **Sources.** Nine references: research papers, UNESCO documents and water museum material.
@@ -23,9 +23,10 @@ The whole page is in English and French, with a language switch at the top.
 ## How it's built
 
 - One self-contained `index.html` file, with no build step and no framework.
-- [three.js](https://threejs.org/) 0.160 (loaded from jsDelivr) for the model. The terrain, tunnel, palm grove and village are all generated in code.
-- The pictures on the page are rendered from the same 3D scene in the browser, so there are no image files.
-- Fonts: Literata and Noto Naskh Arabic (Google Fonts).
+- [three.js](https://threejs.org/) 0.160 (loaded from jsDelivr) for the model. The terrain, tunnel, palm grove and village are all generated in code, and so are their textures (sand ripples, gravel, rammed earth, soil grain), so the repository has no texture files.
+- The two "before and after" pictures are rendered from the same 3D scene in the browser.
+- Photographs come from Wikimedia Commons under CC BY-SA licences, credited beside each image and in the sources list.
+- Fonts: Source Serif 4, Archivo and Noto Naskh Arabic (Google Fonts).
 - Accessibility:
   - keyboard navigation and a skip link
   - text alternatives for the model and pictures
@@ -34,11 +35,11 @@ The whole page is in English and French, with a language switch at the top.
 
 ## Run it locally
 
-Clone the repository and serve the folder with any static server. The page needs an internet connection for three.js and the fonts.
+Clone the repository and serve the folder with any static server. The page needs an internet connection for three.js, the fonts and the photographs.
 
 ```bash
-git clone https://github.com/aminebrr/under-the-oasis.git
-cd under-the-oasis
+git clone https://github.com/aminebrr/Khettara.git
+cd Khettara
 python3 -m http.server 8000
 ```
 

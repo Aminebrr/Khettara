@@ -6,377 +6,346 @@
 <title>Under the Oasis: Morocco's khettaras, a virtual exhibition</title>
 <meta name="description" content="A virtual exhibition on Morocco's khettaras, with an interactive 3D model: how the underground tunnels work, how water is shared, and why they are drying up. Work sample by Amine Brahimi.">
 <meta name="author" content="Amine Brahimi">
-<meta name="theme-color" content="#0a5fc4">
+<meta name="theme-color" content="#100d0a">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Under the Oasis: Morocco's khettaras, a virtual exhibition">
-<meta property="og:description" content="How Morocco's underground water tunnels work, how families share their water, and why pumping is drying them up. Interactive 3D model, sources and three classroom lessons.">
+<meta property="og:description" content="How Morocco's underground water tunnels work, how families share their water, and why pumping is drying them up. Interactive 3D model, sourced figures and three classroom lessons.">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Khettaras.jpg/1280px-Khettaras.jpg">
 <meta property="og:locale" content="en_GB">
 <meta property="og:locale:alternate" content="fr_FR">
-<meta name="twitter:card" content="summary">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230b0b0b'/%3E%3Cpath d='M8 44h48' stroke='%230a5fc4' stroke-width='6'/%3E%3Cg fill='%23fff'%3E%3Ccircle cx='16' cy='30' r='4'/%3E%3Ccircle cx='32' cy='30' r='4'/%3E%3Ccircle cx='48' cy='30' r='4'/%3E%3C/g%3E%3C/svg%3E">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23100d0a'/%3E%3Cpath d='M8 44h48' stroke='%233d96ff' stroke-width='6'/%3E%3Cg fill='%23c8904a'%3E%3Ccircle cx='16' cy='30' r='4'/%3E%3Ccircle cx='32' cy='30' r='4'/%3E%3Ccircle cx='48' cy='30' r='4'/%3E%3C/g%3E%3C/svg%3E">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"CreativeWork","name":"Under the Oasis","alternateName":"Sous l'oasis","description":"A virtual exhibition on Morocco's khettaras, with an interactive 3D model, sourced figures and three classroom lessons.","about":["Khettara","Qanat","Groundwater","Oases of Morocco"],"inLanguage":["en","fr"],"dateCreated":"2026-11","author":{"@type":"Person","name":"Amine Brahimi","url":"https://aminebrr.github.io/Portfolio/"}}
 </script>
 <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&family=Noto+Naskh+Arabic:wght@500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://upload.wikimedia.org">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400&family=Noto+Naskh+Arabic:wght@500&display=swap" rel="stylesheet">
 <script type="importmap">
 {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
 </script>
 <style>
 :root{
-  /* Printed-annual layout: masthead board, a text axis at 42%, whole sections in flat colour. Paper, ink, groundwater blue. */
-  --bg:#ffffff;
-  --surface:#efeeeb;
-  --ink:#0b0b0b;
-  --muted:#575757;
-  --accent:#0a5fc4;
-  --accent-ink:#ffffff;
-  --field:#000000;
-  --field-ink:#ffffff;
-  --text:'Literata', Georgia, 'Times New Roman', serif;
-  --arabic:'Noto Naskh Arabic', 'Geeza Pro', 'Arabic Typesetting', serif;
-  --step-small:clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
-  --step-body:clamp(1.125rem, 1.05rem + 0.3vw, 1.3125rem);
-  --step-lead:clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
-  --step-h2:clamp(36px, 4vw, 60px);
-  --m:20px;
-  --ease:cubic-bezier(.2,.7,.2,1);
-  color-scheme: light;
+  --night:#100d0a;
+  --night-2:#1b1713;
+  --night-3:#2a241d;
+  --bone:#f2ece3;
+  --bone-soft:#b9ad9c;
+  --ochre:#c8904a;
+  --ink:#17110a;
+  --ink-soft:#2e200f;
+  --water:#4a9dff;
+  --water-deep:#0b4596;
+  --serif:'Source Serif 4', Georgia, serif;
+  --sans:'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --arabic:'Noto Naskh Arabic', 'Geeza Pro', serif;
+  --m:clamp(20px, 4vw, 64px);
+  --ease:cubic-bezier(.16,1,.3,1);
+  color-scheme:dark;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--text);font-size:var(--step-body);line-height:1.6;font-optical-sizing:auto;-webkit-font-smoothing:antialiased}
-h1,h2,h3{font-weight:500;letter-spacing:-0.02em;line-height:1.05;margin:0;text-wrap:balance}
+html{scroll-behavior:smooth;scrollbar-color:var(--night-3) var(--night);accent-color:var(--water);caret-color:var(--water)}
+body{margin:0;background:var(--night);color:var(--bone);font-family:var(--serif);font-size:clamp(1.0625rem,1rem + .25vw,1.25rem);line-height:1.6;font-optical-sizing:auto;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.04;letter-spacing:-0.02em;margin:0;text-wrap:balance;font-variation-settings:'opsz' 60}
 p{margin:0}
-a{color:inherit;text-underline-offset:.18em;text-decoration-thickness:1px}
-img{display:block;max-width:100%}
-:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
-::selection{background:var(--accent);color:#fff}
+a{color:inherit;text-underline-offset:.2em;text-decoration-thickness:1px}
+img{display:block;max-width:100%;height:auto}
 button{font:inherit;color:inherit}
+::selection{background:var(--water);color:var(--night)}
+:focus-visible{outline:2px solid var(--water);outline-offset:3px}
+.ochre :focus-visible,footer :focus-visible{outline-color:var(--ink)}
 html[data-lang="en"] [data-l="fr"], html[data-lang="fr"] [data-l="en"]{display:none !important}
-sup{font-size:.62em;line-height:0}
-sup a{text-decoration:none;color:var(--accent);padding:0 .1em}
 .ar{font-family:var(--arabic)}
-.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;padding:0 var(--m)}
-.soft{color:var(--muted)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
-.skip{position:absolute;left:8px;top:-100px;z-index:20;background:var(--field);color:var(--field-ink);padding:12px 16px;font-size:var(--step-small);font-weight:600;text-decoration:none}
+.skip{position:absolute;left:8px;top:-100px;z-index:30;background:var(--bone);color:var(--night);padding:12px 16px;font:600 .875rem var(--sans);text-decoration:none}
 .skip:focus{top:8px}
 main:focus{outline:none}
-/* focus and footnote links stay visible on blue and black fields */
-footer :focus-visible,.say.blue :focus-visible,.band.head :focus-visible,.fig :focus-visible,.show :focus-visible,.pair figcaption :focus-visible{outline-color:#fff}
-.show sup a{color:#8ab8ff}
-.band.head sup a,.fig sup a,footer sup a{color:inherit}
+.wrap{padding:0 var(--m)}
+.measure{max-width:66ch}
 
-/* ---------- hero board ---------- */
-.board{height:100svh;min-height:620px;padding:8px;display:grid;gap:8px;grid-template-columns:1fr 1fr;grid-template-rows:60px 1fr 1fr}
-.toprow{grid-column:1/-1;display:grid;grid-template-columns:60px 1fr auto;gap:8px}
-.tile{position:relative;overflow:hidden}
-.logo{background:var(--field);color:var(--field-ink);display:grid;place-items:center;font-size:2rem;line-height:1;text-decoration:none}
-.links{background:var(--surface);display:grid;grid-template-columns:1fr 1fr;align-items:center}
-.links nav{grid-column:2;display:flex;gap:28px;align-items:center;padding:0 20px;font-size:var(--step-small)}
-.links nav a{text-decoration:none}
-.links nav a:hover{text-decoration:underline}
-.lang{margin-left:auto;display:flex;gap:2px}
-.lang button{background:none;border:0;padding:6px 8px;cursor:pointer;font-size:var(--step-small);color:var(--muted)}
-.lang button[aria-pressed="true"]{color:var(--ink);text-decoration:underline;text-underline-offset:.3em}
-.action{background:var(--field);color:var(--field-ink);display:flex;align-items:center;padding:0 22px;text-decoration:none;font-size:var(--step-small);font-weight:600;transition:background .2s var(--ease)}
-.action:hover{background:var(--accent)}
-.name{background:var(--surface);display:flex;flex-direction:column;justify-content:space-between;padding:24px}
-.name .top{display:flex;justify-content:space-between;align-items:baseline;gap:16px}
-.name .ar{font-size:var(--step-lead);color:var(--muted)}
-.kicker{font-size:var(--step-small);line-height:1.35;color:var(--muted);text-align:right}
-.kicker b{display:block;color:var(--ink);font-weight:600}
-.name h1{font-size:clamp(64px,10.6vw,168px);letter-spacing:-0.05em;line-height:.9;font-weight:500}
-.pic{background:#b38e62}
-.pic img{width:100%;height:100%;object-fit:cover}
-.pic.dark{background:#3b2f24}
-.split{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.say{padding:24px;font-size:clamp(1.15rem,0.95rem + 0.6vw,1.5rem);line-height:1.3}
-.say.dark{background:var(--field);color:var(--field-ink)}
-.say.blue{background:var(--accent);color:var(--accent-ink)}
+/* type voices */
+.label,.cap,.credit,.btn,.bar,.tab,.hot,.ends,.readout p,.by{font-family:var(--sans)}
+.cap{font-size:.875rem;line-height:1.45;color:var(--bone-soft);margin-top:12px;max-width:60ch}
+.cap a{color:inherit}
+.credit{font-size:.75rem;line-height:1.3;color:var(--bone-soft)}
+.credit a{color:inherit}
+h2{font-size:clamp(2.25rem,1.6rem + 2.8vw,3.75rem)}
+.lede{font-size:clamp(1.25rem,1.1rem + .6vw,1.625rem);line-height:1.4;font-variation-settings:'opsz' 32}
 
-/* ---------- model ---------- */
-section{position:relative}
-.model{padding:clamp(96px,11vw,180px) 0 clamp(80px,9vw,140px)}
-.model-head{grid-column:1/5}
-.model-head h2{font-size:var(--step-h2)}
-.model-head p{margin-top:20px;font-size:1.125rem;line-height:1.55}
-.stage-wrap{grid-column:1/-1;margin-top:48px}
-.stage{position:relative;background:var(--surface)}
-.view{position:relative;height:clamp(440px,52vw,780px);overflow:hidden;touch-action:pan-y}
+/* footnotes */
+sup{font-family:var(--sans);font-size:.62em;line-height:0;font-weight:600}
+sup a{text-decoration:none;color:var(--water);padding:0 .12em}
+.ochre sup a,footer sup a{color:#0a2f66}
+
+/* ---------- top bar ---------- */
+.bar{position:absolute;top:0;left:0;right:0;z-index:10;display:flex;align-items:center;gap:28px;padding:18px var(--m);font-size:.8125rem;letter-spacing:.06em;text-transform:uppercase;font-weight:600;background:linear-gradient(rgba(10,8,6,.72),rgba(10,8,6,0))}
+.mark{display:flex;align-items:center;gap:10px;text-decoration:none;white-space:nowrap}
+.mark .ar{font-size:1.375rem;line-height:1;text-transform:none;color:var(--ochre);letter-spacing:0}
+.bar nav{display:flex;gap:24px;margin-left:auto}
+.bar nav a{text-decoration:none;opacity:.85}
+.bar nav a:hover{opacity:1;text-decoration:underline}
+.lang{display:flex;gap:2px}
+.lang button{background:none;border:0;padding:6px 7px;cursor:pointer;font:inherit;color:var(--bone-soft);letter-spacing:.06em}
+.lang button[aria-pressed="true"]{color:var(--bone);text-decoration:underline;text-underline-offset:.35em}
+.cta{background:var(--water);color:var(--night);text-decoration:none;padding:11px 18px;border-radius:2px;transition:background .3s var(--ease)}
+.cta:hover{background:var(--bone)}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;background:var(--night-2)}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 60%}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(16,13,10,0) 28%,rgba(16,13,10,.62) 56%,rgba(16,13,10,.95) 100%)}
+.hero-text{position:relative;z-index:2;padding:0 var(--m) clamp(40px,7vh,88px);max-width:1100px}
+.hero .ar{font-size:clamp(1.5rem,1.2rem + 1vw,2.25rem);color:var(--bone);line-height:1.2;text-shadow:0 1px 14px rgba(0,0,0,.55)}
+.hero h1{font-size:clamp(4rem,2.5rem + 6vw,6rem);letter-spacing:-0.03em;line-height:.95;margin-top:4px}
+.hero .lede{margin-top:20px;max-width:44ch}
+.by{margin-top:22px;font-size:.875rem;color:var(--bone-soft);letter-spacing:.02em}
+.hero .credit{position:absolute;z-index:2;right:var(--m);bottom:16px;max-width:40ch;text-align:right}
+
+/* ---------- model chapter ---------- */
+.model{padding:clamp(88px,10vw,160px) 0 clamp(72px,8vw,128px)}
+.model-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px 64px;align-items:end}
+.model-head p{color:var(--bone-soft);max-width:46ch}
+.stage-wrap{margin-top:48px}
+.stage{position:relative;background:var(--night-2)}
+.view{position:relative;height:clamp(460px,54vw,800px);overflow:hidden;touch-action:pan-y}
 .view canvas{display:block;width:100%;height:100%}
-.hot{position:absolute;left:0;top:0;transform:translate(-50%,-100%);background:var(--field);color:var(--field-ink);border:0;padding:5px 9px;font-size:var(--step-small);line-height:1.2;cursor:pointer;white-space:nowrap;transition:background .2s var(--ease),transform .2s var(--ease)}
-.hot::after{content:"";position:absolute;left:50%;top:100%;width:2px;height:12px;background:var(--field);transform:translateX(-50%)}
-.hot:hover,.hot[aria-pressed="true"]{background:var(--accent)}
-.hot:hover::after,.hot[aria-pressed="true"]::after{background:var(--accent)}
+.hot{position:absolute;left:0;top:0;transform:translate(-50%,-100%);background:var(--bone);color:var(--night);border:0;padding:5px 9px;font-size:.8125rem;font-weight:600;line-height:1.2;cursor:pointer;white-space:nowrap;border-radius:2px;transition:background .25s var(--ease),color .25s var(--ease)}
+.hot::after{content:"";position:absolute;left:50%;top:100%;width:1px;height:12px;background:var(--bone);transform:translateX(-50%)}
+.hot:hover,.hot[aria-pressed="true"]{background:var(--water);color:var(--night)}
+.hot:hover::after,.hot[aria-pressed="true"]::after{background:var(--water)}
 .hot[hidden]{display:none}
-.info{position:absolute;left:16px;bottom:16px;max-width:min(440px,calc(100% - 32px));background:var(--bg);padding:16px 18px;font-size:1rem;line-height:1.45}
-.info b{display:block;font-size:1.125rem;font-weight:600;margin-bottom:4px}
+.info{position:absolute;left:16px;bottom:16px;max-width:min(440px,calc(100% - 140px));background:rgba(16,13,10,.92);padding:16px 18px;font-size:1rem;line-height:1.5;border-radius:2px}
+.info b{display:block;font-family:var(--sans);font-size:1rem;font-weight:700;margin-bottom:4px;color:var(--bone)}
+.info span{color:var(--bone-soft)}
 .turn{position:absolute;right:16px;bottom:16px;display:flex;gap:6px}
-.turn button{width:44px;height:44px;border:0;background:var(--bg);cursor:pointer;font-size:1.2rem;transition:background .2s var(--ease)}
-.turn button:hover{background:var(--field);color:#fff}
-.nogl{position:absolute;inset:0;display:none;padding:32px;background:var(--surface);overflow:auto}
+.turn button{width:44px;height:44px;border:0;background:rgba(16,13,10,.92);color:var(--bone);cursor:pointer;display:grid;place-items:center;border-radius:2px;transition:background .25s var(--ease),color .25s var(--ease)}
+.turn button:hover{background:var(--bone);color:var(--night)}
+.turn svg{width:20px;height:20px}
+.nogl{position:absolute;inset:0;display:none;padding:32px;background:var(--night-2);overflow:auto}
 .view.failed .nogl{display:block}
-.controls{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,4fr) minmax(0,3fr);gap:24px;align-items:end;padding:24px 0 0}
-.controls label{display:block;font-weight:600;font-size:1rem;margin-bottom:8px}
-.controls input[type=range]{width:100%;accent-color:var(--accent);height:28px}
-.ends{display:flex;justify-content:space-between;font-size:var(--step-small);color:var(--muted)}
+.nogl p+p{margin-top:12px;color:var(--bone-soft)}
+.controls{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,4fr) minmax(0,3fr);gap:28px;align-items:end;padding-top:28px}
+.controls label{display:block;font:700 .9375rem var(--sans);margin-bottom:8px}
+.controls input[type=range]{width:100%;height:28px}
+.ends{display:flex;justify-content:space-between;font-size:.8125rem;color:var(--bone-soft)}
 .presets{display:flex;flex-wrap:wrap;gap:6px}
 .presets.scen{display:grid;grid-template-columns:1fr 1fr}
-.btn{border:0;background:var(--surface);padding:10px 14px;font-size:.9375rem;cursor:pointer;transition:background .2s var(--ease),color .2s var(--ease),transform .15s var(--ease)}
-.btn:hover{background:var(--field);color:#fff}
-.btn:active{transform:translateY(1px)}
-.btn[aria-pressed="true"]{background:var(--accent);color:#fff}
+.btn{border:0;background:var(--night-3);color:var(--bone);padding:11px 14px;font-size:.875rem;font-weight:600;cursor:pointer;border-radius:2px;transition:background .25s var(--ease),color .25s var(--ease)}
+.btn:hover{background:#3b3329}
+.btn[aria-pressed="true"]{background:var(--water);color:var(--night)}
 .readout{text-align:right}
-.readout .big{font-size:clamp(48px,5vw,80px);line-height:.95;font-weight:500;letter-spacing:-0.03em;font-variant-numeric:tabular-nums;color:var(--accent)}
-.readout .big.dry{color:var(--ink)}
-.readout p{font-size:var(--step-small);color:var(--muted)}
-.thirds{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
-.thirds h3{font-size:1.25rem;font-weight:600;letter-spacing:0;margin-bottom:8px}
-.thirds p{font-size:1rem;line-height:1.55}
+.readout .big{font-family:var(--sans);font-size:clamp(3rem,2rem + 3vw,5rem);line-height:.95;font-weight:700;font-variation-settings:'wdth' 75;font-variant-numeric:tabular-nums;color:var(--water)}
+.readout .big.dry{color:var(--bone-soft)}
+.readout p{font-size:.875rem;color:var(--bone-soft);margin-top:6px}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px;margin-top:88px}
+.steps h3{font-size:1.75rem;margin-bottom:12px}
+.steps p{font-size:1.0625rem;color:var(--bone-soft)}
+.steps figure{margin:0 0 22px}
+.steps img{width:100%;aspect-ratio:4/3;object-fit:cover;background:var(--night-2)}
+.step-render{aspect-ratio:4/3}
+.steps .cap{margin-top:8px;min-height:2.9em}
 
-/* ---------- intro ---------- */
-.intro{padding:96px 0}
-.lead{grid-column:1/-1;font-size:clamp(22px,2.2vw,32px);line-height:1.25;max-width:48ch}
-.cols{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:72px;align-items:start}
-.cols p{font-size:1rem;line-height:1.45;color:var(--muted)}
-.cols b{color:var(--ink);font-weight:600}
+/* ---------- history (ochre) ---------- */
+.ochre{background:var(--ochre);color:var(--ink)}
+.ochre .cap,.ochre .credit{color:var(--ink-soft)}
+.plate{position:relative;margin:0}
+.plate img{width:100%;height:clamp(320px,46vw,660px);object-fit:cover;object-position:50% 55%;background:var(--night-2)}
+.plate figcaption{display:flex;justify-content:space-between;gap:24px;padding:12px var(--m) 0}
+.history .plate figcaption{background:var(--night);padding-bottom:14px}
+.history-body{padding:clamp(72px,8vw,128px) 0}
+.history-body .lede{max-width:40ch;font-size:clamp(1.5rem,1.2rem + 1.2vw,2.25rem);line-height:1.3;font-weight:500}
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px 64px;margin-top:64px;max-width:1180px}
+.cols p{font-size:1.0625rem}
+.cols b{font-family:var(--sans);font-weight:700;display:block;font-size:1rem;margin-bottom:6px}
+.cols .about{border-top:1px solid rgba(23,17,10,.35);padding-top:16px;grid-column:1/-1;max-width:72ch}
 
-/* ---------- showcase ---------- */
-.show{background:var(--field);color:var(--field-ink);padding:clamp(96px,10vw,160px) 0 0;overflow:hidden}
-.show h2{grid-column:1/6;font-size:var(--step-h2)}
-.show .para{grid-column:7/-1;font-size:1.125rem;line-height:1.55;max-width:60ch}
-.spec{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:12vh}
-.spec figure{margin:0}
-.spec figcaption{font-size:1rem;margin-bottom:10px;opacity:.85}
-.spec .num{font-size:clamp(180px,34vw,520px);line-height:.8;font-weight:500;letter-spacing:-0.05em;height:calc(clamp(180px,34vw,520px) * .5);overflow:hidden;font-variant-numeric:lining-nums}
+/* ---------- sharing ---------- */
+.share{padding:clamp(88px,10vw,160px) 0}
+.share-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(32px,5vw,88px);align-items:start}
+.share figure{margin:0;position:sticky;top:24px}
+.share figure img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:35% 50%;background:var(--night-2)}
+.share h2{margin-bottom:28px}
+.share .para{color:var(--bone)}
+.units{display:grid;grid-template-columns:1fr;gap:44px;margin-top:64px}
+.unit{display:grid;grid-template-columns:auto 1fr;gap:6px 22px;align-items:end}
+.unit .n{font-family:var(--sans);font-weight:700;font-size:clamp(4.5rem,3rem + 4vw,6rem);line-height:.8;font-variation-settings:'wdth' 70;font-variant-numeric:lining-nums;color:var(--ochre)}
+.unit .u{font-size:clamp(1.5rem,1.2rem + 1vw,2rem);font-style:italic;line-height:1;padding-bottom:4px}
+.unit p{grid-column:1/-1;font-family:var(--sans);font-size:.9375rem;color:var(--bone-soft);border-top:1px solid var(--night-3);padding-top:12px;margin-top:10px}
 
-/* ---------- stats ---------- */
-.stats{padding:clamp(96px,11vw,180px) 0 0}
-.stats h2{grid-column:1/-1;font-size:var(--step-h2);margin-bottom:40px}
-.mosaic{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);height:min(66vw,920px)}
-.mosaic .pic{height:100%;min-width:0}
-.figs{display:grid;grid-template-rows:1fr 1fr}
-.fig{padding:28px}
-.fig .n{font-size:clamp(56px,5.6vw,96px);line-height:1;font-weight:500;letter-spacing:-0.03em;font-variant-numeric:tabular-nums}
-.fig p{font-size:1.125rem;line-height:1.4;margin-top:10px;max-width:24ch}
-.fig.black{background:var(--field);color:var(--field-ink)}
-.fig.blue{background:var(--accent);color:var(--accent-ink)}
-.fig sup a{color:inherit}
-.note{grid-column:5/-1;margin-top:40px;font-size:1rem;line-height:1.55;max-width:62ch}
+/* ---------- counts (ochre) ---------- */
+.counts{padding:clamp(88px,10vw,160px) 0}
+.counts-grid{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(40px,6vw,96px);align-items:start;margin-top:56px}
+.field{display:grid;grid-template-columns:repeat(30,1fr);gap:clamp(3px,.5vw,7px);max-width:620px}
+.field i{display:block;aspect-ratio:1;border-radius:50%;border:1.5px solid rgba(23,17,10,.42)}
+.field i.on{background:var(--water-deep);border-color:var(--water-deep)}
+.counts .say{font-size:clamp(1.375rem,1.15rem + .9vw,2rem);line-height:1.3;font-weight:500}
+.counts .say strong{font-weight:700}
+.counts .say + .say{margin-top:28px;padding-top:28px;border-top:1px solid rgba(23,17,10,.35)}
+.key{display:flex;gap:20px;margin-top:18px;font:.875rem var(--sans);color:var(--ink-soft)}
+.key span{display:inline-flex;align-items:center;gap:8px}
+.key i{width:12px;height:12px;border-radius:50%;border:1.5px solid rgba(23,17,10,.42)}
+.key i.on{background:var(--water-deep);border-color:var(--water-deep)}
+.counts .note{margin-top:56px;font-size:1rem;max-width:62ch;color:var(--ink-soft)}
 
-/* ---------- dilemma bands ---------- */
-.dilemma{margin-top:clamp(96px,11vw,180px)}
-.band{padding:56px 0}
-.band:nth-of-type(odd){background:var(--surface)}
-.band .q{grid-column:1/6;font-size:clamp(24px,2.1vw,32px);font-weight:600;line-height:1.15;letter-spacing:-0.01em}
-.band .a{grid-column:7/-1;font-size:1.125rem;line-height:1.5}
-.band.head{background:var(--accent);color:var(--accent-ink);min-height:40svh;display:flex;align-items:flex-end;padding:0 0 40px}
-.band.head .grid{width:100%}
-.band.head h2{grid-column:1/-1;font-size:7vw;letter-spacing:-0.04em}
-.band.head p{grid-column:1/8;font-size:1.125rem;margin-top:14px}
+/* ---------- dilemma ---------- */
+.dilemma-head{position:relative;min-height:88svh;display:flex;align-items:flex-end;overflow:hidden;background:var(--night-2)}
+.dilemma-head img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+.dilemma-head::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(16,13,10,.1) 30%,rgba(16,13,10,.9) 100%)}
+.dilemma-head .wrap{position:relative;z-index:2;padding-bottom:clamp(40px,7vh,80px);width:100%}
+.dilemma-head h2{font-size:clamp(3rem,2rem + 4.4vw,6rem);letter-spacing:-0.03em}
+.dilemma-head p{margin-top:16px;max-width:44ch;font-size:1.1875rem}
+.dilemma-head .credit{position:absolute;z-index:2;right:var(--m);bottom:16px;max-width:40ch;text-align:right}
+.renders{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(12px,2vw,28px);padding-top:clamp(56px,6vw,96px)}
+.renders figure{margin:0}
+.render{background:var(--night-2);aspect-ratio:3/2;overflow:hidden}
+.render img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .9s var(--ease)}
+.render img.ready{opacity:1}
+.renders figcaption{font:600 .9375rem/1.45 var(--sans);margin-top:12px;max-width:52ch}
+.renders figcaption span.t{display:block;color:var(--water)}
+.renders figure:last-child figcaption span.t{color:var(--ochre)}
+.qa{padding:clamp(56px,6vw,96px) 0 clamp(88px,10vw,160px)}
+.qa-row{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:24px 64px;padding:36px 0;border-top:1px solid var(--night-3)}
+.qa-row h3{font-size:clamp(1.5rem,1.25rem + .8vw,2rem)}
+.qa-row p{color:var(--bone-soft);max-width:60ch}
 
-.pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
-.pair figure{margin:0;position:relative;background:#cdb48e}
-.pair img{width:100%;aspect-ratio:3/2;height:auto;object-fit:cover}
-.pair figcaption{padding:16px var(--m) 24px;font-size:1rem;line-height:1.45;background:var(--field);color:var(--field-ink)}
-.pair figure:last-child figcaption{background:var(--surface);color:var(--ink)}
-
-/* ---------- classroom ---------- */
-.class{padding:clamp(96px,11vw,180px) 0 clamp(48px,6vw,96px)}
-.class h2{grid-column:1/-1;font-size:var(--step-h2)}
-.agenda{grid-column:1/-1;display:grid;grid-template-columns:150px 1fr;gap:40px;margin-top:56px}
+/* ---------- lessons (ochre) ---------- */
+.class{padding:clamp(88px,10vw,160px) 0}
+.class h2 .soft{color:var(--ink-soft)}
+.agenda{display:grid;grid-template-columns:180px minmax(0,1fr);gap:40px;margin-top:56px}
 .tabs{display:flex;flex-direction:column;gap:6px}
-.tab{width:150px;height:64px;border:0;background:var(--surface);text-align:left;padding:10px 14px;cursor:pointer;display:flex;flex-direction:column;justify-content:center;transition:background .2s var(--ease),color .2s var(--ease)}
-.tab span{font-size:1rem;font-weight:600;line-height:1.2}
-.tab small{font-size:.8125rem;opacity:.75}
-.tab:hover{background:#dedcd7}
-.tab[aria-selected="true"]{background:var(--field);color:#fff}
-.rows{display:flex;flex-direction:column;gap:4px}
+.tab{border:0;background:rgba(23,17,10,.1);text-align:left;padding:12px 16px;cursor:pointer;display:flex;flex-direction:column;border-radius:2px;color:var(--ink);transition:background .25s var(--ease),color .25s var(--ease)}
+.tab span{font-size:1rem;font-weight:700;line-height:1.2}
+.tab small{font-size:.8125rem;opacity:.8}
+.tab:hover{background:rgba(23,17,10,.18)}
+.tab[aria-selected="true"]{background:var(--ink);color:var(--ochre)}
 .lesson[hidden]{display:none}
-.lesson{display:flex;flex-direction:column;gap:4px}
-.row{min-height:76px;display:grid;grid-template-columns:22% 1fr;align-items:center;padding:12px 20px;background:var(--surface)}
-.row:nth-child(even){background:#e4e2de}
-.row .t{font-size:1.25rem;font-variant-numeric:tabular-nums}
-.row .t small{font-size:.875rem;color:var(--muted)}
-.row .w{font-size:1.125rem;font-weight:500}
-.row .w small{display:block;font-size:.875rem;font-weight:400;color:var(--muted);margin-top:2px}
-.ask{font-size:1rem;color:var(--muted);margin-top:18px}
+.lesson{display:flex;flex-direction:column}
+.row{display:grid;grid-template-columns:120px minmax(0,1fr);gap:24px;align-items:baseline;padding:18px 0;border-top:1px solid rgba(23,17,10,.3)}
+.row .t{font:700 1.125rem var(--sans);font-variant-numeric:tabular-nums}
+.row .t small{font-weight:500;font-size:.8125rem;color:var(--ink-soft)}
+.row .w{font-size:1.1875rem;font-weight:600}
+.row .w small{display:block;font-size:1rem;font-weight:400;color:var(--ink-soft);margin-top:4px}
+.ask{font:.9375rem var(--sans);color:var(--ink-soft);margin-top:22px;padding-top:18px;border-top:1px solid rgba(23,17,10,.3)}
 
-/* ---------- sources (text page on the axis) ---------- */
-.sources{padding:clamp(48px,6vw,96px) 0 clamp(96px,10vw,160px)}
-.axis{display:grid;grid-template-columns:42% 1fr;column-gap:24px;padding:0 var(--m)}
-.axis .side{font-size:1rem;color:var(--muted);padding-right:24px}
-.axis h2{font-size:var(--step-h2);margin-bottom:28px}
-.axis ol{margin:0;padding-left:1.4em;columns:2 34ch;column-gap:40px;font-size:1rem;line-height:1.5}
-.axis li{break-inside:avoid;margin-bottom:14px}
-.axis li:target{background:var(--surface)}
-.further{display:flex;flex-direction:column;gap:6px;margin-bottom:40px;font-size:1.125rem}
+/* ---------- sources ---------- */
+.sources{padding:clamp(88px,10vw,160px) 0}
+.src-grid{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:24px 64px}
+.src-grid .side{color:var(--bone-soft);font-size:1rem;max-width:36ch}
+.further{display:block;margin:20px 0 40px;font-size:1.125rem}
+.sources ol,.photos{margin:0;padding-left:1.4em;columns:2 32ch;column-gap:48px;font:.9375rem/1.55 var(--sans);color:var(--bone-soft)}
+.sources li{break-inside:avoid;margin-bottom:14px}
+.sources li a{color:var(--bone)}
+.sources li:target{background:var(--night-3)}
+.sources h3{font:700 1rem var(--sans);margin:48px 0 16px}
+.photos{list-style:none;padding:0}
 
-/* ---------- footer ---------- */
-footer{background:var(--accent);color:var(--accent-ink);min-height:72svh;display:flex;flex-direction:column;justify-content:space-between;padding:40px 0 24px}
-.ftop{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;padding:0 var(--m);font-size:.9375rem;line-height:1.45}
-.ftop .notes{grid-column:1/8;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.ftop .up{grid-column:12/13;justify-self:end}
-.contact-label{padding:0 var(--m);margin-top:auto;font-size:var(--step-small);font-weight:600}
-.contact{padding:8px var(--m) 0;font-size:clamp(44px,8.4vw,150px);line-height:.95;letter-spacing:-0.04em;font-weight:500;display:block;text-decoration:none}
-.contact:hover span{text-decoration:underline;text-decoration-thickness:.04em}
-.fmeta{display:grid;grid-template-columns:1fr 1fr 1fr;padding:28px var(--m) 0;font-size:.875rem;gap:24px}
-.fmeta div:nth-child(2){text-align:center}
-.fmeta div:last-child{text-align:right}
+/* ---------- footer (ochre) ---------- */
+footer{background:var(--ochre);color:var(--ink);padding:56px 0 28px}
+.ftop{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px 40px;font:.9375rem/1.5 var(--sans)}
+.ftop .notes{display:flex;flex-wrap:wrap;gap:8px 40px}
+.contact-label{margin-top:clamp(96px,14vw,200px);font:700 .9375rem var(--sans)}
+.contact{display:block;margin-top:10px;font-family:var(--serif);font-weight:600;font-size:clamp(2.75rem,1rem + 6.5vw,6rem);line-height:1;letter-spacing:-0.03em;text-decoration:none;font-variation-settings:'opsz' 60;overflow-wrap:anywhere}
+.contact:hover{text-decoration:underline;text-decoration-thickness:.05em}
+.fmeta{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 32px;margin-top:40px;padding-top:16px;border-top:1px solid rgba(23,17,10,.35);font:.8125rem var(--sans)}
 
 /* ---------- motion ---------- */
-@keyframes shutter{from{clip-path:inset(0 0 0 100%)}to{clip-path:inset(0 0 0 0)}}
-@keyframes settle{from{transform:scale(1.12)}to{transform:scale(1)}}
-.pic img{opacity:0}
-.pic img.ready{opacity:1}
-.pic.shut img.ready{animation:shutter 1.1s var(--ease) both, settle 1.4s var(--ease) both}
-.pic.fade img.ready{transition:opacity .9s var(--ease)}
-html.js .rise{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
-html.js .rise.in{opacity:1;transform:none}
+@keyframes settle{from{transform:scale(1.07)}to{transform:scale(1)}}
+.hero img{animation:settle 2.8s var(--ease) both}
+.field i{transition:background-color .5s var(--ease),border-color .5s var(--ease)}
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto}
-  .pic.shut img.ready{animation:none}
-  html.js .rise{transform:none;transition:opacity .4s linear}
+  .hero img{animation:none}
+  .field i,.render img{transition:none}
 }
 
 /* ---------- tablet ---------- */
-@media (min-width:761px) and (max-width:1100px){
-  .links nav{gap:20px}
-  .cols{grid-template-columns:repeat(2,1fr);row-gap:32px}
-  .model-head{grid-column:1/10}
+@media (max-width:1100px){
+  .bar nav{gap:18px}
+  .bar nav a.wide{display:none}
   .controls{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
   .readout{grid-column:1/-1;text-align:left}
-  .note{grid-column:3/-1}
-  .ftop .notes{grid-column:1/11}
-}
-/* tall screens (tablet portrait): square tiles instead of a full-height board */
-@media (min-width:761px) and (max-aspect-ratio:4/5){
-  .board{height:auto;min-height:0;grid-template-rows:60px auto auto}
-  .name,.pic.p1,.pic.p2{aspect-ratio:1/1}
+  .steps{gap:28px}
+  .counts-grid{grid-template-columns:1fr}
+  .field{max-width:none}
 }
 
 /* ---------- phone ---------- */
 @media (max-width:760px){
-  :root{--m:20px}
-  .board{height:auto;min-height:0;padding:6px;gap:6px;grid-template-columns:1fr;grid-template-rows:none}
-  .toprow{grid-template-columns:60px 1fr auto;height:60px}
-  .links{grid-template-columns:1fr}
-  .links nav{grid-column:1;gap:16px}
-  .links nav a.wide{display:none}
-  .action{padding:0 14px}
-  .links nav a.m3d{display:none}
-  .pair{grid-template-columns:minmax(0,1fr)}
-  .name{height:30svh;min-height:200px}
-  .name h1{font-size:22vw}
-  .pic.p1{aspect-ratio:4/3}
-  .pic.p2{aspect-ratio:4/3;order:9}
-  .split{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
-  .say{aspect-ratio:auto;min-height:calc(50vw - 9px);padding:16px;font-size:1.0625rem;overflow:visible}
-  .kicker > span{display:none}
+  .bar{gap:12px;padding:12px var(--m)}
+  .bar nav{display:none}
+  .lang{margin-left:auto}
+  .cta{padding:10px 12px}
+  .mark .t{display:none}
+  .dilemma-head{flex-direction:column;justify-content:flex-end;align-items:stretch}
+  .hero .credit,.dilemma-head .credit{position:relative;right:auto;bottom:auto;text-align:left;padding:0 var(--m) 14px}
+  .hero-text{padding-bottom:20px}
+  .model-head{grid-template-columns:1fr}
+  .view{height:112vw;max-height:640px}
+  .info{position:static;max-width:none;background:var(--night-2);padding:4px 16px 18px}
   .hot{font-size:.75rem;padding:4px 7px}
-  .model-head{grid-column:1/-1}
-  .view{height:112vw;max-height:620px}
-  .info{position:static;max-width:none;background:var(--surface);padding:4px 16px 18px}
   .controls{grid-template-columns:1fr}
-  .readout{text-align:left}
-  .thirds{grid-template-columns:1fr;gap:28px}
-  .lead{font-size:20px}
-  .cols{grid-template-columns:1fr;gap:28px;margin-top:40px}
-  .show h2,.show .para{grid-column:1/-1}
-  .show .para{margin-top:18px}
-  .spec{grid-template-columns:1fr;gap:0;margin-top:56px}
-  .spec .num{font-size:62vw;height:38svh;max-height:31vw}
-  .spec figure:last-child{background:var(--bg);color:var(--ink);padding:20px var(--m) 0;margin:0 calc(-1 * var(--m))}
-  .mosaic{grid-template-columns:minmax(0,1fr);height:auto}
-  .mosaic .pic{aspect-ratio:4/3}
-  .figs{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:none}
-  .fig{aspect-ratio:1/1;padding:16px}
-  .fig .n{font-size:13vw}
-  .fig p{font-size:.9375rem}
-  .note{grid-column:1/-1}
-  .band{padding:32px 0}
-  .band .q,.band .a{grid-column:1/-1}
-  .band .q{font-size:22px;margin-bottom:12px}
-  .band .a{font-size:1.0625rem}
-  .band.head{min-height:30svh}
-  .band.head h2{font-size:13vw}
-  .band.head p{grid-column:1/-1}
+  .steps{grid-template-columns:1fr;gap:44px;margin-top:64px}
+  .cols{grid-template-columns:1fr;gap:28px}
+  .plate figcaption{flex-direction:column;gap:6px}
+  .share-grid{grid-template-columns:1fr}
+  .share figure{position:static}
+  .share figure img{aspect-ratio:4/3}
+  .field{grid-template-columns:repeat(19,1fr)}
+  .renders{grid-template-columns:1fr;gap:36px}
+  .qa-row{grid-template-columns:1fr;gap:10px;padding:28px 0}
   .agenda{grid-template-columns:1fr;gap:16px}
-  .tabs{flex-direction:row;position:sticky;top:0;z-index:2;background:var(--bg);padding:6px 0}
-  .tab{flex:1;width:auto}
-  .row{grid-template-columns:1fr;padding:16px}
-  .axis{grid-template-columns:1fr}
-  .axis .side{padding:0 0 20px}
-  .axis ol{columns:1}
-  .ftop{grid-template-columns:1fr}
-  .ftop .notes{grid-column:1;grid-template-columns:1fr;gap:6px}
-  .ftop .up{grid-column:1;justify-self:start;margin-top:12px}
-  footer{min-height:0}
-  .contact-label{margin-top:96px}
-  .contact{font-size:9.4vw}
-  .fmeta{grid-template-columns:1fr;gap:4px;font-size:.8125rem}
-  .fmeta div:nth-child(2),.fmeta div:last-child{text-align:left}
+  .tabs{flex-direction:row;position:sticky;top:0;z-index:2;background:var(--ochre);padding:8px 0}
+  .tab{flex:1;padding:10px}
+  .row{grid-template-columns:1fr;gap:6px}
+  .src-grid{grid-template-columns:1fr}
+  .sources ol,.photos{columns:1}
 }
 @media (max-width:374px){
-  .links nav{padding:0 12px}
-  .links nav > a{display:none}
-  .action{padding:0 12px}
+  .cta{font-size:.75rem}
+  .lang button{padding:6px 4px}
 }
 </style>
 </head>
 <body>
 <a class="skip" href="#main"><span data-l="en">Skip to the exhibition</span><span data-l="fr">Aller à l'exposition</span></a>
 
-<header class="board" id="top">
-  <div class="toprow">
-    <a class="tile logo ar" href="#top" aria-label="Under the Oasis, back to top">خ</a>
-    <div class="tile links">
-      <nav aria-label="Sections">
-        <a class="m3d" href="#model"><span data-l="en">Model</span><span data-l="fr">Maquette</span></a>
-        <a class="wide" href="#history"><span data-l="en">History</span><span data-l="fr">Histoire</span></a>
-        <a class="wide" href="#sharing"><span data-l="en">Sharing</span><span data-l="fr">Partage</span></a>
-        <a href="#dilemma"><span data-l="en">Dilemma</span><span data-l="fr">Dilemme</span></a>
-        <a class="wide" href="#classroom"><span data-l="en">Lessons</span><span data-l="fr">Séances</span></a>
-        <div class="lang" role="group" aria-label="Language / Langue">
-          <button type="button" id="btn-en" lang="en" aria-label="English" aria-pressed="true">EN</button>
-          <button type="button" id="btn-fr" lang="fr" aria-label="Français" aria-pressed="false">FR</button>
-        </div>
-      </nav>
-    </div>
-    <a class="tile action" href="#model"><span data-l="en">Explore in 3D</span><span data-l="fr">Explorer en 3D</span></a>
+<header class="bar" id="top">
+  <a class="mark" href="#top" aria-label="Under the Oasis, back to top"><span class="ar" lang="ar" aria-hidden="true">خ</span><span class="t"><span data-l="en">Under the Oasis</span><span data-l="fr">Sous l'oasis</span></span></a>
+  <nav aria-label="Sections">
+    <a href="#history"><span data-l="en">History</span><span data-l="fr">Histoire</span></a>
+    <a href="#sharing"><span data-l="en">Sharing</span><span data-l="fr">Partage</span></a>
+    <a class="wide" href="#numbers"><span data-l="en">Counts</span><span data-l="fr">Chiffres</span></a>
+    <a href="#dilemma"><span data-l="en">Dilemma</span><span data-l="fr">Dilemme</span></a>
+    <a href="#classroom"><span data-l="en">Lessons</span><span data-l="fr">Séances</span></a>
+  </nav>
+  <div class="lang" role="group" aria-label="Language / Langue">
+    <button type="button" id="btn-en" lang="en" aria-label="English" aria-pressed="true">EN</button>
+    <button type="button" id="btn-fr" lang="fr" aria-label="Français" aria-pressed="false">FR</button>
   </div>
-
-  <div class="tile name">
-    <div class="top">
-      <span class="ar" lang="ar">خطّارة</span>
-      <p class="kicker"><b><span data-l="en">Under the Oasis</span><span data-l="fr">Sous l'oasis</span></b><span><span data-l="en">A virtual exhibition</span><span data-l="fr">Une exposition virtuelle</span></span></p>
-    </div>
-    <h1>Khettara</h1>
-  </div>
-  <div class="tile pic p1 shut">
-    <img id="still-aerial" width="1600" height="900" alt="Aerial view rendered from the exhibition's 3D model: a dotted line of shaft mounds runs across the plain from the foothills to the palm grove.">
-  </div>
-  <div class="tile pic p2 dark fade">
-    <img id="still-cut" width="1600" height="900" alt="Cutaway rendered from the 3D model: the tunnel slopes beneath the plain, under the blue water table, with shafts rising to the surface.">
-  </div>
-  <div class="split">
-    <p class="tile say dark"><span data-l="en">In Morocco's oases, water travels for kilometres underground, moved by gravity alone.</span><span data-l="fr">Dans les oasis du Maroc, l'eau voyage des kilomètres sous terre, portée par la seule gravité.</span></p>
-    <p class="tile say blue"><span data-l="en">A virtual exhibition on how it works, who shares it and why it is running dry.</span><span data-l="fr">Une exposition virtuelle : comment elle marche, qui la partage, pourquoi elle s'assèche.</span></p>
-  </div>
+  <a class="cta" href="#model"><span data-l="en">Explore in 3D</span><span data-l="fr">Explorer en 3D</span></a>
 </header>
+
+<section class="hero" aria-labelledby="title">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Khettaras.jpg/1920px-Khettaras.jpg" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Khettaras.jpg/1280px-Khettaras.jpg 1280w, https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Khettaras.jpg/1920px-Khettaras.jpg 1920w" sizes="100vw" width="1920" height="1304" fetchpriority="high" alt="">
+  <div class="hero-text">
+    <p class="ar" lang="ar">خطّارة</p>
+    <h1 id="title">Khettara</h1>
+    <p class="lede"><span data-l="en">In Morocco's oases, water travels for kilometres underground, moved by gravity alone. A virtual exhibition on how it works, who shares it and why it is running dry.</span><span data-l="fr">Dans les oasis du Maroc, l'eau voyage des kilomètres sous terre, portée par la seule gravité. Une exposition virtuelle : comment elle marche, qui la partage, pourquoi elle s'assèche.</span></p>
+    <p class="by"><span data-l="en">Under the Oasis · By Amine Brahimi · November 2026</span><span data-l="fr">Sous l'oasis · Par Amine Brahimi · Novembre 2026</span></p>
+  </div>
+  <p class="credit"><span data-l="en">The mounds of khettara shafts crossing the desert near Erfoud.</span><span data-l="fr">Les déblais des puits de khettaras traversent le désert près d'Erfoud.</span> <a href="https://commons.wikimedia.org/wiki/File:Khettaras.jpg">Bernard Gagnon</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a></p>
+</section>
 
 <main id="main" tabindex="-1">
 
 <!-- MODEL -->
 <section class="model" id="model">
-  <div class="grid">
+  <div class="wrap">
     <div class="model-head">
-      <h2 class="rise"><span data-l="en">From mountain to palm grove</span><span data-l="fr">De la montagne à la palmeraie</span></h2>
-      <p class="rise"><span data-l="en">Turn the model, tap a label and lower the water table. Heights are exaggerated: the real tunnel slopes only 1 to 2%.</span><span data-l="fr">Faites tourner la maquette, touchez une étiquette et faites baisser la nappe. Les hauteurs sont exagérées : la vraie pente n'est que de 1 à 2 %.</span><sup><a href="#src-1">1</a></sup></p>
+      <h2><span data-l="en">From mountain to palm grove</span><span data-l="fr">De la montagne à la palmeraie</span></h2>
+      <p><span data-l="en">Turn the model, tap a label and lower the water table. Heights are exaggerated: the real tunnel slopes only 1 to 2%.</span><span data-l="fr">Faites tourner la maquette, touchez une étiquette et faites baisser la nappe. Les hauteurs sont exagérées : la vraie pente n'est que de 1 à 2 %.</span><sup><a href="#src-1">1</a></sup></p>
     </div>
 
     <div class="stage-wrap">
@@ -384,12 +353,12 @@ html.js .rise.in{opacity:1;transform:none}
        <div class="view" id="stage">
         <div id="hots"></div>
         <div class="turn">
-          <button type="button" id="turn-l" aria-label="Turn the model left">←</button>
-          <button type="button" id="turn-r" aria-label="Turn the model right">→</button>
+          <button type="button" id="turn-l" aria-label="Turn the model left"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M16 10H4M9 5l-5 5 5 5"/></svg></button>
+          <button type="button" id="turn-r" aria-label="Turn the model right"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 10h12M11 5l5 5-5 5"/></svg></button>
         </div>
         <div class="nogl">
           <p><b data-l="en">This browser cannot show the 3D model.</b><b data-l="fr">Ce navigateur ne peut pas afficher la maquette 3D.</b></p>
-          <p style="margin-top:12px"><span data-l="en">It shows foothills where rain feeds the groundwater; a mother well dug at the highest point; a line of shafts across the plain; a tunnel sloping gently under the water table; an outlet and basin; and canals feeding a palm grove beside an earthen village.</span><span data-l="fr">Elle montre le piémont où la pluie alimente la nappe ; un puits mère creusé au point le plus haut ; une ligne de puits à travers la plaine ; un tunnel en pente douce sous la nappe ; une sortie et un bassin ; des canaux qui irriguent une palmeraie près d'un village de terre.</span></p>
+          <p><span data-l="en">It shows foothills where rain feeds the groundwater; a mother well dug at the highest point; a line of shafts across the plain; a tunnel sloping gently under the water table; an outlet and basin; and canals feeding a palm grove beside an earthen village.</span><span data-l="fr">Elle montre le piémont où la pluie alimente la nappe ; un puits mère creusé au point le plus haut ; une ligne de puits à travers la plaine ; un tunnel en pente douce sous la nappe ; une sortie et un bassin ; des canaux qui irriguent une palmeraie près d'un village de terre.</span></p>
         </div>
        </div>
         <div class="info" id="info" aria-live="polite">
@@ -422,16 +391,28 @@ html.js .rise.in{opacity:1;transform:none}
       </div>
     </div>
 
-    <div class="thirds">
-      <div class="rise">
+    <div class="steps">
+      <div>
+        <figure>
+          <div class="render step-render"><img id="still-cut" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" width="1280" height="960" alt=""></div>
+          <figcaption class="cap"><span data-l="en">Rendered from the model: the tunnel's upper end, under the mother well, reaches into the groundwater.</span><span data-l="fr">Rendu de la maquette : la partie haute du tunnel, sous le puits mère, atteint la nappe.</span></figcaption>
+        </figure>
         <h3><span data-l="en">Gather</span><span data-l="fr">Capter</span></h3>
         <p><span data-l="en">Rain and floods on the foothills soak into the gravel. The tunnel's upper end, under the mother well, cuts into this water-bearing layer.</span><span data-l="fr">La pluie et les crues du piémont s'infiltrent dans les graviers. La partie haute du tunnel, sous le puits mère, entaille cette couche aquifère.</span><sup><a href="#src-1">1</a></sup></p>
       </div>
-      <div class="rise">
+      <div>
+        <figure>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Khettara.jpg/1280px-Khettara.jpg" width="1280" height="958" loading="lazy" decoding="async" alt="">
+          <figcaption class="cap"><span data-l="en">A shaft opening near Erfoud.</span><span data-l="fr">L'ouverture d'un puits près d'Erfoud.</span> <a href="https://commons.wikimedia.org/wiki/File:Khettara.jpg">Bernard Gagnon</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a></figcaption>
+        </figure>
         <h3><span data-l="en">Channel</span><span data-l="fr">Conduire</span></h3>
         <p><span data-l="en">Water seeps in and runs down a slope of 1 to 2%. Shafts every 5 to 40 m let diggers remove soil, climb down and bring in air.</span><span data-l="fr">L'eau s'infiltre et descend une pente de 1 à 2 %. Des puits tous les 5 à 40 m servent à sortir la terre, à descendre et à aérer.</span><sup><a href="#src-1">1</a>,<a href="#src-2">2</a></sup></p>
       </div>
-      <div class="rise">
+      <div>
+        <figure>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/A_pool_for_irrigating_gardens.jpg/1280px-A_pool_for_irrigating_gardens.jpg" width="1280" height="768" loading="lazy" decoding="async" alt="">
+          <figcaption class="cap"><span data-l="en">An irrigation pool in the palm grove of Figuig.</span><span data-l="fr">Un bassin d'irrigation dans la palmeraie de Figuig.</span> <a href="https://commons.wikimedia.org/wiki/File:A_pool_for_irrigating_gardens.jpg">Mohammed Abdeljalil</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a></figcaption>
+        </figure>
         <h3><span data-l="en">Share</span><span data-l="fr">Partager</span></h3>
         <p><span data-l="en">At the outlet, water fills a basin and canals carry it to each family's garden in turn. A khettara can never take more than the aquifer receives.</span><span data-l="fr">À la sortie, l'eau remplit un bassin et des canaux la mènent tour à tour au jardin de chaque famille. Une khettara ne prend jamais plus que ce que reçoit la nappe.</span><sup><a href="#src-9">9</a></sup></p>
       </div>
@@ -440,99 +421,119 @@ html.js .rise.in{opacity:1;transform:none}
 </section>
 
 <!-- HISTORY -->
-<section class="intro" id="history">
-  <div class="grid">
-    <p class="lead rise"><span data-l="en">The same idea has watered dry lands for more than 2,500 years: a gently sloping tunnel that lets groundwater walk to the surface. Iran calls it qanat, Algeria foggara, Morocco khettara.</span><span data-l="fr">La même idée irrigue les terres sèches depuis plus de 2 500 ans : un tunnel en pente douce qui amène l'eau souterraine à la surface. L'Iran dit qanat, l'Algérie foggara, le Maroc khettara.</span><sup><a href="#src-1">1</a>,<a href="#src-4">4</a></sup></p>
-    <div class="cols">
-      <p class="rise"><span data-l="en"><b>Born in Persia.</b> The technique appears there more than 2,500 years ago and spreads along the southern Mediterranean in the Middle Ages. Iran still counts an estimated 37,000 qanats, and eleven were inscribed on UNESCO's World Heritage List in 2016.</span><span data-l="fr"><b>Née en Perse.</b> La technique y apparaît il y a plus de 2 500 ans et gagne la rive sud de la Méditerranée au Moyen Âge. L'Iran compterait encore 37 000 qanats ; onze ont été inscrits au patrimoine mondial de l'UNESCO en 2016.</span><sup><a href="#src-1">1</a>,<a href="#src-6">6</a>,<a href="#src-7">7</a></sup></p>
-      <p class="rise"><span data-l="en"><b>Rooted in Marrakech.</b> Under the Almoravids, in the 11th and 12th centuries, the first Moroccan khettaras were dug to supply Marrakech and irrigate the Haouz plain. About 650 still worked there at the end of the 20th century.</span><span data-l="fr"><b>Ancrée à Marrakech.</b> Sous les Almoravides, aux XIe et XIIe siècles, les premières khettaras marocaines sont creusées pour alimenter Marrakech et irriguer la plaine du Haouz. Environ 650 y fonctionnaient encore à la fin du XXe siècle.</span><sup><a href="#src-1">1</a>,<a href="#src-5">5</a></sup></p>
-      <p class="rise"><span data-l="en"><b>Alive in the Tafilalet.</b> The oldest documented digging there dates from the 16th and 17th centuries, and the khettaras of Siffa from about 1730. After the drought of 1979–1985, rain returned from 2006 and young people came back to restore the tunnels.</span><span data-l="fr"><b>Vivante au Tafilalet.</b> Les premiers creusements documentés y datent des XVIe et XVIIe siècles, ceux de Siffa d'environ 1730. Après la sécheresse de 1979-1985, la pluie revient à partir de 2006 et des jeunes reviennent restaurer les galeries.</span><sup><a href="#src-1">1</a>,<a href="#src-2">2</a>,<a href="#src-4">4</a></sup></p>
-      <p class="rise"><span data-l="en"><b>About this exhibition.</b> A work sample by Amine Brahimi, not an official UNESCO publication. It is designed as a deep-dive companion to the Morocco case of <i>The Voices of Water</i>, by the Global Network of Water Museums, on UNESCO's Virtual Science Museum.</span><span data-l="fr"><b>À propos.</b> Échantillon de travail réalisé par Amine Brahimi, et non publication officielle de l'UNESCO. Il prolonge le cas marocain de <i>The Voices of Water</i>, exposition du Réseau mondial des musées de l'eau sur le Musée virtuel des sciences de l'UNESCO.</span><sup><a href="#src-8">8</a></sup></p>
+<section class="history" id="history">
+  <figure class="plate">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/64/Tafilalt_-_panoramio.jpg" width="1227" height="766" loading="lazy" decoding="async" alt="">
+    <figcaption><span class="cap" style="margin:0"><span data-l="en">Palm groves along the valley floor in the Tafilalet.</span><span data-l="fr">Palmeraies au fond de la vallée, au Tafilalet.</span></span><span class="credit"><a href="https://commons.wikimedia.org/wiki/File:Tafilalt_-_panoramio.jpg">Eduardo Manchon</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a></span></figcaption>
+  </figure>
+  <div class="history-body ochre">
+    <div class="wrap">
+      <h2 class="sr"><span data-l="en">History</span><span data-l="fr">Histoire</span></h2>
+      <p class="lede"><span data-l="en">The same idea has watered dry lands for more than 2,500 years: a gently sloping tunnel that lets groundwater walk to the surface. Iran calls it qanat, Algeria foggara, Morocco khettara.</span><span data-l="fr">La même idée irrigue les terres sèches depuis plus de 2 500 ans : un tunnel en pente douce qui amène l'eau souterraine à la surface. L'Iran dit qanat, l'Algérie foggara, le Maroc khettara.</span><sup><a href="#src-1">1</a>,<a href="#src-4">4</a></sup></p>
+      <div class="cols">
+        <p><span data-l="en"><b>Born in Persia</b>The technique appears there more than 2,500 years ago and spreads along the southern Mediterranean in the Middle Ages. Iran still counts an estimated 37,000 qanats, and eleven were inscribed on UNESCO's World Heritage List in 2016.</span><span data-l="fr"><b>Née en Perse</b>La technique y apparaît il y a plus de 2 500 ans et gagne la rive sud de la Méditerranée au Moyen Âge. L'Iran compterait encore 37 000 qanats ; onze ont été inscrits au patrimoine mondial de l'UNESCO en 2016.</span><sup><a href="#src-1">1</a>,<a href="#src-6">6</a>,<a href="#src-7">7</a></sup></p>
+        <p><span data-l="en"><b>Rooted in Marrakech</b>Under the Almoravids, in the 11th and 12th centuries, the first Moroccan khettaras were dug to supply Marrakech and irrigate the Haouz plain. About 650 still worked there at the end of the 20th century.</span><span data-l="fr"><b>Ancrée à Marrakech</b>Sous les Almoravides, aux XIe et XIIe siècles, les premières khettaras marocaines sont creusées pour alimenter Marrakech et irriguer la plaine du Haouz. Environ 650 y fonctionnaient encore à la fin du XXe siècle.</span><sup><a href="#src-1">1</a>,<a href="#src-5">5</a></sup></p>
+        <p><span data-l="en"><b>Alive in the Tafilalet</b>The oldest documented digging there dates from the 16th and 17th centuries, and the khettaras of Siffa from about 1730. After the drought of 1979–1985, rain returned from 2006 and young people came back to restore the tunnels.</span><span data-l="fr"><b>Vivante au Tafilalet</b>Les premiers creusements documentés y datent des XVIe et XVIIe siècles, ceux de Siffa d'environ 1730. Après la sécheresse de 1979-1985, la pluie revient à partir de 2006 et des jeunes reviennent restaurer les galeries.</span><sup><a href="#src-1">1</a>,<a href="#src-2">2</a>,<a href="#src-4">4</a></sup></p>
+        <p class="about"><span data-l="en"><b>About this exhibition</b>A work sample by Amine Brahimi, not an official UNESCO publication. It is designed as a deep-dive companion to the Morocco case of <i>The Voices of Water</i>, by the Global Network of Water Museums, on UNESCO's Virtual Science Museum.</span><span data-l="fr"><b>À propos</b>Échantillon de travail réalisé par Amine Brahimi, et non publication officielle de l'UNESCO. Il prolonge le cas marocain de <i>The Voices of Water</i>, exposition du Réseau mondial des musées de l'eau sur le Musée virtuel des sciences de l'UNESCO.</span><sup><a href="#src-8">8</a></sup></p>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- SHARING -->
-<section class="show" id="sharing">
-  <div class="grid">
-    <h2 class="rise"><span data-l="en">Water measured in time</span><span data-l="fr">L'eau se mesure en temps</span></h2>
-    <p class="para rise"><span data-l="en">In the Tafilalet, a family's share comes from the work its ancestors gave when the tunnel was dug. Shares are inherited, sold or rented, and a sheikh keeps the turns. Turns were timed with a pierced bowl floating in a pot: when it sank, about 45 minutes had passed.</span><span data-l="fr">Au Tafilalet, la part d'une famille vient du travail fourni par ses ancêtres au creusement. Les parts s'héritent, se vendent ou se louent, et un cheikh veille aux tours. On les mesurait avec un bol percé flottant dans un pot : quand il coulait, environ 45 minutes avaient passé.</span><sup><a href="#src-2">2</a></sup></p>
-    <div class="spec">
-      <figure>
-        <figcaption><span class="sr">12 </span><span data-l="en">Hours of full flow in one nouba, the basic share</span><span data-l="fr">Heures de débit complet dans une nouba, la part de base</span></figcaption>
-        <div class="num" aria-hidden="true">12</div>
-      </figure>
-      <figure>
-        <figcaption><span class="sr">45 </span><span data-l="en">Minutes before the pierced bowl, the tanast, sinks</span><span data-l="fr">Minutes avant que le bol percé, la tanast, ne coule</span></figcaption>
-        <div class="num" aria-hidden="true">45</div>
-      </figure>
+<section class="share" id="sharing">
+  <div class="wrap share-grid">
+    <figure>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Tarhjicht_-_Water_the_treasure_in_the_oasis_-_panoramio.jpg/1280px-Tarhjicht_-_Water_the_treasure_in_the_oasis_-_panoramio.jpg" width="1280" height="853" loading="lazy" decoding="async" alt="">
+      <figcaption class="cap"><span data-l="en">An irrigation canal under the palms of the Tarhjicht oasis.</span><span data-l="fr">Un canal d'irrigation sous les palmiers de l'oasis de Tarhjicht.</span> <a href="https://commons.wikimedia.org/wiki/File:Tarhjicht_-_Water_the_treasure_in_the_oasis_-_panoramio.jpg">tuarek</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a></figcaption>
+    </figure>
+    <div>
+      <h2><span data-l="en">Water measured in time</span><span data-l="fr">L'eau se mesure en temps</span></h2>
+      <p class="para measure"><span data-l="en">In the Tafilalet, a family's share comes from the work its ancestors gave when the tunnel was dug. Shares are inherited, sold or rented, and a sheikh keeps the turns. Turns were timed with a pierced bowl floating in a pot: when it sank, about 45 minutes had passed.</span><span data-l="fr">Au Tafilalet, la part d'une famille vient du travail fourni par ses ancêtres au creusement. Les parts s'héritent, se vendent ou se louent, et un cheikh veille aux tours. On les mesurait avec un bol percé flottant dans un pot : quand il coulait, environ 45 minutes avaient passé.</span><sup><a href="#src-2">2</a></sup></p>
+      <div class="units">
+        <div class="unit">
+          <span class="n">12</span><span class="u"><span data-l="en">hours</span><span data-l="fr">heures</span></span>
+          <p><span data-l="en">of full flow in one nouba, the basic share</span><span data-l="fr">de débit complet dans une nouba, la part de base</span></p>
+        </div>
+        <div class="unit">
+          <span class="n">45</span><span class="u"><span data-l="en">minutes</span><span data-l="fr">minutes</span></span>
+          <p><span data-l="en">before the pierced bowl, the tanast, sinks</span><span data-l="fr">avant que le bol percé, la tanast, ne coule</span></p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- NUMBERS -->
-<section class="stats" id="numbers">
-  <div class="grid"><h2 class="rise"><span data-l="en">How many still flow</span><span data-l="fr">Combien coulent encore</span></h2></div>
-  <div class="mosaic">
-    <div class="pic fade"><img id="still-oasis" width="1200" height="1200" alt="Rendered from the 3D model: the palm grove and earthen village at the end of the khettara, with the basin and canals."></div>
-    <div class="figs">
-      <div class="fig black">
-        <div class="n">304</div>
-        <p><span data-l="en">of 570 khettaras in the Tafilalet still work</span><span data-l="fr">des 570 khettaras du Tafilalet fonctionnent encore</span><sup><a href="#src-2">2</a></sup></p>
+<section class="counts ochre" id="numbers">
+  <div class="wrap">
+    <h2><span data-l="en">How many still flow</span><span data-l="fr">Combien coulent encore</span></h2>
+    <div class="counts-grid">
+      <div>
+        <div class="field" id="field" role="img" aria-label="570 dots, one per khettara in the Tafilalet; 304 are filled."></div>
+        <div class="key" aria-hidden="true"><span><i class="on"></i><span data-l="en">Still working</span><span data-l="fr">En service</span></span><span><i></i><span data-l="en">Abandoned or dry</span><span data-l="fr">Abandonnée ou à sec</span></span></div>
       </div>
-      <div class="fig blue">
-        <div class="n">650</div>
-        <p><span data-l="en">worked around Marrakech in the late 20th century. Almost none remain.</span><span data-l="fr">fonctionnaient autour de Marrakech à la fin du XXe siècle. Il n'en reste presque aucune.</span><sup><a href="#src-1">1</a></sup></p>
+      <div>
+        <p class="say"><span data-l="en"><strong>304 of 570</strong> khettaras in the Tafilalet still work. Each dot is one tunnel.</span><span data-l="fr"><strong>304 sur 570</strong> khettaras du Tafilalet fonctionnent encore. Chaque point est une galerie.</span><sup><a href="#src-2">2</a></sup></p>
+        <p class="say"><span data-l="en">Around Marrakech, <strong>650</strong> worked in the late 20th century. Almost none remain.</span><span data-l="fr">Autour de Marrakech, <strong>650</strong> fonctionnaient à la fin du XXe siècle. Il n'en reste presque aucune.</span><sup><a href="#src-1">1</a></sup></p>
       </div>
     </div>
-  </div>
-  <div class="grid">
-    <p class="note rise"><span data-l="en">The Tafilalet's working khettaras irrigate about 16,000 hectares, with a combined flow of about 700 litres a second. Sources do not always agree: a 2006 census found only about 150 in operation. That is why every figure here carries its source.</span><span data-l="fr">Les khettaras en service du Tafilalet irriguent environ 16 000 hectares, pour un débit cumulé d'environ 700 litres par seconde. Les sources ne concordent pas toujours : un recensement de 2006 n'en comptait qu'environ 150 en service. C'est pourquoi chaque chiffre porte ici sa source.</span><sup><a href="#src-2">2</a></sup></p>
+    <p class="note"><span data-l="en">The Tafilalet's working khettaras irrigate about 16,000 hectares, with a combined flow of about 700 litres a second. Sources do not always agree: a 2006 census found only about 150 in operation. That is why every figure here carries its source.</span><span data-l="fr">Les khettaras en service du Tafilalet irriguent environ 16 000 hectares, pour un débit cumulé d'environ 700 litres par seconde. Les sources ne concordent pas toujours : un recensement de 2006 n'en comptait qu'environ 150 en service. C'est pourquoi chaque chiffre porte ici sa source.</span><sup><a href="#src-2">2</a></sup></p>
   </div>
 </section>
 
 <!-- DILEMMA -->
 <section class="dilemma" id="dilemma">
-  <div class="band head">
-    <div class="grid">
+  <div class="dilemma-head">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Tafilalt_Khettara.jpg/1920px-Tafilalt_Khettara.jpg" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Tafilalt_Khettara.jpg/1280px-Tafilalt_Khettara.jpg 1280w, https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Tafilalt_Khettara.jpg/1920px-Tafilalt_Khettara.jpg 1920w" sizes="100vw" width="1920" height="1280" loading="lazy" decoding="async" alt="">
+    <div class="wrap">
       <h2><span data-l="en">Pump, or disappear?</span><span data-l="fr">Pomper ou disparaître ?</span></h2>
       <p><span data-l="en">The question researchers ask about the oases of southern Morocco today.</span><span data-l="fr">La question que posent les chercheurs sur les oasis du sud du Maroc.</span><sup><a href="#src-3">3</a></sup></p>
     </div>
+    <p class="credit"><span data-l="en">A khettara shaft in the Tafilalet, with a wooden frame above it.</span><span data-l="fr">Un puits de khettara au Tafilalet, surmonté d'un cadre en bois.</span> <a href="https://commons.wikimedia.org/wiki/File:Tafilalt_Khettara.jpg">Sebastian Lapostol</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a></p>
   </div>
-  <div class="pair">
-    <figure class="pic fade"><img id="still-wet" width="1200" height="800" alt="Rendered from the 3D model in an average year: the water table sits high and the lower half of the tunnel carries water to the palm grove.">
-      <figcaption><span data-l="en">Average year: the tunnel's upper half sits in the aquifer and water reaches the oasis.</span><span data-l="fr">Année moyenne : la moitié haute du tunnel baigne dans la nappe et l'eau atteint l'oasis.</span></figcaption></figure>
-    <figure class="pic fade"><img id="still-dry" width="1200" height="800" alt="Rendered from the 3D model after heavy pumping: the water table has dropped below the tunnel, solar pumps stand in the fields and the canals are empty.">
-      <figcaption><span data-l="en">After years of pumping: the water table falls below the tunnel and the outlet runs dry.</span><span data-l="fr">Après des années de pompage : la nappe passe sous le tunnel et la sortie s'assèche.</span></figcaption></figure>
+  <div class="wrap">
+    <div class="renders">
+      <figure>
+        <div class="render"><img id="still-wet" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" width="1200" height="800" alt="Rendered from the 3D model in an average year: the water table sits high and the lower half of the tunnel carries water to the palm grove."></div>
+        <figcaption><span class="t"><span data-l="en">Average year</span><span data-l="fr">Année moyenne</span></span><span data-l="en">The tunnel's upper half sits in the aquifer and water reaches the oasis.</span><span data-l="fr">La moitié haute du tunnel baigne dans la nappe et l'eau atteint l'oasis.</span></figcaption>
+      </figure>
+      <figure>
+        <div class="render"><img id="still-dry" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" width="1200" height="800" alt="Rendered from the 3D model after heavy pumping: the water table has dropped below the tunnel, solar pumps stand in the fields and the canals are empty."></div>
+        <figcaption><span class="t"><span data-l="en">After years of pumping</span><span data-l="fr">Après des années de pompage</span></span><span data-l="en">The water table falls below the tunnel and the outlet runs dry.</span><span data-l="fr">La nappe passe sous le tunnel et la sortie s'assèche.</span></figcaption>
+      </figure>
+    </div>
+    <div class="qa">
+      <div class="qa-row">
+        <h3><span data-l="en">Why are khettaras drying up?</span><span data-l="fr">Pourquoi les khettaras s'assèchent-elles ?</span></h3>
+        <p><span data-l="en">Pumping for drinking water and for new farms lowers the water table, while lower rainfall refills the aquifer less. On the same aquifer, motor pumps tend to win over the khettara.</span><span data-l="fr">Le pompage pour l'eau potable et les nouvelles exploitations fait baisser la nappe, et des pluies plus faibles la rechargent moins. Sur une même nappe, les motopompes finissent par l'emporter sur la khettara.</span><sup><a href="#src-2">2</a>,<a href="#src-3">3</a></sup></p>
+      </div>
+      <div class="qa-row">
+        <h3><span data-l="en">What are communities doing?</span><span data-l="fr">Que font les communautés ?</span></h3>
+        <p><span data-l="en">Some drill a borehole, add a solar pump and pour the pumped water into their khettara. The water flows again and their shared access survives.</span><span data-l="fr">Certaines forent un puits, installent une pompe solaire et versent l'eau pompée dans leur khettara. L'eau coule à nouveau et l'accès collectif survit.</span><sup><a href="#src-3">3</a></sup></p>
+      </div>
+      <div class="qa-row">
+        <h3><span data-l="en">Why is that a dilemma?</span><span data-l="fr">Pourquoi est-ce un dilemme ?</span></h3>
+        <p><span data-l="en">The same pumps lower the water table a little more. In the model above, slide the water table down and watch the tunnel's capture zone shrink.</span><span data-l="fr">Ces mêmes pompes font encore baisser la nappe. Dans la maquette ci-dessus, faites descendre la nappe et regardez la zone de captage rétrécir.</span><sup><a href="#src-3">3</a></sup></p>
+      </div>
+      <div class="qa-row">
+        <h3><span data-l="en">Is there another way?</span><span data-l="fr">Existe-t-il une autre voie ?</span></h3>
+        <p><span data-l="en">Shared limits on pumping need rules everyone accepts and a way to check them. Oasis communities were already relaunching collective action against uncontrolled pumping in 2011. Recharging the aquifer along the wadis is another proposal.</span><span data-l="fr">Des limites communes au pompage exigent des règles acceptées par tous et un contrôle. Dès 2011, des communautés oasiennes relançaient l'action collective contre le pompage incontrôlé. Recharger la nappe le long des oueds est une autre piste.</span><sup><a href="#src-1">1</a>,<a href="#src-4">4</a></sup></p>
+      </div>
+      <div class="qa-row">
+        <h3><span data-l="en">Who keeps the tunnels open?</span><span data-l="fr">Qui entretient les galeries ?</span></h3>
+        <p><span data-l="en">The families who hold water rights, in proportion to their shares. The work is hard and dangerous: in the Tafilalet, people have been badly hurt or killed by collapsing shafts and snake bites.</span><span data-l="fr">Les familles qui détiennent des droits d'eau, selon leurs parts. Le travail est pénible et dangereux : au Tafilalet, des personnes ont été blessées ou tuées par l'effondrement d'un puits ou une morsure de serpent.</span><sup><a href="#src-2">2</a>,<a href="#src-5">5</a></sup></p>
+      </div>
+    </div>
   </div>
-  <div class="band"><div class="grid">
-    <h3 class="q rise"><span data-l="en">Why are khettaras drying up?</span><span data-l="fr">Pourquoi les khettaras s'assèchent-elles ?</span></h3>
-    <p class="a rise"><span data-l="en">Pumping for drinking water and for new farms lowers the water table, while lower rainfall refills the aquifer less. On the same aquifer, motor pumps tend to win over the khettara.</span><span data-l="fr">Le pompage pour l'eau potable et les nouvelles exploitations fait baisser la nappe, et des pluies plus faibles la rechargent moins. Sur une même nappe, les motopompes finissent par l'emporter sur la khettara.</span><sup><a href="#src-2">2</a>,<a href="#src-3">3</a></sup></p>
-  </div></div>
-  <div class="band"><div class="grid">
-    <h3 class="q rise"><span data-l="en">What are communities doing?</span><span data-l="fr">Que font les communautés ?</span></h3>
-    <p class="a rise"><span data-l="en">Some drill a borehole, add a solar pump and pour the pumped water into their khettara. The water flows again and their shared access survives.</span><span data-l="fr">Certaines forent un puits, installent une pompe solaire et versent l'eau pompée dans leur khettara. L'eau coule à nouveau et l'accès collectif survit.</span><sup><a href="#src-3">3</a></sup></p>
-  </div></div>
-  <div class="band"><div class="grid">
-    <h3 class="q rise"><span data-l="en">Why is that a dilemma?</span><span data-l="fr">Pourquoi est-ce un dilemme ?</span></h3>
-    <p class="a rise"><span data-l="en">The same pumps lower the water table a little more. In the model above, slide the water table down and watch the tunnel's capture zone shrink.</span><span data-l="fr">Ces mêmes pompes font encore baisser la nappe. Dans la maquette ci-dessus, faites descendre la nappe et regardez la zone de captage rétrécir.</span><sup><a href="#src-3">3</a></sup></p>
-  </div></div>
-  <div class="band"><div class="grid">
-    <h3 class="q rise"><span data-l="en">Is there another way?</span><span data-l="fr">Existe-t-il une autre voie ?</span></h3>
-    <p class="a rise"><span data-l="en">Shared limits on pumping need rules everyone accepts and a way to check them. Oasis communities were already relaunching collective action against uncontrolled pumping in 2011. Recharging the aquifer along the wadis is another proposal.</span><span data-l="fr">Des limites communes au pompage exigent des règles acceptées par tous et un contrôle. Dès 2011, des communautés oasiennes relançaient l'action collective contre le pompage incontrôlé. Recharger la nappe le long des oueds est une autre piste.</span><sup><a href="#src-1">1</a>,<a href="#src-4">4</a></sup></p>
-  </div></div>
-  <div class="band"><div class="grid">
-    <h3 class="q rise"><span data-l="en">Who keeps the tunnels open?</span><span data-l="fr">Qui entretient les galeries ?</span></h3>
-    <p class="a rise"><span data-l="en">The families who hold water rights, in proportion to their shares. The work is hard and dangerous: in the Tafilalet, people have been badly hurt or killed by collapsing shafts and snake bites.</span><span data-l="fr">Les familles qui détiennent des droits d'eau, selon leurs parts. Le travail est pénible et dangereux : au Tafilalet, des personnes ont été blessées ou tuées par l'effondrement d'un puits ou une morsure de serpent.</span><sup><a href="#src-2">2</a>,<a href="#src-5">5</a></sup></p>
-  </div></div>
 </section>
 
 <!-- CLASSROOM -->
-<section class="class" id="classroom">
-  <div class="grid">
-    <h2 class="rise"><span class="soft"><span data-l="en">Three lessons</span><span data-l="fr">Trois séances</span></span><br><span data-l="en">for ages 11 to 15</span><span data-l="fr">pour les 11-15 ans</span></h2>
+<section class="class ochre" id="classroom">
+  <div class="wrap">
+    <h2><span class="soft"><span data-l="en">Three lessons</span><span data-l="fr">Trois séances</span></span><br><span data-l="en">for ages 11 to 15</span><span data-l="fr">pour les 11-15 ans</span></h2>
     <div class="agenda">
-      <div class="tabs" role="tablist" aria-label="Lessons">
+      <div class="tabs" role="tablist" aria-label="Lessons" aria-orientation="vertical">
         <button type="button" class="tab" role="tab" id="tab-sci" aria-controls="les-sci" aria-selected="true"><span><span data-l="en">Science</span><span data-l="fr">Sciences</span></span><small>45 min</small></button>
         <button type="button" class="tab" role="tab" id="tab-math" aria-controls="les-math" aria-selected="false"><span>Maths</span><small>20 min</small></button>
         <button type="button" class="tab" role="tab" id="tab-civ" aria-controls="les-civ" aria-selected="false"><span><span data-l="en">Citizenship</span><span data-l="fr">Citoyenneté</span></span><small>30 min</small></button>
@@ -562,13 +563,11 @@ html.js .rise.in{opacity:1;transform:none}
 
 <!-- SOURCES -->
 <section class="sources" id="sources">
-  <div class="axis">
-    <p class="side"><span data-l="en">Every figure on this page links to one of these sources. The model and all pictures were made in code for this exhibition.</span><span data-l="fr">Chaque chiffre de cette page renvoie à l'une de ces sources. La maquette et toutes les images ont été réalisées en code pour cette exposition.</span></p>
+  <div class="wrap src-grid">
+    <p class="side"><span data-l="en">Every figure on this page links to one of these sources. The 3D model and its renders were made in code for this exhibition; the photographs come from Wikimedia Commons under open licences.</span><span data-l="fr">Chaque chiffre de cette page renvoie à l'une de ces sources. La maquette 3D et ses rendus ont été réalisés en code pour cette exposition ; les photographies viennent de Wikimedia Commons, sous licence libre.</span></p>
     <div>
       <h2><span data-l="en">Sources and further reading</span><span data-l="fr">Sources et lectures</span></h2>
-      <div class="further">
-        <a href="https://www.unesco.org/en/virtual-science-museum/voices-water?hub=196669"><span data-l="en">The Voices of Water, on UNESCO's Virtual Science Museum</span><span data-l="fr">The Voices of Water, sur le Musée virtuel des sciences de l'UNESCO</span></a>
-      </div>
+      <a class="further" href="https://www.unesco.org/en/virtual-science-museum/voices-water?hub=196669"><span data-l="en">The Voices of Water, on UNESCO's Virtual Science Museum</span><span data-l="fr">The Voices of Water, sur le Musée virtuel des sciences de l'UNESCO</span></a>
       <ol>
         <li id="src-1">WAMU-NET / Museum of Water Civilisation in Morocco "Mohammed VI", <a href="https://www.watermuseums.net/campaigns/valuing-ancient-water-cultures/moroccan-khettaras/">Moroccan khettaras</a>.</li>
         <li id="src-2">Beraaouz M., Abioui M., Hssaisoune M., Martínez-Frías J. (2022), <a href="https://link.springer.com/10.1186/s43238-022-00073-x">Khettaras in the Tafilalet oasis (Morocco): contribution to the promotion of tourism and sustainable development</a>, <i>Built Heritage</i>.</li>
@@ -580,45 +579,56 @@ html.js .rise.in{opacity:1;transform:none}
         <li id="src-8">WAMU-NET (2026), <a href="https://www.ideassonline.org/public/pdf/UNESCOTheVoiciesofWater-ENG.pdf">The Voices of Water on UNESCO's Virtual Science Museum</a>, summary sheet.</li>
         <li id="src-9">Khettouch A. (2025), <a href="https://iwra.org/proceedings/congress/resource/IWRA_XIXWWCMaroc_Dec2025_WaterChangingWorld_ORAL_Athmane_Khettouch_XIXWorldWaterCongress319.pdf">Resilience of the khettara system in Morocco's southern oases</a>, XIX World Water Congress, Marrakech.</li>
       </ol>
+      <h3><span data-l="en">Photographs</span><span data-l="fr">Photographies</span></h3>
+      <ul class="photos">
+        <li><a href="https://commons.wikimedia.org/wiki/File:Khettaras.jpg">Khettaras near Erfoud</a>, Bernard Gagnon, 2005, <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a></li>
+        <li><a href="https://commons.wikimedia.org/wiki/File:Khettara.jpg">Khettara hole near Erfoud</a>, Bernard Gagnon, 2005, <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a></li>
+        <li><a href="https://commons.wikimedia.org/wiki/File:A_pool_for_irrigating_gardens.jpg">A pool for irrigating gardens</a>, Mohammed Abdeljalil, 2015, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a></li>
+        <li><a href="https://commons.wikimedia.org/wiki/File:Tafilalt_-_panoramio.jpg">Tafilalt</a>, Eduardo Manchon, 2005, <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a></li>
+        <li><a href="https://commons.wikimedia.org/wiki/File:Tarhjicht_-_Water_the_treasure_in_the_oasis_-_panoramio.jpg">Tarhjicht, water the treasure in the oasis</a>, tuarek, 2008, <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a></li>
+        <li><a href="https://commons.wikimedia.org/wiki/File:Tafilalt_Khettara.jpg">Tafilalt Khettara</a>, Sebastian Lapostol, 2012, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a></li>
+      </ul>
     </div>
   </div>
 </section>
 </main>
 
 <footer>
-  <div class="ftop">
-    <div class="notes">
-      <p><span data-l="en">Under the Oasis, a concept exhibition by Amine Brahimi</span><span data-l="fr">Sous l'oasis, exposition concept d'Amine Brahimi</span></p>
-      <p><span data-l="en">Not an official UNESCO publication</span><span data-l="fr">Pas une publication officielle de l'UNESCO</span></p>
-      <p><span data-l="en">November 2026</span><span data-l="fr">Novembre 2026</span></p>
+  <div class="wrap">
+    <div class="ftop">
+      <div class="notes">
+        <p><span data-l="en">Under the Oasis, a concept exhibition by Amine Brahimi</span><span data-l="fr">Sous l'oasis, exposition concept d'Amine Brahimi</span></p>
+        <p><span data-l="en">Not an official UNESCO publication</span><span data-l="fr">Pas une publication officielle de l'UNESCO</span></p>
+        <p><span data-l="en">November 2026</span><span data-l="fr">Novembre 2026</span></p>
+      </div>
+      <a href="#top"><span data-l="en">Back to top</span><span data-l="fr">Haut de page</span></a>
     </div>
-    <a class="up" href="#top"><span data-l="en">Back to top</span><span data-l="fr">Haut de page</span></a>
-  </div>
-  <p class="contact-label"><span data-l="en">More work by Amine Brahimi</span><span data-l="fr">D'autres travaux d'Amine Brahimi</span></p>
-  <a class="contact" href="https://aminebrr.github.io/Portfolio/"><span>aminebrr.github.io</span><br><span>/Portfolio</span></a>
-  <div class="fmeta">
-    <div><a href="#sources">Sources</a></div>
-    <div><span data-l="en">3D model and pictures made in code · Type: Literata, Noto Naskh Arabic</span><span data-l="fr">Maquette 3D et images réalisées en code · Caractères : Literata, Noto Naskh Arabic</span></div>
-    <div>France, 2026</div>
+    <p class="contact-label"><span data-l="en">More work by Amine Brahimi</span><span data-l="fr">D'autres travaux d'Amine Brahimi</span></p>
+    <a class="contact" href="https://aminebrr.github.io/Portfolio/">aminebrr.github.io/Portfolio</a>
+    <div class="fmeta">
+      <a href="#sources">Sources</a>
+      <span><span data-l="en">3D model and renders made in code · Photographs: Wikimedia Commons · Type: Source Serif 4, Archivo, Noto Naskh Arabic</span><span data-l="fr">Maquette 3D et rendus réalisés en code · Photographies : Wikimedia Commons · Caractères : Source Serif 4, Archivo, Noto Naskh Arabic</span></span>
+      <span>France, 2026</span>
+    </div>
   </div>
 </footer>
 
 <script>
-/* language, tabs and entrances: plain script so the page works even if 3D fails */
+/* language, tabs, dot field: plain script so the page works even if 3D fails */
 (function(){
-  var root=document.documentElement; root.classList.add('js');
+  var root=document.documentElement;
   var bEn=document.getElementById('btn-en'), bFr=document.getElementById('btn-fr');
   window.uoLang=function(){return root.getAttribute('data-lang');};
   var META={
-    en:{t:"Under the Oasis: Morocco's khettaras, a virtual exhibition", d:"A virtual exhibition on Morocco's khettaras, with an interactive 3D model: how the underground tunnels work, how water is shared, and why they are drying up. Work sample by Amine Brahimi."},
-    fr:{t:"Sous l'oasis : les khettaras du Maroc, une exposition virtuelle", d:"Une exposition virtuelle sur les khettaras du Maroc, avec une maquette 3D interactive : comment fonctionnent ces galeries souterraines, comment l'eau se partage et pourquoi elles s'assèchent. Travail d'Amine Brahimi."}
+    en:{t:"Under the Oasis: Morocco's khettaras, a virtual exhibition", d:"A virtual exhibition on Morocco's khettaras, with an interactive 3D model: how the underground tunnels work, how water is shared, and why they are drying up. Work sample by Amine Brahimi.", f:"570 dots, one per khettara in the Tafilalet; 304 are filled."},
+    fr:{t:"Sous l'oasis : les khettaras du Maroc, une exposition virtuelle", d:"Une exposition virtuelle sur les khettaras du Maroc, avec une maquette 3D interactive : comment fonctionnent ces galeries souterraines, comment l'eau se partage et pourquoi elles s'assèchent. Travail d'Amine Brahimi.", f:"570 points, un par khettara du Tafilalet ; 304 sont pleins."}
   };
   var desc=document.querySelector('meta[name="description"]');
-  /* footnote links read as "Source 3" rather than "3" */
+  var field=document.getElementById('field');
   [].forEach.call(document.querySelectorAll('sup a[href^="#src-"]'),function(a){a.setAttribute('aria-label','Source '+a.textContent.trim());});
   function setLang(l){
     root.setAttribute('data-lang',l); root.lang=l;
-    document.title=META[l].t; desc.setAttribute('content',META[l].d);
+    document.title=META[l].t; desc.setAttribute('content',META[l].d); field.setAttribute('aria-label',META[l].f);
     bEn.setAttribute('aria-pressed',l==='en'); bFr.setAttribute('aria-pressed',l==='fr');
     try{localStorage.setItem('uto-lang',l);}catch(e){}
     document.dispatchEvent(new CustomEvent('uolang'));
@@ -642,22 +652,20 @@ html.js .rise.in{opacity:1;transform:none}
   });
   pick(tabs[0]);
 
-  /* staggered entrances; content is visible if this never runs */
-  var els=[].slice.call(document.querySelectorAll('.rise'));
-  function show(el){el.classList.add('in');}
-  if('IntersectionObserver' in window){
+  /* 570 khettaras, 304 working. The dots are filled at once; on screens that allow motion they fill in as the section arrives. */
+  var TOTAL=570, ON=304, dots=[], frag=document.createDocumentFragment();
+  for(var i=0;i<TOTAL;i++){var d=document.createElement('i'); dots.push(d); frag.appendChild(d);}
+  field.appendChild(frag);
+  function fill(all){ dots.forEach(function(d,k){ if(k<ON) d.className='on'; }); }
+  var still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(still || !('IntersectionObserver' in window)) fill();
+  else {
     var io=new IntersectionObserver(function(es){
-      es.forEach(function(e){
-        if(!e.isIntersecting) return;
-        var sibs=[].slice.call(e.target.parentNode.querySelectorAll(':scope > .rise'));
-        var k=Math.max(0,sibs.indexOf(e.target));
-        setTimeout(function(){show(e.target);},k*80);
-        io.unobserve(e.target);
-      });
-    },{rootMargin:'0px 0px -8% 0px'});
-    els.forEach(function(el){io.observe(el);});
-  } else els.forEach(show);
-  setTimeout(function(){els.forEach(show);},4000);
+      if(!es[0].isIntersecting) return; io.disconnect();
+      var k=0; (function step(){ for(var n=0;n<12&&k<ON;n++,k++) dots[k].className='on'; if(k<ON) requestAnimationFrame(step); })();
+    },{threshold:.35});
+    io.observe(field);
+  }
 
   /* if the 3D module never starts (blocked CDN, old browser), show the text description instead of an empty box */
   setTimeout(function(){
@@ -771,6 +779,78 @@ Object.assign(sun.shadow.camera,{left:-14,right:14,top:12,bottom:-12,near:1,far:
 sun.shadow.bias=-0.0004; sun.shadow.normalBias=0.03;
 scene.add(sun);
 
+/* ---------------- textures, all generated in code (no image files) ---------------- */
+const ANISO = renderer.capabilities.getMaxAnisotropy();
+/* periodic value noise, so every texture tiles without seams */
+function tileNoise(n, cells, octaves, seed){
+  const h = new Float32Array(n*n);
+  const r = (x,y,o)=>{const v=Math.sin(x*127.1+y*311.7+o*74.7+seed*13.37)*43758.5453; return v-Math.floor(v);};
+  for(let o=0;o<octaves;o++){
+    const c=cells<<o, amp=Math.pow(0.5,o);
+    for(let y=0;y<n;y++){ const fy=y/n*c, iy=Math.floor(fy), ty=fy-iy, v=ty*ty*(3-2*ty);
+      for(let x=0;x<n;x++){ const fx=x/n*c, ix=Math.floor(fx), tx=fx-ix, u=tx*tx*(3-2*tx);
+        const a=r(ix%c,iy%c,o), b=r((ix+1)%c,iy%c,o), cc=r(ix%c,(iy+1)%c,o), d=r((ix+1)%c,(iy+1)%c,o);
+        h[y*n+x]+=amp*(a+(b-a)*u+(cc-a)*v+(a-b-cc+d)*u*v);
+      }}
+  }
+  let lo=Infinity, hi=-Infinity; for(const k of h){ if(k<lo) lo=k; if(k>hi) hi=k; }
+  for(let i=0;i<h.length;i++) h[i]=(h[i]-lo)/(hi-lo);
+  return h;
+}
+function canvasTex(n, paint, color){
+  const cv=document.createElement('canvas'); cv.width=cv.height=n;
+  const ctx=cv.getContext('2d'), img=ctx.createImageData(n,n);
+  paint(img.data); ctx.putImageData(img,0,0);
+  const t=new THREE.CanvasTexture(cv);
+  t.wrapS=t.wrapT=THREE.RepeatWrapping; t.anisotropy=ANISO;
+  if(color) t.colorSpace=THREE.SRGBColorSpace;     /* colour maps are sRGB; normal and grain maps stay linear */
+  return t;
+}
+/* tangent-space normal map from a height field (OpenGL convention, +Y up) */
+function normalTex(h, n, k){
+  return canvasTex(n, d=>{
+    for(let y=0;y<n;y++) for(let x=0;x<n;x++){
+      const l=h[y*n+(x-1+n)%n], r=h[y*n+(x+1)%n], up=h[((y-1+n)%n)*n+x], dn=h[((y+1)%n)*n+x];
+      const nx=(l-r)*k, ny=(dn-up)*k, L=Math.hypot(nx,ny,1), i=(y*n+x)*4;
+      d[i]=(nx/L*.5+.5)*255; d[i+1]=(ny/L*.5+.5)*255; d[i+2]=(1/L*.5+.5)*255; d[i+3]=255;
+    }
+  });
+}
+function greyTex(h, n, lo, hi, color){
+  return canvasTex(n, d=>{ for(let i=0;i<n*n;i++){ const g=(lo+(hi-lo)*h[i])*255; d[i*4]=d[i*4+1]=d[i*4+2]=g; d[i*4+3]=255; } }, color);
+}
+const TN = small ? 256 : 512;
+
+/* sand: fine grain plus wind ripples, as a near-white detail map that the terrain's vertex colours tint */
+const grain = tileNoise(TN, 32, 4, 1), drift = tileNoise(TN, 4, 3, 2);
+const sandH = new Float32Array(TN*TN);
+for(let y=0;y<TN;y++) for(let x=0;x<TN;x++){
+  const i=y*TN+x, ripple=0.5+0.5*Math.sin(((x/TN)*6 + (y/TN) + 0.35*drift[i])*Math.PI*2*3);
+  sandH[i]=0.55*ripple*ripple + 0.45*grain[i];
+}
+const sandMap = greyTex(grain.map((g,i)=>0.6*g+0.4*drift[i]), TN, 0.84, 1.0, true);
+const sandNormal = normalTex(sandH, TN, 3.2);
+sandMap.repeat.set(14,7); sandNormal.repeat.set(14,7);
+
+/* gravel for the spoil mounds around each shaft */
+const GN=256, pebble=tileNoise(GN, 24, 3, 3);
+const gravelMap = greyTex(pebble, GN, 0.72, 1.0, true);
+const gravelNormal = normalTex(pebble, GN, 6);
+gravelMap.repeat.set(2,1); gravelNormal.repeat.set(2,1);
+
+/* rammed earth (pisé) for the ksar: poured layers, formwork seams and putlog holes */
+const earthN=256, earthNoise=tileNoise(earthN, 16, 4, 4);
+const earthH = new Float32Array(earthN*earthN);
+for(let y=0;y<earthN;y++) for(let x=0;x<earthN;x++){
+  const i=y*earthN+x, lift=(y%64)/64, seam=lift<0.04?0.35:1, hole=((y%64)>44&&(y%64)<52&&(x%86)>40&&(x%86)<50)?0.2:1;
+  earthH[i]=(0.55+0.45*earthNoise[i])*seam*hole;
+}
+const earthMap = canvasTex(earthN, d=>{ for(let i=0;i<earthN*earthN;i++){ const v=earthH[i]; d[i*4]=150+80*v; d[i*4+1]=104+64*v; d[i*4+2]=68+42*v; d[i*4+3]=255; } }, true);
+const earthNormal = normalTex(earthH, earthN, 4);
+
+/* grain for the soil layers in the cut-away walls */
+const wallGrain = greyTex(tileNoise(256, 32, 3, 5), 256, 0, 1, false);
+
 /* ---------------- terrain ---------------- */
 const SX=220, SZ=110;
 const tGeo = new THREE.PlaneGeometry(HX*2, HZ*2, SX, SZ);
@@ -796,20 +876,20 @@ for(let i=0;i<tp.count;i++){
 }
 tGeo.setAttribute('color', new THREE.BufferAttribute(cols,3));
 tGeo.computeVertexNormals();
-const tMat = new THREE.MeshStandardMaterial({vertexColors:true, roughness:0.96, metalness:0, transparent:true, opacity:1});
+const tMat = new THREE.MeshStandardMaterial({vertexColors:true, map:sandMap, normalMap:sandNormal, normalScale:new THREE.Vector2(0.5,0.5), roughness:0.96, metalness:0, transparent:true, opacity:1});
 const terrain = new THREE.Mesh(tGeo, tMat);
 terrain.receiveShadow = true;
 terrain.renderOrder = 2;
 scene.add(terrain);
 
 /* ---------------- block walls (strata shader) ---------------- */
-const wallUniforms = { uWT0:{value:wt0}, uSlope:{value:SLOPE} };
+const wallUniforms = { uWT0:{value:wt0}, uSlope:{value:SLOPE}, uGrain:{value:wallGrain} };
 function wallMat(shade){
   return new THREE.ShaderMaterial({
     uniforms: Object.assign({uShade:{value:shade}}, wallUniforms),
     vertexShader:`varying vec3 vP; void main(){ vec4 w = modelMatrix*vec4(position,1.0); vP=w.xyz; gl_Position=projectionMatrix*viewMatrix*w; }`,
     fragmentShader:`
-      uniform float uWT0; uniform float uSlope; uniform float uShade; varying vec3 vP;
+      uniform float uWT0; uniform float uSlope; uniform float uShade; uniform sampler2D uGrain; varying vec3 vP;
       float rnd(vec2 p){ return fract(sin(dot(p, vec2(12.9898,78.233)))*43758.5453); }
       void main(){
         float along = vP.x + vP.z;
@@ -819,6 +899,7 @@ function wallMat(shade){
         vec3 c = mix(grav, alluv, smoothstep(-1.7,-1.1, vP.y + 0.28*sin(along*0.7)));
         c = mix(rock, c, smoothstep(-3.95,-3.55, vP.y + 0.3*sin(along*0.45+1.0)));
         c *= 0.9 + 0.1*rnd(floor(vec2(along, vP.y)*vec2(26.0,34.0)));
+        c *= 0.82 + 0.3*texture2D(uGrain, vec2(along*0.45, vP.y*0.9)).r;
         float wt = uWT0 + uSlope*vP.x;
         float sat = step(vP.y, wt) * smoothstep(-3.9,-3.6, vP.y);
         c = mix(c, vec3(0.13,0.42,0.78), sat*0.62);
@@ -881,7 +962,7 @@ water.renderOrder = 3; scene.add(water);
 const shaftXs=[]; for(let x=X0;x<=X1-0.5;x+=0.72) shaftXs.push(x);
 const shaftMat = new THREE.MeshStandardMaterial({color:0x4b3828, roughness:1});
 const ringGeo = new THREE.TorusGeometry(0.17,0.075,8,18); ringGeo.rotateX(Math.PI/2);
-const rings = new THREE.InstancedMesh(ringGeo, new THREE.MeshStandardMaterial({color:0xb48a5a, roughness:1}), shaftXs.length);
+const rings = new THREE.InstancedMesh(ringGeo, new THREE.MeshStandardMaterial({color:0xb48a5a, map:gravelMap, normalMap:gravelNormal, roughness:1}), shaftXs.length);
 const holeGeo = new THREE.CircleGeometry(0.11,14); holeGeo.rotateX(-Math.PI/2);
 const holes = new THREE.InstancedMesh(holeGeo, new THREE.MeshBasicMaterial({color:0x1d150f}), shaftXs.length);
 const d = new THREE.Object3D();
@@ -897,7 +978,7 @@ scene.add(rings, holes);
 
 /* outlet basin and canals */
 const bx = X1+0.42, bz=gz(X1), by=surf(bx,bz);
-const basin = new THREE.Mesh(new THREE.BoxGeometry(0.62,0.16,0.46), new THREE.MeshStandardMaterial({color:0xa97b51, roughness:1}));
+const basin = new THREE.Mesh(new THREE.BoxGeometry(0.62,0.16,0.46), new THREE.MeshStandardMaterial({color:0xc9a27a, map:earthMap, normalMap:earthNormal, normalScale:new THREE.Vector2(0.6,0.6), roughness:1}));
 basin.position.set(bx,by+0.04,bz); basin.castShadow=true; scene.add(basin);
 const waterMat = new THREE.MeshBasicMaterial({color:0x1f78d6, transparent:true, opacity:1});
 const basinW = new THREE.Mesh(new THREE.PlaneGeometry(0.5,0.34).rotateX(-Math.PI/2), waterMat);
@@ -935,7 +1016,7 @@ trunks.castShadow=crowns.castShadow=true;
 scene.add(trunks,crowns);
 
 /* ksar: earthen village */
-const ksarMat = new THREE.MeshStandardMaterial({color:0xb7845a, roughness:1, flatShading:true});
+const ksarMat = new THREE.MeshStandardMaterial({color:0xffffff, map:earthMap, normalMap:earthNormal, normalScale:new THREE.Vector2(0.8,0.8), roughness:1});
 [[8.2,-3.2,0.6,0.35,0.5],[8.75,-3.15,0.5,0.45,0.45],[9.25,-3.1,0.45,0.32,0.5],[8.3,-2.6,0.5,0.4,0.45],[8.85,-2.55,0.6,0.5,0.4],[9.3,-2.5,0.4,0.36,0.5],[8.4,-2.05,0.55,0.3,0.4],[8.95,-2.0,0.45,0.42,0.4],[9.38,-2.0,0.32,0.75,0.32]]
 .forEach(([x,z,w,h,dd])=>{const b=new THREE.Mesh(new THREE.BoxGeometry(w,h,dd),ksarMat); b.position.set(x,surf(x,z)+h/2-0.02,z); b.castShadow=b.receiveShadow=true; scene.add(b);});
 
@@ -1121,15 +1202,13 @@ async function still(id, w, h, pos, look, opts){
   img.src=URL.createObjectURL(blob);
   img.decode().catch(()=>{}).then(()=>img.classList.add('ready'));
 }
-/* masthead stills render at once; the others when the reader gets near them. One at a time, since each borrows the scene. */
+/* the two dilemma renders are made when the reader gets near them, one at a time, since each borrows the scene */
 let queue = Promise.resolve();
 const render = (...a) => { queue = queue.then(()=>still(...a)).catch(()=>{}); };
-render('still-aerial',1600,900,new THREE.Vector3(-1.5,19,9.5),new THREE.Vector3(1.6,0,1.0),{xray:false,bg:0xb38e62,fov:34});
-render('still-cut',1600,900,new THREE.Vector3(3.2,8.6,12.4),new THREE.Vector3(-1.2,-0.6,0.6),{xray:true,bg:0xefeeeb,fov:38});
 const later = {
-  'still-oasis':[1200,1200,new THREE.Vector3(12.8,3.6,7.6),new THREE.Vector3(7.2,0.2,0.6),{xray:false,bg:0xefeeeb,fov:34}],
-  'still-wet':[1200,800,new THREE.Vector3(2.5,9.5,13.5),new THREE.Vector3(-0.6,-0.8,0.8),{xray:true,bg:0xefeeeb,fov:40,wt:0}],
-  'still-dry':[1200,800,new THREE.Vector3(2.5,9.5,13.5),new THREE.Vector3(-0.6,-0.8,0.8),{xray:true,bg:0xefeeeb,fov:40,wt:-1.95}]
+  'still-cut':[1280,960,new THREE.Vector3(3.2,8.6,12.4),new THREE.Vector3(-1.2,-0.6,0.6),{xray:true,bg:0x1b1713,fov:44,wt:0}],
+  'still-wet':[1200,800,new THREE.Vector3(2.5,9.5,13.5),new THREE.Vector3(-0.6,-0.8,0.8),{xray:true,bg:0x1b1713,fov:40,wt:0}],
+  'still-dry':[1200,800,new THREE.Vector3(2.5,9.5,13.5),new THREE.Vector3(-0.6,-0.8,0.8),{xray:true,bg:0x1b1713,fov:40,wt:-1.95}]
 };
 const near = new IntersectionObserver(es=>es.forEach(e=>{
   if(!e.isIntersecting) return;
