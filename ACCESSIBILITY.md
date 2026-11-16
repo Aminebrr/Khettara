@@ -143,3 +143,14 @@ The visual identity, layout, copy, typefaces, palette and 3D implementation are 
 - **Hard to see without vision.** The 3D view itself remains a visual experience; the text description and diagram are its equivalent.
 - **Small inline links.** Footnote numbers and photo-credit links inside sentences are smaller than 24 px. They fall under the inline exception of WCAG 2.5.8; footnotes have an enlarged hit area.
 - **Long reading sections.** Some sections are long. The copy was kept as written, by design.
+
+## Update, 16 November 2026
+
+The design-polish pass changed these things; the audit above otherwise still stands.
+
+- The compact "Sections" menu now serves all widths under 1000 px, fixing a sideways-scroll bug between 761 and ~900 px.
+- Photo credits moved off the photographs onto solid ground below them, at 13 px (were 12 px white-on-photo).
+- A drawn locator map of the khettara regions was added to the History chapter (SVG with `role="img"`, a written caption as its accessible name, and larger labels on phones).
+- Scroll entrance animations were added. They are applied by script only (nothing is hidden if scripts fail), are disabled entirely under `prefers-reduced-motion`, and anything missed is revealed by a safety timer. The slow drift on the dilemma photograph also stops under reduced motion.
+- 3D hotspot labels on phones: 13 px, minimum 32 px tall.
+- Re-validated after the changes: html-validate pass; axe (desktop EN, phone FR) 0 violations once entrance transitions settle; no horizontal scroll from 320 to 1440 px.

@@ -73,13 +73,15 @@ main:focus{outline:none}
 .label,.cap,.credit,.btn,.bar,.tab,.hot,.ends,.readout p,.by{font-family:var(--sans)}
 .cap{font-size:.875rem;line-height:1.45;color:var(--bone-soft);margin-top:12px;max-width:60ch}
 .cap a{color:inherit}
-.credit{font-size:.75rem;line-height:1.3;color:var(--bone-soft)}
+.credit{font-size:.8125rem;line-height:1.4;color:var(--bone-soft)}
+.credit-strip{background:var(--night);padding:10px var(--m) 0;text-align:right}
+.credit-strip .credit{margin:0}
 .credit a{color:inherit}
 h2{font-size:clamp(2.25rem,1.6rem + 2.8vw,3.75rem)}
 .lede{font-size:clamp(1.25rem,1.1rem + .6vw,1.625rem);line-height:1.4;font-variation-settings:'opsz' 32}
 
 /* footnotes */
-sup{font-family:var(--sans);font-size:.62em;line-height:0;font-weight:600}
+sup{font-family:var(--sans);font-size:.7em;line-height:0;font-weight:600}
 sup a{text-decoration:none;color:var(--water);display:inline-block;padding:.5em .3em;margin:-.5em -.15em;position:relative}
 .ochre sup a,footer sup a{color:#0a2f66}
 
@@ -93,7 +95,7 @@ sup a{text-decoration:none;color:var(--water);display:inline-block;padding:.5em 
 .lang{display:flex;gap:2px}
 .lang button{background:none;border:0;min-width:44px;min-height:44px;padding:0 8px;cursor:pointer;font:inherit;color:var(--bone-soft);letter-spacing:.06em}
 .lang button[aria-pressed="true"]{color:var(--bone);text-decoration:underline;text-underline-offset:.35em}
-.cta{background:var(--water);color:var(--night);text-decoration:none;padding:11px 18px;border-radius:2px;transition:background .3s var(--ease)}
+.cta{background:var(--water);color:var(--night);text-decoration:none;white-space:nowrap;padding:11px 18px;border-radius:2px;transition:background .3s var(--ease)}
 .cta:hover{background:var(--bone)}
 
 /* ---------- hero ---------- */
@@ -105,7 +107,6 @@ sup a{text-decoration:none;color:var(--water);display:inline-block;padding:.5em 
 .hero h1{font-size:clamp(4rem,2.5rem + 6vw,6rem);letter-spacing:-0.03em;line-height:.95;margin-top:4px}
 .hero .lede{margin-top:20px;max-width:44ch}
 .by{margin-top:22px;font-size:.875rem;color:var(--bone-soft);letter-spacing:.02em}
-.hero .credit{position:absolute;z-index:2;right:var(--m);bottom:16px;max-width:40ch;text-align:right}
 
 /* ---------- model chapter ---------- */
 .model{padding:clamp(88px,10vw,160px) 0 clamp(72px,8vw,128px)}
@@ -161,11 +162,17 @@ sup a{text-decoration:none;color:var(--water);display:inline-block;padding:.5em 
 .plate figcaption{display:flex;justify-content:space-between;gap:24px;padding:12px var(--m) 0}
 .history .plate figcaption{background:var(--night);padding-bottom:14px}
 .history-body{padding:clamp(72px,8vw,128px) 0}
+.history-body .name-line{margin-top:18px;font-size:1.1875rem;max-width:62ch}
 .history-body .lede{max-width:40ch;font-size:clamp(1.5rem,1.2rem + 1.2vw,2.25rem);line-height:1.3;font-weight:500}
-.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px 64px;margin-top:64px;max-width:1180px}
+.cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px 56px;margin-top:64px}
 .cols p{font-size:1.0625rem}
 .cols b{font-family:var(--sans);font-weight:700;display:block;font-size:1rem;margin-bottom:6px}
 .cols .about{border-top:1px solid rgba(23,17,10,.35);padding-top:16px;grid-column:1/-1;max-width:72ch}
+.map-fig{margin:72px 0 0;max-width:1180px}
+.map-fig svg{display:block;width:100%;height:auto}
+.map-fig svg [data-l]{display:none}
+html[data-lang="en"] .map-fig svg tspan[data-l="en"],html[data-lang="fr"] .map-fig svg tspan[data-l="fr"]{display:inline}
+.map-fig .cap{color:var(--ink-soft);max-width:66ch}
 
 /* ---------- sharing ---------- */
 .share{padding:clamp(88px,10vw,160px) 0}
@@ -202,7 +209,6 @@ sup a{text-decoration:none;color:var(--water);display:inline-block;padding:.5em 
 .dilemma-head .wrap{position:relative;z-index:2;padding-bottom:clamp(40px,7vh,80px);width:100%}
 .dilemma-head h2{font-size:clamp(3rem,2rem + 4.4vw,6rem);letter-spacing:-0.03em}
 .dilemma-head p{margin-top:16px;max-width:44ch;font-size:1.1875rem}
-.dilemma-head .credit{position:absolute;z-index:2;right:var(--m);bottom:16px;max-width:40ch;text-align:right}
 .renders{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(12px,2vw,28px);padding-top:clamp(56px,6vw,96px)}
 .renders figure{margin:0}
 .render{background:var(--night-2);aspect-ratio:3/2;overflow:hidden}
@@ -217,9 +223,9 @@ sup a{text-decoration:none;color:var(--water);display:inline-block;padding:.5em 
 .qa-row p{color:var(--bone-soft);max-width:60ch}
 
 /* ---------- lessons (ochre) ---------- */
-.class{padding:clamp(88px,10vw,160px) 0}
+.class{padding:clamp(72px,8vw,128px) 0 clamp(88px,10vw,160px)}
 .class h2 .soft{color:var(--ink-soft)}
-.agenda{display:grid;grid-template-columns:180px minmax(0,1fr);gap:40px;margin-top:56px}
+.agenda{display:grid;grid-template-columns:230px minmax(0,1fr);gap:44px;margin-top:44px}
 .tabs{display:flex;flex-direction:column;gap:6px}
 .tab{border:0;background:rgba(23,17,10,.1);text-align:left;padding:12px 16px;cursor:pointer;display:flex;flex-direction:column;border-radius:2px;color:var(--ink);transition:background .25s var(--ease),color .25s var(--ease)}
 .tab span{font-size:1rem;font-weight:700;line-height:1.2}
@@ -282,19 +288,28 @@ footer{background:var(--ochre);color:var(--ink);padding:56px 0 28px}
 .include{font:.9375rem var(--sans);color:var(--ink-soft);margin-top:10px}
 
 /* ---------- motion ---------- */
+.pre{opacity:0;transform:translateY(26px)}
+.pre.in{opacity:1;transform:none;transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.btn,.cta,.turn button,.menu,.tab{transition:background .25s var(--ease),color .25s var(--ease),transform .2s var(--ease)}
+.btn:hover,.cta:hover,.turn button:hover{transform:translateY(-2px)}
+.btn:active,.cta:active,.turn button:active,.tab:active,.hot:active{transform:translateY(0) scale(.97)}
+.dilemma-head img{will-change:transform;animation:drift 24s linear infinite alternate}
+@keyframes drift{from{transform:scale(1.03)}to{transform:scale(1.1) translateY(-2%)}}
 @keyframes settle{from{transform:scale(1.07)}to{transform:scale(1)}}
 .hero img{animation:settle 2.8s var(--ease) both}
 .field i{transition:background-color .5s var(--ease),border-color .5s var(--ease)}
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{scroll-behavior:auto !important;animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
   html{scroll-behavior:auto}
-  .hero img{animation:none}
+  .hero img,.dilemma-head img{animation:none}
+  .pre{opacity:1;transform:none}
   .field i,.render img{transition:none}
 }
 
 /* ---------- tablet ---------- */
 @media (max-width:1100px){
   .bar nav{gap:18px}
+  .cols{grid-template-columns:repeat(2,minmax(0,1fr))}
   .bar nav a.wide{display:none}
   .controls{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
   .readout{grid-column:1/-1;text-align:left}
@@ -303,8 +318,8 @@ footer{background:var(--ochre);color:var(--ink);padding:56px 0 28px}
   .field{max-width:none}
 }
 
-/* ---------- phone ---------- */
-@media (max-width:760px){
+/* ---------- narrow header (phones and portrait tablets) ---------- */
+@media (max-width:999px){
   .bar{gap:8px;padding:6px var(--m);flex-wrap:wrap}
   .menu{display:inline-flex;margin-left:auto}
   .mark{min-width:44px;justify-content:center}
@@ -312,22 +327,28 @@ footer{background:var(--ochre);color:var(--ink);padding:56px 0 28px}
   .bar.open nav{display:flex}
   .bar nav a{padding:12px 0;border-top:1px solid var(--night-3)}
   .bar nav a.wide{display:inline-block}
+  .cta{padding:10px 12px}
+}
+
+/* ---------- phone ---------- */
+@media (max-width:760px){
   .model-text dl{grid-template-columns:1fr;gap:4px}
   .model-text dd{margin-bottom:12px}
   .hot{min-height:32px}
-  .cta{padding:10px 12px}
   .mark .t{display:none}
   .dilemma-head{flex-direction:column;justify-content:flex-end;align-items:stretch}
-  .hero .credit,.dilemma-head .credit{position:relative;right:auto;bottom:auto;text-align:left;padding:0 var(--m) 14px}
+  .credit-strip{text-align:left}
   .hero-text{padding-bottom:20px}
   .model-head{grid-template-columns:1fr}
   .view{height:112vw;max-height:640px}
   .info{position:static;max-width:none;background:var(--night-2);padding:4px 16px 18px}
-  .hot{font-size:.75rem;padding:4px 7px}
+  .hot{font-size:.8125rem;padding:4px 8px}
   .controls{grid-template-columns:1fr}
   .steps{grid-template-columns:1fr;gap:44px;margin-top:64px}
   .cols{grid-template-columns:1fr;gap:28px}
   .plate figcaption{flex-direction:column;gap:6px}
+  .map-fig svg text{font-size:24px}
+  .map-fig svg .m-sub{display:none}
   .share-grid{grid-template-columns:1fr}
   .share figure{position:static}
   .share figure img{aspect-ratio:4/3}
@@ -374,11 +395,11 @@ footer{background:var(--ochre);color:var(--ink);padding:56px 0 28px}
   <div class="hero-text">
     <p class="ar"><span lang="ar" dir="rtl">خطّارة</span></p>
     <h1 id="title">Khettara</h1>
-    <p class="lede"><span data-l="en">In Morocco's oases, water travels for kilometres underground, moved by gravity alone. A virtual exhibition on how it works, who shares it and why it is running dry.</span><span data-l="fr">Dans les oasis du Maroc, l'eau voyage des kilomètres sous terre, portée par la seule gravité. Une exposition virtuelle : comment elle marche, qui la partage, pourquoi elle s'assèche.</span></p>
+    <p class="lede"><span data-l="en">In Morocco's oases, water travels for kilometres underground, moved by gravity alone. A virtual exhibition on how it works, who shares it and why it is running dry.</span><span data-l="fr">Dans les oasis du Maroc, l'eau voyage des kilomètres sous terre, portée par la seule gravité. Une exposition virtuelle : comment elle marche, qui la partage, pourquoi elle s'assèche.</span></p>
     <p class="by"><span data-l="en">Under the Oasis · By Amine Brahimi · November 2026</span><span data-l="fr">Sous l'oasis · Par Amine Brahimi · Novembre 2026</span></p>
   </div>
-  <p class="credit"><span data-l="en">The mounds of khettara shafts crossing the desert near Erfoud.</span><span data-l="fr">Les déblais des puits de khettaras traversent le désert près d'Erfoud.</span> <a href="https://commons.wikimedia.org/wiki/File:Khettaras.jpg">Bernard Gagnon</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a></p>
 </section>
+<div class="credit-strip"><p class="credit"><span data-l="en">The mounds of khettara shafts crossing the desert near Erfoud.</span><span data-l="fr">Les déblais des puits de khettaras traversent le désert près d'Erfoud.</span> <a href="https://commons.wikimedia.org/wiki/File:Khettaras.jpg">Bernard Gagnon</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a></p></div>
 
 <main id="main" tabindex="-1">
 
@@ -387,7 +408,7 @@ footer{background:var(--ochre);color:var(--ink);padding:56px 0 28px}
   <div class="wrap">
     <div class="model-head">
       <h2><span data-l="en">From mountain to palm grove</span><span data-l="fr">De la montagne à la palmeraie</span></h2>
-      <p><span data-l="en">Turn the model, tap a label and lower the water table. Heights are exaggerated: the real tunnel slopes only 1 to 2%.</span><span data-l="fr">Faites tourner la maquette, touchez une étiquette et faites baisser la nappe. Les hauteurs sont exagérées : la vraie pente n'est que de 1 à 2 %.</span><sup><a href="#src-1">1</a></sup></p>
+      <p><span data-l="en">Turn the model, tap a label and lower the water table. Heights are exaggerated: the real tunnel slopes only 1 to 2%.</span><span data-l="fr">Faites tourner la maquette, touchez une étiquette et faites baisser la nappe. Les hauteurs sont exagérées : la vraie pente n'est que de 1 à 2 %.</span><sup><a href="#src-1">1</a></sup></p>
     </div>
 
     <div class="stage-wrap">
@@ -485,10 +506,10 @@ footer{background:var(--ochre);color:var(--ink);padding:56px 0 28px}
           <dt><span data-l="en">Boreholes</span><span data-l="fr">Forages</span></dt><dd><span data-l="en">Shown only after heavy pumping. Motor and solar pumps lower the water table; on the same aquifer, pumps tend to win.</span><span data-l="fr">Visibles seulement après un pompage intensif. Les pompes, à moteur ou solaires, font baisser la nappe ; sur une même nappe, elles finissent par l'emporter.</span><sup><a href="#src-2">2</a>,<a href="#src-3">3</a></sup></dd>
         </dl>
         <ul class="scen-list">
-<li><span data-l="en">Rainy years: the water table rises and about 87% of the tunnel collects water.</span><span data-l="fr">Années pluvieuses : la nappe monte et environ 87 % de la galerie capte l'eau.</span></li>
-          <li><span data-l="en">Average year: about 58% of the tunnel collects water.</span><span data-l="fr">Année moyenne : environ 58 % de la galerie capte l'eau.</span></li>
-          <li><span data-l="en">Heavy pumping: the water table falls, only about 18% of the tunnel collects water, the flow is weak and boreholes appear in the fields.</span><span data-l="fr">Pompage intensif : la nappe baisse, environ 18 % seulement de la galerie capte l'eau, le débit est faible et des forages apparaissent dans les champs.</span></li>
-          <li><span data-l="en">Aquifer exhausted: the water table is below the whole tunnel and the outlet is dry.</span><span data-l="fr">Nappe épuisée : la nappe passe sous toute la galerie et la sortie est à sec.</span></li>
+<li><span data-l="en">Rainy years: the water table rises and about 87% of the tunnel collects water.</span><span data-l="fr">Années pluvieuses : la nappe monte et environ 87 % de la galerie capte l'eau.</span></li>
+          <li><span data-l="en">Average year: about 58% of the tunnel collects water.</span><span data-l="fr">Année moyenne : environ 58 % de la galerie capte l'eau.</span></li>
+          <li><span data-l="en">Heavy pumping: the water table falls, only about 18% of the tunnel collects water, the flow is weak and boreholes appear in the fields.</span><span data-l="fr">Pompage intensif : la nappe baisse, environ 18 % seulement de la galerie capte l'eau, le débit est faible et des forages apparaissent dans les champs.</span></li>
+          <li><span data-l="en">Aquifer exhausted: the water table is below the whole tunnel and the outlet is dry.</span><span data-l="fr">Nappe épuisée : la nappe passe sous toute la galerie et la sortie est à sec.</span></li>
           <li><span data-l="en">These percentages come from the model, which exaggerates heights; they illustrate the mechanism, not a measured khettara.</span><span data-l="fr">Ces pourcentages viennent de la maquette, dont les hauteurs sont exagérées ; ils illustrent le mécanisme, pas une khettara mesurée.</span></li>
         </ul>
       </details>
@@ -498,7 +519,7 @@ footer{background:var(--ochre);color:var(--ink);padding:56px 0 28px}
       <div>
         <figure>
           <div class="render step-render"><img id="still-cut" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" width="1280" height="960" alt="Rendered from the 3D model: a cut-away of the hillside showing the mother well and the first shafts reaching down to a blue band of groundwater."></div>
-          <figcaption class="cap"><span data-l="en">Rendered from the model: the tunnel's upper end, under the mother well, reaches into the groundwater.</span><span data-l="fr">Rendu de la maquette : la partie haute du tunnel, sous le puits mère, atteint la nappe.</span></figcaption>
+          <figcaption class="cap"><span data-l="en">Rendered from the model: the tunnel's upper end, under the mother well, reaches into the groundwater.</span><span data-l="fr">Rendu de la maquette : la partie haute du tunnel, sous le puits mère, atteint la nappe.</span></figcaption>
         </figure>
         <h3><span data-l="en">Gather</span><span data-l="fr">Capter</span></h3>
         <p><span data-l="en">Rain and floods on the foothills soak into the gravel. The tunnel's upper end, under the mother well, cuts into this water-bearing layer.</span><span data-l="fr">La pluie et les crues du piémont s'infiltrent dans les graviers. La partie haute du tunnel, sous le puits mère, entaille cette couche aquifère.</span><sup><a href="#src-1">1</a></sup></p>
@@ -509,7 +530,7 @@ footer{background:var(--ochre);color:var(--ink);padding:56px 0 28px}
           <figcaption class="cap"><span data-l="en">A shaft opening near Erfoud.</span><span data-l="fr">L'ouverture d'un puits près d'Erfoud.</span> <a href="https://commons.wikimedia.org/wiki/File:Khettara.jpg">Bernard Gagnon</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a></figcaption>
         </figure>
         <h3><span data-l="en">Channel</span><span data-l="fr">Conduire</span></h3>
-        <p><span data-l="en">Water seeps in and runs down a slope of 1 to 2%. Shafts every 5 to 40 m let diggers remove soil, climb down and bring in air.</span><span data-l="fr">L'eau s'infiltre et descend une pente de 1 à 2 %. Des puits tous les 5 à 40 m servent à sortir la terre, à descendre et à aérer.</span><sup><a href="#src-1">1</a>,<a href="#src-2">2</a></sup></p>
+        <p><span data-l="en">Water seeps in and runs down a slope of 1 to 2%. Shafts every 5 to 40 m let diggers remove soil, climb down and bring in air.</span><span data-l="fr">L'eau s'infiltre et descend une pente de 1 à 2 %. Des puits tous les 5 à 40 m servent à sortir la terre, à descendre et à aérer.</span><sup><a href="#src-1">1</a>,<a href="#src-2">2</a></sup></p>
       </div>
       <div>
         <figure>
@@ -532,13 +553,49 @@ footer{background:var(--ochre);color:var(--ink);padding:56px 0 28px}
   <div class="history-body ochre">
     <div class="wrap">
       <h2 class="sr"><span data-l="en">History</span><span data-l="fr">Histoire</span></h2>
-      <p class="lede"><span data-l="en">The same idea has watered dry lands for more than 2,500 years: a gently sloping tunnel that lets groundwater walk to the surface. Iran calls it qanat, Algeria foggara, Morocco khettara.</span><span data-l="fr">La même idée irrigue les terres sèches depuis plus de 2 500 ans : un tunnel en pente douce qui amène l'eau souterraine à la surface. L'Iran dit qanat, l'Algérie foggara, le Maroc khettara.</span><sup><a href="#src-1">1</a>,<a href="#src-4">4</a></sup></p>
+      <p class="lede"><span data-l="en">The same idea has watered dry lands for more than 2,500 years: a tunnel that lets groundwater walk to the surface.</span><span data-l="fr">La même idée irrigue les terres sèches depuis plus de 2 500 ans : un tunnel qui amène l'eau souterraine à la surface.</span><sup><a href="#src-1">1</a>,<a href="#src-4">4</a></sup></p>
+      <p class="name-line"><span data-l="en">Iran calls it qanat, Algeria foggara, Morocco khettara.</span><span data-l="fr">L'Iran dit qanat, l'Algérie foggara, le Maroc khettara.</span></p>
       <div class="cols">
-        <p><span data-l="en"><b>Born in Persia</b>The technique appears there more than 2,500 years ago and spreads along the southern Mediterranean in the Middle Ages. Iran still counts an estimated 37,000 qanats, and eleven were inscribed on UNESCO's World Heritage List in 2016.</span><span data-l="fr"><b>Née en Perse</b>La technique y apparaît il y a plus de 2 500 ans et gagne la rive sud de la Méditerranée au Moyen Âge. L'Iran compterait encore 37 000 qanats ; onze ont été inscrits au patrimoine mondial de l'UNESCO en 2016.</span><sup><a href="#src-1">1</a>,<a href="#src-6">6</a>,<a href="#src-7">7</a></sup></p>
+        <p><span data-l="en"><b>Born in Persia</b>The technique appears there more than 2,500 years ago and spreads along the southern Mediterranean in the Middle Ages. Iran still counts an estimated 37,000 qanats, and eleven were inscribed on UNESCO's World Heritage List in 2016.</span><span data-l="fr"><b>Née en Perse</b>La technique y apparaît il y a plus de 2 500 ans et gagne la rive sud de la Méditerranée au Moyen Âge. L'Iran compterait encore 37 000 qanats ; onze ont été inscrits au patrimoine mondial de l'UNESCO en 2016.</span><sup><a href="#src-1">1</a>,<a href="#src-6">6</a>,<a href="#src-7">7</a></sup></p>
         <p><span data-l="en"><b>Rooted in Marrakech</b>Under the Almoravids, in the 11th and 12th centuries, the first Moroccan khettaras were dug to supply Marrakech and irrigate the Haouz plain. About 650 still worked there at the end of the 20th century.</span><span data-l="fr"><b>Ancrée à Marrakech</b>Sous les Almoravides, aux XIe et XIIe siècles, les premières khettaras marocaines sont creusées pour alimenter Marrakech et irriguer la plaine du Haouz. Environ 650 y fonctionnaient encore à la fin du XXe siècle.</span><sup><a href="#src-1">1</a>,<a href="#src-5">5</a></sup></p>
         <p><span data-l="en"><b>Alive in the Tafilalet</b>The oldest documented digging there dates from the 16th and 17th centuries, and the khettaras of Siffa from about 1730. After the drought of 1979–1985, rain returned from 2006 and young people came back to restore the tunnels.</span><span data-l="fr"><b>Vivante au Tafilalet</b>Les premiers creusements documentés y datent des XVIe et XVIIe siècles, ceux de Siffa d'environ 1730. Après la sécheresse de 1979-1985, la pluie revient à partir de 2006 et des jeunes reviennent restaurer les galeries.</span><sup><a href="#src-1">1</a>,<a href="#src-2">2</a>,<a href="#src-4">4</a></sup></p>
         <p class="about"><span data-l="en"><b>About this exhibition</b>A work sample by Amine Brahimi, not an official UNESCO publication. It is designed as a deep-dive companion to the Morocco case of <i lang="en">The Voices of Water</i>, by the Global Network of Water Museums, on UNESCO's Virtual Science Museum.</span><span data-l="fr"><b>À propos</b>Échantillon de travail réalisé par Amine Brahimi, et non publication officielle de l'UNESCO. Il prolonge le cas marocain de <i lang="en">The Voices of Water</i>, exposition du Réseau mondial des musées de l'eau sur le Musée virtuel des sciences de l'UNESCO.</span><sup><a href="#src-8">8</a></sup></p>
       </div>
+      <figure class="map-fig">
+        <svg viewBox="0 0 800 430" role="img" aria-labelledby="map-cap" font-family="Archivo, Arial, sans-serif" font-size="15">
+          <rect width="800" height="430" fill="#17110a"/>
+          <path d="M118 0 C96 64 84 140 92 205 C98 258 118 310 160 352 L160 430 L0 430 L0 0 Z" fill="#100d0a"/>
+          <path d="M118 0 C96 64 84 140 92 205 C98 258 118 310 160 352" fill="none" stroke="#f2ece3" stroke-width="2"/>
+          <g stroke="#c8904a" stroke-width="3" fill="none" stroke-linecap="round">
+            <path d="M150 210 L205 186 L250 196 L305 168 L360 178 L420 152 L480 162 L545 140"/>
+            <path d="M150 300 L210 282 L265 292 L325 268 L385 278 L440 258"/>
+          </g>
+          <g stroke="#4a9dff" stroke-width="2" stroke-dasharray="2 7" stroke-linecap="round">
+            <line x1="300" y1="178" x2="282" y2="152"/>
+            <line x1="520" y1="268" x2="500" y2="196"/>
+            <line x1="688" y1="188" x2="640" y2="160"/>
+          </g>
+          <g fill="#c8904a" stroke="#17110a" stroke-width="3">
+            <circle cx="278" cy="140" r="8"/>
+            <circle cx="524" cy="282" r="8"/>
+            <circle cx="692" cy="200" r="8"/>
+          </g>
+          <g fill="#f2ece3">
+            <text class="m-sub" x="30" y="150" transform="rotate(-78 30 150)" fill="#8fc2ff" font-size="13" letter-spacing=".04em"><tspan data-l="en">ATLANTIC</tspan><tspan data-l="fr">ATLANTIQUE</tspan></text>
+            <text x="366" y="150" fill="#d7aa72"><tspan data-l="en">High Atlas</tspan><tspan data-l="fr">Haut Atlas</tspan></text>
+            <text class="m-sub" x="250" y="330" fill="#d7aa72"><tspan data-l="en">Anti-Atlas</tspan><tspan data-l="fr">Anti-Atlas</tspan></text>
+            <text x="262" y="102">Marrakech</text>
+            <text class="m-sub" x="262" y="121" fill="#b9ad9c" font-size="13"><tspan data-l="en">and the Haouz plain</tspan><tspan data-l="fr">et la plaine du Haouz</tspan></text>
+            <text x="508" y="320">Tafilalet</text>
+            <text class="m-sub" x="508" y="340" fill="#b9ad9c" font-size="13">Erfoud · Rissani</text>
+            <text x="676" y="232">Figuig</text>
+            <text x="560" y="400" fill="#b9ad9c" letter-spacing=".08em">SAHARA</text>
+            <path d="M762 36 L762 16 M762 16 L756 24 M762 16 L768 24" stroke="#b9ad9c" stroke-width="2" fill="none"/>
+            <text class="m-sub" x="757" y="54" fill="#b9ad9c" font-size="13">N</text>
+          </g>
+        </svg>
+        <figcaption class="cap" id="map-cap"><span data-l="en">Where the khettaras are. Rain and snow on the Atlas feed the aquifers; each dotted line runs from the mountains to a khettara region named on this page. Simplified map, not to scale.</span><span data-l="fr">Où sont les khettaras. La pluie et la neige de l'Atlas alimentent les nappes&nbsp;; chaque ligne pointillée relie la montagne à une région de khettaras citée sur cette page. Carte simplifiée, sans échelle.</span></figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -552,7 +609,7 @@ footer{background:var(--ochre);color:var(--ink);padding:56px 0 28px}
     </figure>
     <div>
       <h2><span data-l="en">Water measured in time</span><span data-l="fr">L'eau se mesure en temps</span></h2>
-      <p class="para measure"><span data-l="en">In the Tafilalet, a family's share comes from the work its ancestors gave when the tunnel was dug. Shares are inherited, sold or rented, and a sheikh keeps the turns. Turns were timed with a pierced bowl floating in a pot: when it sank, about 45 minutes had passed.</span><span data-l="fr">Au Tafilalet, la part d'une famille vient du travail fourni par ses ancêtres au creusement. Les parts s'héritent, se vendent ou se louent, et un cheikh veille aux tours. On les mesurait avec un bol percé flottant dans un pot : quand il coulait, environ 45 minutes avaient passé.</span><sup><a href="#src-2">2</a></sup></p>
+      <p class="para measure"><span data-l="en">In the Tafilalet, a family's share comes from the work its ancestors gave when the tunnel was dug. Shares are inherited, sold or rented, and a sheikh keeps the turns. Turns were timed with a pierced bowl floating in a pot: when it sank, about 45 minutes had passed.</span><span data-l="fr">Au Tafilalet, la part d'une famille vient du travail fourni par ses ancêtres au creusement. Les parts s'héritent, se vendent ou se louent, et un cheikh veille aux tours. On les mesurait avec un bol percé flottant dans un pot : quand il coulait, environ 45 minutes avaient passé.</span><sup><a href="#src-2">2</a></sup></p>
       <div class="units">
         <div class="unit">
           <span class="n">12</span><span class="u"><span data-l="en">hours</span><span data-l="fr">heures</span></span>
@@ -581,7 +638,7 @@ footer{background:var(--ochre);color:var(--ink);padding:56px 0 28px}
         <p class="say"><span data-l="en">Around Marrakech, <strong>650</strong> worked in the late 20th century. Almost none remain.</span><span data-l="fr">Autour de Marrakech, <strong>650</strong> fonctionnaient à la fin du XXe siècle. Il n'en reste presque aucune.</span><sup><a href="#src-1">1</a></sup></p>
       </div>
     </div>
-    <p class="note"><span data-l="en">The Tafilalet's working khettaras irrigate about 16,000 hectares, with a combined flow of about 700 litres a second. Sources do not always agree: a 2006 census found only about 150 in operation. That is why every figure here carries its source.</span><span data-l="fr">Les khettaras en service du Tafilalet irriguent environ 16 000 hectares, pour un débit cumulé d'environ 700 litres par seconde. Les sources ne concordent pas toujours : un recensement de 2006 n'en comptait qu'environ 150 en service. C'est pourquoi chaque chiffre porte ici sa source.</span><sup><a href="#src-2">2</a></sup></p>
+    <p class="note"><span data-l="en">The Tafilalet's working khettaras irrigate about 16,000 hectares, with a combined flow of about 700 litres a second. Sources do not always agree: a 2006 census found only about 150 in operation. That is why every figure here carries its source.</span><span data-l="fr">Les khettaras en service du Tafilalet irriguent environ 16 000 hectares, pour un débit cumulé d'environ 700 litres par seconde. Les sources ne concordent pas toujours : un recensement de 2006 n'en comptait qu'environ 150 en service. C'est pourquoi chaque chiffre porte ici sa source.</span><sup><a href="#src-2">2</a></sup></p>
   </div>
 </section>
 
@@ -590,11 +647,11 @@ footer{background:var(--ochre);color:var(--ink);padding:56px 0 28px}
   <div class="dilemma-head">
     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Tafilalt_Khettara.jpg/1920px-Tafilalt_Khettara.jpg" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Tafilalt_Khettara.jpg/1280px-Tafilalt_Khettara.jpg 1280w, https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Tafilalt_Khettara.jpg/1920px-Tafilalt_Khettara.jpg 1920w" sizes="100vw" width="1920" height="1280" loading="lazy" decoding="async" alt="A frame of rough wooden poles and a crossbar standing over a shaft opening in bare, stony ground.">
     <div class="wrap">
-      <h2><span data-l="en">Pump, or disappear?</span><span data-l="fr">Pomper ou disparaître ?</span></h2>
+      <h2><span data-l="en">Pump, or disappear?</span><span data-l="fr">Pomper ou disparaître ?</span></h2>
       <p><span data-l="en">The question researchers ask about the oases of southern Morocco today.</span><span data-l="fr">La question que posent les chercheurs sur les oasis du sud du Maroc.</span><sup><a href="#src-3">3</a></sup></p>
     </div>
-    <p class="credit"><span data-l="en">A khettara shaft in the Tafilalet, with a wooden frame above it.</span><span data-l="fr">Un puits de khettara au Tafilalet, surmonté d'un cadre en bois.</span> <a href="https://commons.wikimedia.org/wiki/File:Tafilalt_Khettara.jpg">Sebastian Lapostol</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a></p>
   </div>
+  <div class="credit-strip"><p class="credit"><span data-l="en">A khettara shaft in the Tafilalet, with a wooden frame above it.</span><span data-l="fr">Un puits de khettara au Tafilalet, surmonté d'un cadre en bois.</span> <a href="https://commons.wikimedia.org/wiki/File:Tafilalt_Khettara.jpg">Sebastian Lapostol</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a></p></div>
   <div class="wrap">
     <div class="renders">
       <figure>
@@ -608,24 +665,24 @@ footer{background:var(--ochre);color:var(--ink);padding:56px 0 28px}
     </div>
     <div class="qa">
       <div class="qa-row">
-        <h3><span data-l="en">Why are khettaras drying up?</span><span data-l="fr">Pourquoi les khettaras s'assèchent-elles ?</span></h3>
+        <h3><span data-l="en">Why are khettaras drying up?</span><span data-l="fr">Pourquoi les khettaras s'assèchent-elles ?</span></h3>
         <p><span data-l="en">Pumping for drinking water and for new farms lowers the water table, while lower rainfall refills the aquifer less. On the same aquifer, motor pumps tend to win over the khettara.</span><span data-l="fr">Le pompage pour l'eau potable et les nouvelles exploitations fait baisser la nappe, et des pluies plus faibles la rechargent moins. Sur une même nappe, les motopompes finissent par l'emporter sur la khettara.</span><sup><a href="#src-2">2</a>,<a href="#src-3">3</a></sup></p>
       </div>
       <div class="qa-row">
-        <h3><span data-l="en">What are communities doing?</span><span data-l="fr">Que font les communautés ?</span></h3>
+        <h3><span data-l="en">What are communities doing?</span><span data-l="fr">Que font les communautés ?</span></h3>
         <p><span data-l="en">Some drill a borehole, add a solar pump and pour the pumped water into their khettara. The water flows again and their shared access survives.</span><span data-l="fr">Certaines forent un puits, installent une pompe solaire et versent l'eau pompée dans leur khettara. L'eau coule à nouveau et l'accès collectif survit.</span><sup><a href="#src-3">3</a></sup></p>
       </div>
       <div class="qa-row">
-        <h3><span data-l="en">Why is that a dilemma?</span><span data-l="fr">Pourquoi est-ce un dilemme ?</span></h3>
+        <h3><span data-l="en">Why is that a dilemma?</span><span data-l="fr">Pourquoi est-ce un dilemme ?</span></h3>
         <p><span data-l="en">The same pumps lower the water table a little more. In the model above, slide the water table down and watch the tunnel's capture zone shrink.</span><span data-l="fr">Ces mêmes pompes font encore baisser la nappe. Dans la maquette ci-dessus, faites descendre la nappe et regardez la zone de captage rétrécir.</span><sup><a href="#src-3">3</a></sup></p>
       </div>
       <div class="qa-row">
-        <h3><span data-l="en">Is there another way?</span><span data-l="fr">Existe-t-il une autre voie ?</span></h3>
+        <h3><span data-l="en">Is there another way?</span><span data-l="fr">Existe-t-il une autre voie ?</span></h3>
         <p><span data-l="en">Shared limits on pumping need rules everyone accepts and a way to check them. Oasis communities were already relaunching collective action against uncontrolled pumping in 2011. Recharging the aquifer along the wadis is another proposal.</span><span data-l="fr">Des limites communes au pompage exigent des règles acceptées par tous et un contrôle. Dès 2011, des communautés oasiennes relançaient l'action collective contre le pompage incontrôlé. Recharger la nappe le long des oueds est une autre piste.</span><sup><a href="#src-1">1</a>,<a href="#src-4">4</a></sup></p>
       </div>
       <div class="qa-row">
-        <h3><span data-l="en">Who keeps the tunnels open?</span><span data-l="fr">Qui entretient les galeries ?</span></h3>
-        <p><span data-l="en">The families who hold water rights, in proportion to their shares. The work is hard and dangerous: in the Tafilalet, people have been badly hurt or killed by collapsing shafts and snake bites.</span><span data-l="fr">Les familles qui détiennent des droits d'eau, selon leurs parts. Le travail est pénible et dangereux : au Tafilalet, des personnes ont été blessées ou tuées par l'effondrement d'un puits ou une morsure de serpent.</span><sup><a href="#src-2">2</a>,<a href="#src-5">5</a></sup></p>
+        <h3><span data-l="en">Who keeps the tunnels open?</span><span data-l="fr">Qui entretient les galeries ?</span></h3>
+        <p><span data-l="en">The families who hold water rights, in proportion to their shares. The work is hard and dangerous: in the Tafilalet, people have been badly hurt or killed by collapsing shafts and snake bites.</span><span data-l="fr">Les familles qui détiennent des droits d'eau, selon leurs parts. Le travail est pénible et dangereux : au Tafilalet, des personnes ont été blessées ou tuées par l'effondrement d'un puits ou une morsure de serpent.</span><sup><a href="#src-2">2</a>,<a href="#src-5">5</a></sup></p>
       </div>
     </div>
   </div>
@@ -646,20 +703,20 @@ footer{background:var(--ochre);color:var(--ink);padding:56px 0 28px}
           <div class="row"><div class="t">0–5 <small>min</small></div><div class="w"><span data-l="en">Set up the tray</span><span data-l="fr">Préparer le bac</span><small><span data-l="en">Clear plastic box, sand, gravel, a drinking straw pierced with small holes, a watering can.</span><span data-l="fr">Bac transparent, sable, gravier, une paille percée de petits trous, un arrosoir.</span></small></div></div>
           <div class="row"><div class="t">5–15 <small>min</small></div><div class="w"><span data-l="en">Bury the tunnel</span><span data-l="fr">Enterrer le tunnel</span><small><span data-l="en">Tilt the box slightly and bury the straw in the sand on a gentle slope, its low end at the edge of the box.</span><span data-l="fr">Inclinez légèrement le bac et enterrez la paille dans le sable en pente douce, son extrémité basse au bord du bac.</span></small></div></div>
           <div class="row"><div class="t">15–30 <small>min</small></div><div class="w"><span data-l="en">Make it rain</span><span data-l="fr">Faire pleuvoir</span><small><span data-l="en">Water the high end and watch the water come out of the low end.</span><span data-l="fr">Arrosez la partie haute et regardez l'eau sortir en bas.</span></small></div></div>
-          <div class="row"><div class="t">30–45 <small>min</small></div><div class="w"><span data-l="en">Dig a well</span><span data-l="fr">Creuser un puits</span><small><span data-l="en">Scoop water out of a hole near the top. What happens to the flow?</span><span data-l="fr">Retirez l'eau d'un trou près du haut. Que devient le débit ?</span></small></div></div>
+          <div class="row"><div class="t">30–45 <small>min</small></div><div class="w"><span data-l="en">Dig a well</span><span data-l="fr">Creuser un puits</span><small><span data-l="en">Scoop water out of a hole near the top. What happens to the flow?</span><span data-l="fr">Retirez l'eau d'un trou près du haut. Que devient le débit ?</span></small></div></div>
         </div>
         <div class="lesson" id="les-math" role="tabpanel" aria-labelledby="tab-math" tabindex="0">
-          <div class="row"><div class="t">0–5 <small>min</small></div><div class="w"><span data-l="en">The question</span><span data-l="fr">La question</span><small><span data-l="en">A khettara is 3 km long with a 1.5% gradient. How far does it drop?</span><span data-l="fr">Une khettara mesure 3 km avec une pente de 1,5 %. De combien descend-elle ?</span></small></div></div>
-          <div class="row"><div class="t">5–15 <small>min</small></div><div class="w"><span data-l="en">Work it out</span><span data-l="fr">Calculer</span><small><span aria-hidden="true">3,000 m × 0.015 = 45 m</span><span class="sr"><span data-l="en">3,000 metres times 0.015 equals 45 metres</span><span data-l="fr">3 000 mètres fois 0,015 égale 45 mètres</span></span></small></div></div>
-          <div class="row"><div class="t">15–20 <small>min</small></div><div class="w"><span data-l="en">Compare</span><span data-l="fr">Comparer</span><small><span data-l="en">A 1.5% slope looks flat to the eye, yet it is enough to keep the water moving for 3 km.</span><span data-l="fr">Une pente de 1,5 % paraît plate à l'œil, mais elle suffit à faire couler l'eau sur 3 km.</span></small></div></div>
+          <div class="row"><div class="t">0–5 <small>min</small></div><div class="w"><span data-l="en">The question</span><span data-l="fr">La question</span><small><span data-l="en">A khettara is 3 km long with a 1.5% gradient. How far does it drop?</span><span data-l="fr">Une khettara mesure 3 km avec une pente de 1,5 %. De combien descend-elle ?</span></small></div></div>
+          <div class="row"><div class="t">5–15 <small>min</small></div><div class="w"><span data-l="en">Work it out</span><span data-l="fr">Calculer</span><small><span aria-hidden="true">3,000 m × 0.015 = 45 m</span><span class="sr"><span data-l="en">3,000 metres times 0.015 equals 45 metres</span><span data-l="fr">3 000 mètres fois 0,015 égale 45 mètres</span></span></small></div></div>
+          <div class="row"><div class="t">15–20 <small>min</small></div><div class="w"><span data-l="en">Compare</span><span data-l="fr">Comparer</span><small><span data-l="en">A 1.5% slope looks flat to the eye, yet it is enough to keep the water moving for 3 km.</span><span data-l="fr">Une pente de 1,5 % paraît plate à l'œil, mais elle suffit à faire couler l'eau sur 3 km.</span></small></div></div>
         </div>
         <div class="lesson" id="les-civ" role="tabpanel" aria-labelledby="tab-civ" tabindex="0">
           <div class="row"><div class="t">0–10 <small>min</small></div><div class="w"><span data-l="en">Make a tanast</span><span data-l="fr">Fabriquer une tanast</span><small><span data-l="en">Pierce a yoghurt pot with a pin, float it in a bowl of water and time how long it takes to sink.</span><span data-l="fr">Percez un pot de yaourt avec une épingle, posez-le sur l'eau d'un saladier et mesurez le temps qu'il met à couler.</span></small></div></div>
-          <div class="row"><div class="t">10–20 <small>min</small></div><div class="w"><span data-l="en">Share the turns</span><span data-l="fr">Partager les tours</span><small><span data-l="en">Give each group turns according to the "work" it did.</span><span data-l="fr">Donnez à chaque groupe des tours selon le « travail » fourni.</span></small></div></div>
-          <div class="row"><div class="t">20–30 <small>min</small></div><div class="w"><span data-l="en">Debate</span><span data-l="fr">Débattre</span><small><span data-l="en">A new family arrives in the village. Who gives up time?</span><span data-l="fr">Une nouvelle famille arrive au village. Qui cède du temps ?</span></small></div></div>
+          <div class="row"><div class="t">10–20 <small>min</small></div><div class="w"><span data-l="en">Share the turns</span><span data-l="fr">Partager les tours</span><small><span data-l="en">Give each group turns according to the "work" it did.</span><span data-l="fr">Donnez à chaque groupe des tours selon le « travail » fourni.</span></small></div></div>
+          <div class="row"><div class="t">20–30 <small>min</small></div><div class="w"><span data-l="en">Debate</span><span data-l="fr">Débattre</span><small><span data-l="en">A new family arrives in the village. Who gives up time?</span><span data-l="fr">Une nouvelle famille arrive au village. Qui cède du temps ?</span></small></div></div>
         </div>
-        <p class="include"><span data-l="en">For every lesson, pupils can work in pairs with one handling, one timing and one recording, so no step depends on fine hand movement or on sight alone. The "Dig a well" effect can also be shown with the water-table slider in the 3D model, or with its text description.</span><span data-l="fr">Pour chaque séance, les élèves peuvent travailler en binôme, l'un manipule, l'autre chronomètre ou note, pour qu'aucune étape ne dépende seulement de la motricité fine ou de la vue. L'effet « Creuser un puits » peut aussi se montrer avec le curseur de la nappe dans la maquette 3D, ou avec sa description en texte.</span></p>
-        <p class="ask"><span data-l="en">Curriculum links: groundwater, percentages, sustainable development (SDG 6, clean water).</span><span data-l="fr">Liens avec les programmes : eaux souterraines, pourcentages, développement durable (ODD 6, eau propre).</span></p>
+        <p class="include"><span data-l="en">For every lesson, pupils can work in pairs with one handling, one timing and one recording, so no step depends on fine hand movement or on sight alone. The "Dig a well" effect can also be shown with the water-table slider in the 3D model, or with its text description.</span><span data-l="fr">Pour chaque séance, les élèves peuvent travailler en binôme, l'un manipule, l'autre chronomètre ou note, pour qu'aucune étape ne dépende seulement de la motricité fine ou de la vue. L'effet « Creuser un puits » peut aussi se montrer avec le curseur de la nappe dans la maquette 3D, ou avec sa description en texte.</span></p>
+        <p class="ask"><span data-l="en">Curriculum links: groundwater, percentages, sustainable development (SDG 6, clean water).</span><span data-l="fr">Liens avec les programmes : eaux souterraines, pourcentages, développement durable (ODD 6, eau propre).</span></p>
       </div>
     </div>
   </div>
@@ -711,7 +768,7 @@ footer{background:var(--ochre);color:var(--ink);padding:56px 0 28px}
     <a class="contact" href="https://aminebrr.github.io/Portfolio/">aminebrr.github.io/Portfolio</a>
     <div class="fmeta">
       <a href="#sources">Sources</a>
-      <span><span data-l="en">3D model and renders made in code · Photographs: Wikimedia Commons · Type: Source Serif 4, Archivo, Noto Naskh Arabic</span><span data-l="fr">Maquette 3D et rendus réalisés en code · Photographies : Wikimedia Commons · Caractères : Source Serif 4, Archivo, Noto Naskh Arabic</span></span>
+      <span><span data-l="en">3D model and renders made in code · Photographs: Wikimedia Commons · Type: Source Serif 4, Archivo, Noto Naskh Arabic</span><span data-l="fr">Maquette 3D et rendus réalisés en code · Photographies : Wikimedia Commons · Caractères : Source Serif 4, Archivo, Noto Naskh Arabic</span></span>
       <span>France, 2026</span>
     </div>
   </div>
@@ -772,6 +829,19 @@ footer{background:var(--ochre);color:var(--ink);padding:56px 0 28px}
     });
   });
   pick(tabs[0]);
+
+  /* entrances: headings, text and figures rise as their chapter arrives. JS-only, so nothing is hidden if scripts fail. */
+  if(!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window){
+    var SETS=['.model-head > *','.steps > div','.history-body .lede','.history-body .name-line','.cols > p','.map-fig','.share-grid > figure','.share-grid h2','.share-grid .para','.unit','.counts h2','.counts-grid > div','.counts .note','.renders figure','.qa-row','.class h2','.agenda > *','.src-grid > *'];
+    var rise=[]; SETS.forEach(function(sel){ [].forEach.call(document.querySelectorAll(sel),function(e){ rise.push(e); }); });
+    var byParent=new Map();
+    rise.forEach(function(e){ var a=byParent.get(e.parentNode)||[]; a.push(e); byParent.set(e.parentNode,a); });
+    byParent.forEach(function(a){ a.forEach(function(e,i){ e.classList.add('pre'); e.style.transitionDelay=Math.min(i*80,400)+'ms'; }); });
+    var rio=new IntersectionObserver(function(es){ es.forEach(function(x){ if(x.isIntersecting){ x.target.classList.add('in'); rio.unobserve(x.target); } }); },{threshold:.1,rootMargin:'2000px 0px -6% 0px'});
+    rise.forEach(function(e){ rio.observe(e); });
+    /* safety: anything still hidden 9s after load is shown */
+    setTimeout(function(){ rise.forEach(function(e){ e.classList.add('in'); }); },9000);
+  }
 
   /* 570 khettaras, 304 working. The dots are filled at once; on screens that allow motion they fill in as the section arrives. */
   var TOTAL=570, ON=304, dots=[], frag=document.createDocumentFragment();
@@ -886,6 +956,7 @@ renderer.domElement.setAttribute('role','img');
 const labelCanvas = () => renderer.domElement.setAttribute('aria-label', T[lang()].canvas);
 
 const scene = new THREE.Scene();
+scene.fog = new THREE.Fog(0x1b1713, 24, 62);   /* the far end of the valley recedes into the stage ground */
 const camera = new THREE.PerspectiveCamera(30,1,0.1,200);
 const HOME = {pos:new THREE.Vector3(16.5,15.5,23.5), target:new THREE.Vector3(-0.4,0.7,0)};
 camera.position.copy(HOME.pos);
